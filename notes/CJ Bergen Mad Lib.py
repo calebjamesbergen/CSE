@@ -15,6 +15,7 @@ object1 = input("Object: ")
 # My dad always tells me that I am too (adjective) but I don’t care, I am who (person) is/am
 # Then he comes into my (noun) and throws a/an (object) at my head.
 # That is when I have to turn it off.
+
 print("I love %s" % day_of_the_week)
 print("It is the one day of the week where I don't have to go to %s" % noun1)
 print("I love waking up at %s in the morning and not having to immediately leave for %s" % (number1, noun2))

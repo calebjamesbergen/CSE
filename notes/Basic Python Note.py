@@ -1,3 +1,4 @@
+"""
 # Link to where all of the notes are github.com/EdisonHS/
 
 print("Hello World!")
@@ -67,3 +68,50 @@ real_age = int(input("How old are you again? "))
 hidden_age = real_age + 5
 print(hidden_age)
 # This will be used for the project after Mad Libs
+
+# Random Number
+#  import random
+#  for x in range(1):
+# x = random.randint(1, 5)
+"""
+
+# Multi-line Comments
+# Hit quotation 3 times and press enter
+
+"""
+This is a multi-line comment
+anything in between them is automatically commented out.
+"""
+
+# You have to have 2 blanks lines before and after the def function
+# Defining Functions
+
+
+def say_it():
+    print("Hello World!")
+
+
+say_it()
+say_it()
+say_it()
+
+
+# f(x) = 2x + 3
+# f = the name
+# in the parentheses is the parameter
+def f(x):
+    print(2*x + 3)
+
+
+f(1)
+f(5)
+
+
+# ** = raised to the power of
+def distance(x1, y1, x2, y2):
+    dist = ((x2-x1)**2 + (y2-y1)**2)**(1/2)
+    print(dist)
+
+
+distance(0, 0, 3, 4)
+distance(0, 0, 5, 12)

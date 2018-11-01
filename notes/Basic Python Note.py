@@ -1,3 +1,4 @@
+import random    # This should be on line 1 always
 """
 # Link to where all of the notes are github.com/EdisonHS/
 
@@ -164,5 +165,14 @@ your_grade = grade_calc(82)
 print(your_grade)
 
 # Random numbers
-import random    # This should be on line  1
 print(random.randint(0, 100))
+
+# Equality Statements
+print(5 > 3)
+print(5 >= 3)
+print(3 == 3)
+print(3 != 4)  # Is not equal to
+"""
+a = 3 # A is set to 3
+a == 3 # Is a equal to 3?
+"""

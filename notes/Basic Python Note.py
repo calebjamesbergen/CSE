@@ -1,4 +1,4 @@
-import random    # This should be on line 1 always
+import random    # This should always be on line 1
 """
 # Link to where all of the notes are github.com/EdisonHS/
 

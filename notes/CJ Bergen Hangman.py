@@ -14,7 +14,15 @@ word_guessed = ""
 WORDS = ("chair", "brick", "jerky")
 random_word = random.choice(WORDS)
 word = random_word
-
+random_word_list = ["chair" "jerky" "raise" "stair" "treat" "seats" "roast" "tenor" "tense" "loser" "train" "tread" "trail" "total"]
+random_word_list.append = "tears"
+random_word_list.append = "arise"
+random_word_list.append = "tires"
+random_word_list.append = "arson"
+random_word_list.append = "jacky"
+random_word_list.append = "brick"
+number = random.randint(0, 19)
+print(random_word_list)
 if random_word == "jerky":
     first_letter = "j"
     second_letter = "e"

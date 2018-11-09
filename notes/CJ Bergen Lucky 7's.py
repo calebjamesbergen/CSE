@@ -20,6 +20,6 @@ while money_total > 0:
         print("You got a seven!!!")
     print("You have $%s" % money_total)
     print("You have played %s rounds" % rounds_played)
-print("You got %s dollars" % total_money_over_time)
+print("You had %s dollars total" % total_money_over_time)
 print("The most money you had was $%s" % highest_money_gotten)
 print("You had the most money in round %s" % highest_money_round)

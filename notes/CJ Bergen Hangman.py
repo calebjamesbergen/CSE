@@ -1,10 +1,5 @@
 import random
 guesses = 8
-first_letter = ""
-second_letter = ""
-third_letter = ""
-fourth_letter = ""
-fifth_letter = ""
 letter_guessed1 = ""
 letter_guessed2 = ""
 letter_guessed3 = ""
@@ -14,34 +9,25 @@ word_guessed = ""
 WORDS = ("chair", "brick", "jerky")
 random_word = random.choice(WORDS)
 word = random_word
-random_word_list = ["chair" "jerky" "raise" "stair" "treat" "seats" "roast" "tenor" "tense" "loser" "train" "tread" "trail" "total"]
-random_word_list.append = "tears"
-random_word_list.append = "arise"
-random_word_list.append = "tires"
-random_word_list.append = "arson"
-random_word_list.append = "jacky"
-random_word_list.append = "brick"
+random_word_list = ["seats ", "roast ", "tenor ", "tense ", "loser ", "train ", "tread ", "trail ", "total "]
+random_word_list.append("tears")
+random_word_list.append("jerky")
+random_word_list.append("treat")
+random_word_list.append("siren")
+random_word_list.append("stair")
+random_word_list.append("arise")
+random_word_list.append("tires")
+random_word_list.append("arson")
+random_word_list.append("jacky")
+random_word_list.append("brick")
+random_word_list.append("chair")
 number = random.randint(0, 19)
-print(random_word_list)
-if random_word == "jerky":
-    first_letter = "j"
-    second_letter = "e"
-    third_letter = "r"
-    fourth_letter = "k"
-    fifth_letter = "y"
-if random_word == "chair":
-    first_letter = "c"
-    second_letter = "h"
-    third_letter = "a"
-    fourth_letter = "i"
-    fifth_letter = "r"
-if random_word == "brick":
-    first_letter = "b"
-    second_letter = "r"
-    third_letter = "i"
-    fourth_letter = "c"
-    fifth_letter = "k"
-
+truly_random_word = random_word_list[number]
+first_letter = truly_random_word[0]
+second_letter = truly_random_word[1]
+third_letter = truly_random_word[2]
+fourth_letter = truly_random_word[3]
+fifth_letter = truly_random_word[4]
 # Random word generation
 while guesses > 0 and not word_guessed == random_word:
     print("You have %s guesses left" % guesses)

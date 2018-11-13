@@ -6,30 +6,22 @@ letter_guessed3 = ""
 letter_guessed4 = ""
 letter_guessed5 = ""
 word_guessed = ""
-WORDS = ("chair", "brick", "jerky")
-random_word = random.choice(WORDS)
-word = random_word
-random_word_list = ["seats ", "roast ", "tenor ", "tense ", "loser ", "train ", "tread ", "trail ", "total "]
-random_word_list.append("tears")
-random_word_list.append("jerky")
-random_word_list.append("treat")
-random_word_list.append("siren")
-random_word_list.append("stair")
-random_word_list.append("arise")
-random_word_list.append("tires")
-random_word_list.append("arson")
-random_word_list.append("jacky")
-random_word_list.append("brick")
-random_word_list.append("chair")
-number = random.randint(0, 19)
-truly_random_word = random_word_list[number]
+random_word_list = ["pricy     ", "roast     ", "tenor     ", "tense     ", "loser     ", "train     ",
+                    "tears     ", "jerky     ", "treat     ", "siren     ", "stair     ", "arise     ", "tires     ", "arson     ", "jacky     ", "brick     ", "chair     "
+                    "tread     ", "trail     ", "pouch", "jumbucks     ", "juxtaposed"]
+truly_random_word = random.choice(random_word_list)
 first_letter = truly_random_word[0]
 second_letter = truly_random_word[1]
 third_letter = truly_random_word[2]
 fourth_letter = truly_random_word[3]
 fifth_letter = truly_random_word[4]
+sixth_letter = truly_random_word[5]
+seventh_letter = truly_random_word[6]
+eighth_letter = truly_random_word[7]
+ninth_letter = truly_random_word[8]
+tenth_letter = truly_random_word[9]
 # Random word generation
-while guesses > 0 and not word_guessed == random_word:
+while guesses > 0 and not word_guessed == truly_random_word:
     print("You have %s guesses left" % guesses)
     letter_guessed = input("Guess a lowercase letter ")
     guesses = guesses - 1
@@ -46,7 +38,7 @@ while guesses > 0 and not word_guessed == random_word:
     word_guessed = letter_guessed1 + letter_guessed2 + letter_guessed3 + letter_guessed4 + letter_guessed5
     print(word_guessed)
 
-if guesses > 0:
+if word_guessed == truly_random_word:
     print("You win!")
-if guesses == 0:
+else:
     print("You lose. Ha!")

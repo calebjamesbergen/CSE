@@ -38,6 +38,7 @@ print(5 % 3)
 print(9 % 4)
 # Subtracts the second number from the first unlimited times until just before it goes negative
 # Like a clock (military time) 15-12 = 3 o clock
+% This is called the modulus
 
 # 150 // 60 = 2 hours
 # 150 % 60 = 30 minutes
@@ -75,7 +76,6 @@ print(hidden_age)
 #  for x in range(1):
 # x = random.randint(1, 5)
 """
-
 # Multi-line Comments
 # Hit quotation 3 times and press enter
 

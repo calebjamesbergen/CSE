@@ -7,24 +7,24 @@ eldrazi_scion_attack = 0
 eldrazi_scout_health = 5
 eldrazi_scout_attack = 2
 total_health = 5
-damage_taken = 0
 total_gold = 0
 decision9 = "1"
 alive_round1 = True
 did_you_beat_round_one = False
 map_item = "Raven Gorge"
-a = input("Hello human")
-b = input("It is I")
-c = input("You have a mission")
-d = input("Take back the world from the evil eldrazi")
-e = input("What would you like to do")
+a = input("Press enter to scroll through dialogue")
+b = input("Hello human")
+c = input("It is I")
+d = input("You have a mission")
+e = input("Take back the world from the evil eldrazi")
+f = input("What would you like to do")
 while alive_round1 and not did_you_beat_round_one:
     beginning_choice = input("1: Open inventory 2: Look at map")
     if beginning_choice == "1":
         print(*inventory, sep=" ")
     elif beginning_choice == "2":
         print(map_item)
-        print("Would you like to go to Raven Gorge")
+        print("Would you like to go to Raven Gorge?")
         decision2 = input("1: Yes 2: No")
         if decision2 == "1":
             print("You are now in Raven Gorge")
@@ -41,15 +41,7 @@ while alive_round1 and not did_you_beat_round_one:
                 print("You won")
                 total_gold += 5
                 print("You now have %s gold" % total_gold)
-            elif decision2 == "2":
-                alive_round1 = False
-            if decision3 == "2":
-                print("The eldrazi killed you")
-                alive_round1 = False
-            print("Oh no! Now an eldrazi scout has appeared")
             decision5 = input("1: Fight 2: Run")
-            if decision5 == "2":
-                alive_round1 = False
             while eldrazi_scout_health > 0 and not decision5 == "2" and total_health > 0:
                 if decision5 == "1":
                     print("What would you like to attack with?")
@@ -63,8 +55,6 @@ while alive_round1 and not did_you_beat_round_one:
                 print("You won")
                 total_gold += 10
                 print("You now have %s gold" % total_gold)
-            else:
-                alive_round1 = False
             print("Would you like to look in the shop")
             decision7 = input("1: Yes 2: No")
             while decision7 == "1" and decision9 == "1":
@@ -95,3 +85,8 @@ if did_you_beat_round_one:
     print("You have survived round 1. Congrats. It's about to get harder though")
 else:
     print("You died")
+alive_round1 = True
+did_you_beat_round_two = False
+while alive_round1 and not did_you_beat_round_two:
+    print("As I said, eveything is about to get a lot harder")
+    print("You destroyed a couple of scouts but that is nothing compared to what is coming")

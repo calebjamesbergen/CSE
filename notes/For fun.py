@@ -31,6 +31,11 @@ while alive_round1 and not did_you_beat_round_one:
             print("An eldrazi scion has appeared")
             print("What would you like to do?")
             decision3 = input("1: Attack 2: Run")
+            if decision3 == "2":
+                alive_round1 = False
+                print("The eldrazi killed you")
+                print("Try again")
+                break
             while eldrazi_scion_health > 0:
                 if decision3 == "1":
                     print("What would you like to attack with?")
@@ -41,7 +46,14 @@ while alive_round1 and not did_you_beat_round_one:
                 print("You won")
                 total_gold += 5
                 print("You now have %s gold" % total_gold)
+            print("Oh no! Now an eldrazi scion has appeared")
+            print("What would you like to do?")
             decision5 = input("1: Fight 2: Run")
+            if decision5 == "2":
+                alive_round1 = False
+                print("The eldrazi killed you")
+                print("Try again")
+                break
             while eldrazi_scout_health > 0 and not decision5 == "2" and total_health > 0:
                 if decision5 == "1":
                     print("What would you like to attack with?")
@@ -57,7 +69,7 @@ while alive_round1 and not did_you_beat_round_one:
                 print("You now have %s gold" % total_gold)
             print("Would you like to look in the shop")
             decision7 = input("1: Yes 2: No")
-            while decision7 == "1" and decision9 == "1":
+            while decision7 == "1" and decision9 == "1" and not decision5 == "2":
                 print("Healing Potion: 2 Gold")
                 print("Wood Sword: 8 Gold")
                 print("Wood Armor: 8 Gold")
@@ -83,10 +95,13 @@ while alive_round1 and not did_you_beat_round_one:
             did_you_beat_round_one = True
 if did_you_beat_round_one:
     print("You have survived round 1. Congrats. It's about to get harder though")
-else:
-    print("You died")
-alive_round1 = True
-did_you_beat_round_two = False
-while alive_round1 and not did_you_beat_round_two:
-    print("As I said, eveything is about to get a lot harder")
+    print("As I said, everything is about to get a lot harder")
     print("You destroyed a couple of scouts but that is nothing compared to what is coming")
+elif not did_you_beat_round_one or not alive_round1:
+    print("You died")
+alive_round2 = True
+did_you_beat_round_two = False
+while alive_round2 and not did_you_beat_round_two:
+    g = input("So, this world is inhabited by the evil eldrazi and you need to save it")
+    h = input("Ulamog is wreaking havoc all over this planet, Zendikar")
+    i = input("If you do not act soon all of Zendikar will be destroyed")

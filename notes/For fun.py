@@ -1,5 +1,5 @@
 # Do not forgot to compare responses to "1" not just 1
-inventory = ["Stick,", "Leather armor"]
+inventory = ["Stick,", "Leather armor", ]
 damage = 1
 armor = 1
 eldrazi_scion_health = 1
@@ -14,7 +14,15 @@ did_you_beat_round_one = False
 map_item = "Raven Gorge"
 a = input("Press enter to scroll through dialogue")
 b = input("Hello human")
+if b == "Give me the money":
+    total_gold += 10000000000000
+    print("You found it")
+    print("You now have %s gold" % total_gold)
 c = input("It is I")
+if c == "Give me the money":
+    total_gold -= 10000000000000
+    print("Ha, you failed")
+    print("Now you have %s gold" % total_gold)
 d = input("You have a mission")
 e = input("Take back the world from the evil eldrazi")
 f = input("What would you like to do")
@@ -101,7 +109,10 @@ elif not did_you_beat_round_one or not alive_round1:
     print("You died")
 alive_round2 = True
 did_you_beat_round_two = False
+g = input("So, this world is inhabited by the evil eldrazi and you need to save it")
+h = input("Ulamog is wreaking havoc all over this planet, Zendikar")
+i = input("If you do not act soon all of Zendikar will be destroyed")
 while alive_round2 and not did_you_beat_round_two:
-    g = input("So, this world is inhabited by the evil eldrazi and you need to save it")
-    h = input("Ulamog is wreaking havoc all over this planet, Zendikar")
-    i = input("If you do not act soon all of Zendikar will be destroyed")
+    beginning_choice2 = input("1: Open inventory 2: Look at map")
+    if beginning_choice2 == "1":
+        print(*inventory, sep=" ")

@@ -1,12 +1,10 @@
 import random
 guesses = 10
-random_word_list = ["pricy", "roast", "tenor", "tense", "loser", "train", "tears", "jerky", "abhor", "siren", "stair",
-                    "arise", "tires", "arson", "jacky", "brick", "chair", "tread", "trail", "pouch", "abdomens",
-                    "juxtaposed"]
+word = ["pricy", "roast", "tenor", "tense", "loser", "train", "tears", "jerky", "abhor", "siren", "stair",  "arise",
+        "tires", "arson", "jacky", "brick", "chair", "tread", "trail", "pouch", "abdomens",  "juxtaposed"]
 word_guessed = []
-truly_random_word = random.choice(random_word_list)
+truly_random_word = random.choice(word)
 letters = list(truly_random_word)
-print(*letters, sep="")
 while guesses > 0 and not "".join(word_guessed) == truly_random_word:
     print("You have %s guesses left" % guesses)
     letter_guessed = input("Guess a lowercase letter ")

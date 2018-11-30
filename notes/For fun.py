@@ -1,15 +1,16 @@
 # Do not forgot to compare responses to "1" not just 1
-inventory = ["Stick,", "Leather armor", ]
+inventory = ["Stick,", "Leather armor,",  "Map,"]
 damage = 1
 armor = 1
+total_health = 5
+total_gold = 0
 eldrazi_scion_health = 1
 eldrazi_scion_attack = 0
 eldrazi_scout_health = 5
 eldrazi_scout_attack = 2
-total_health = 5
-total_gold = 0
 decision9 = "1"
 alive_round1 = True
+alive_round2 = True
 did_you_beat_round_one = False
 map_item = "Raven Gorge"
 a = input("Press enter to scroll through dialogue")
@@ -90,29 +91,131 @@ while alive_round1 and not did_you_beat_round_one:
                 elif decision8 == "2" and total_gold >= 8:
                     damage = 4
                     total_gold -= 8
-                    inventory.append("Wood sword")
+                    inventory.append("Wood sword,")
                     print("Now you deal 4 damage")
                 elif decision8 == "3" and total_gold >= 8:
                     armor = 3
                     total_gold -= 8
                     print("Now you have 3 armor points")
-                    inventory.append("Wood armor")
+                    inventory.append("Wood armor,")
                 print("You have %s gold left" % total_gold)
                 print("Would you like to remain in the shop")
                 decision9 = input("1: Yes 2: No")
             did_you_beat_round_one = True
 if did_you_beat_round_one:
-    print("You have survived round 1. Congrats. It's about to get harder though")
-    print("As I said, everything is about to get a lot harder")
     print("You destroyed a couple of scouts but that is nothing compared to what is coming")
 elif not did_you_beat_round_one or not alive_round1:
     print("You died")
-alive_round2 = True
+    alive_round2 = False
+
 did_you_beat_round_two = False
+did_you_get_to_the_mountain = False
+did_you_get_to_the_desert = False
+did_you_get_to_the_lake = False
 g = input("So, this world is inhabited by the evil eldrazi and you need to save it")
 h = input("Ulamog is wreaking havoc all over this planet, Zendikar")
 i = input("If you do not act soon all of Zendikar will be destroyed")
+
 while alive_round2 and not did_you_beat_round_two:
     beginning_choice2 = input("1: Open inventory 2: Look at map")
     if beginning_choice2 == "1":
         print(*inventory, sep=" ")
+    elif beginning_choice2 == "2":
+        print("Sheltered Valley")
+        print("Would you like to go there?")
+        dec1 = input("1: Yes 2: No")
+        if dec1 == "1":
+            print("You are now in Sheltered Valley")
+            print("You see for the first time in a while that there is no destruction from the eldrazi")
+            print("You see two paths, one going left and one going right")
+            print("Which path would you like to follow?")
+            dec2 = input("1: Left 2: Right")
+            if dec2 == "1":
+                print("You start heading down the left path")
+                print("Suddenly in the distance you see a body")
+                print("Do you want to walk towards it?")
+                dec3 = input("1: Yes 2: No")
+                if dec3 == "1":
+                    print("You start walking towards the body and you soon see that there is blood all over it")
+                    print("Although whoever it is spilt a lot of gold out of a bag")
+                    total_gold += 50
+                    print("You just got 50 gold")
+                    print("Now you have %s gold" % total_gold)
+                    print("You continue going down the path until you come to a stream")
+                    print("You are very thirsty")
+                    print("Do you take a drink of water?")
+                    dec6 = input("1: Yes 2: No")
+                    if dec6 == "1":
+                        print("You take a long drink of the water and it tastes great")
+                        print("You continue walking and slowly start feeling more and more dizzy")
+                        print("Before you realize it your are on the ground and your eyes slowly start to close")
+                        print("You died")
+                        print("Try again")
+                        alive_round2 = False
+                    if dec6 == "2":
+                        print("You decide not to take a drink of water because it might be unsanitary")
+                        print("Ahead in the distance you begin to see what looks like a mountain")
+                        did_you_beat_round_two = True
+                elif dec3 == "2":
+                    print("You turned around and started walking the other way")
+                    print("Suddenly, you hear a loud snap and see a flash of movement beside you")
+                    dec4 = input("1: Investigate 2: Stay put")
+                    if dec4 == "1":
+                        print("You start walking towards the sound and realize there is a sword "
+                              "sticking out of your chest")
+                        print("You died")
+                        print("Try again")
+                        alive_round2 = False
+                    if dec4 == "2":
+                        print("The sound slowly fades away but whatever it is might come back")
+                        print("You continue walking and before you know it the sun went down")
+                        print("There are a lot of dry plants and sticks around you")
+                        print("Do you want to make a fire?")
+                        dec5 = input("1: Yes 2: No")
+                        if dec5 == "1":
+                            print("You make a small fire and before you know it you have fallen asleep")
+                            print("When you wake up you check your surroundings, but nothing has changed")
+                            print("You continue walking and soon the land becomes drier and drier")
+                            print("Vegetation slowly starts to disappear and water appears to have flown away")
+                            print("You find a sign that says, You have made it into the Great Desert, "
+                                  "you are going to die")
+                            did_you_beat_round_two = True
+                        if dec5 == "2":
+                            print("The sound you heard earlier starts to come back")
+                            print("It gets louder and louder until it seems like it is completely surrounding you")
+                            print("Suddenly 8 silhouettes come out of nowhere and 1 of them shoots you with a dart")
+                            print("When you fall over you think it is a sleeping dart but you never end up waking up")
+                            print("You died")
+                            print("Try again")
+                            alive_round2 = False
+            elif dec2 == "2":
+                print("You start heading down the right path")
+                print("Up ahead you see a huge mess of trees")
+                print("Do you want to go into the forest or keep walking along the edge of them")
+                dec7 = input("1: Go into the forest 2: Walk along the edge")
+                if dec7 == "2":
+                    print("You decide not to go into the trees but to go along them")
+                    print("You see what looks like a house in the distance but right as you are about to get "
+                          "there an eldrazi appears and kills you before you can react")
+                    print("You died")
+                    print("Try again")
+                    alive_round2 = False
+                elif dec7 == "1":
+                    print("You started walking into the forest")
+                    print("Slowly, more and more light is being blocked by the trees")
+                    print("Before you know it you are in almost complete darkness")
+                    print("You begin to tire and wonder if you will ever make it out of the forest")
+                    print("What do you want to do?")
+                    dec8 = input("1: Stop and rest 2: Keep walking")
+                    if dec8 == "1":
+                        print("You find a smooth part of a tree and sit down with your back against it")
+                        print("It seems to you like you are slowly being encased by the tree")
+                        print("You are tired so you think nothing of it, but soon you get enveloped "
+                              "and crushed by the tree")
+                        print("You died")
+                        print("Try again")
+                        alive_round2 = False
+                    elif dec8 == "2":
+                        print("You keep walking for what seems like hours and you finally make it out of the trees")
+                        print("Out in front of you is a vast lake that goes on farther than your eye can see")
+                        did_you_beat_round_two = True

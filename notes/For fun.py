@@ -12,6 +12,7 @@ decision9 = "1"
 alive_round1 = True
 alive_round2 = True
 did_you_beat_round_one = False
+did_you_beat_round_two = False
 map_item = "Raven Gorge"
 a = input("Press enter to scroll through dialogue")
 b = input("Hello human")
@@ -106,7 +107,7 @@ if did_you_beat_round_one:
     print("You destroyed a couple of scouts but that is nothing compared to what is coming")
 elif not did_you_beat_round_one or not alive_round1:
     print("You died")
-    alive_round2 = False
+    # alive_round2 = False
 
 did_you_beat_round_two = False
 did_you_get_to_the_mountain = False
@@ -219,3 +220,13 @@ while alive_round2 and not did_you_beat_round_two:
                         print("You keep walking for what seems like hours and you finally make it out of the trees")
                         print("Out in front of you is a vast lake that goes on farther than your eye can see")
                         did_you_beat_round_two = True
+alive_in_the_mountain = True
+alive_in_the_lake = True
+alive_in_the_desert = True
+while did_you_get_to_the_mountain and alive_in_the_mountain:
+    print("You are now near the mountain")
+    print("There are 2 paths to climb the mountain")
+while did_you_get_to_the_desert and alive_in_the_desert:
+    print("You are now in the desert")
+while did_you_get_to_the_lake and alive_in_the_lake:
+    print("You are now by the lake")

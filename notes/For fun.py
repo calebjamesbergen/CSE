@@ -13,7 +13,8 @@ alive_round1 = True
 alive_round2 = True
 did_you_beat_round_one = False
 did_you_beat_round_two = False
-map_item = "Raven Gorge"
+map_item = []
+
 a = input("Press enter to scroll through dialogue")
 b = input("Hello human")
 if b == "Give me the money":
@@ -25,15 +26,31 @@ if c == "Give me the money":
     total_gold -= 10000000000000
     print("Ha, you failed")
     print("Now you have %s gold" % total_gold)
-d = input("You have a mission")
-e = input("Take back the world from the evil eldrazi")
-f = input("What would you like to do")
+d = input("The all knowing")
+print()
+print()
+print()
+print()
+e = input("Powerful")
+print()
+print()
+print()
+print()
+f = input("Wait, I think I forgot my name")
+g = input("Anyway, you have a mission")
+h = input("Take back the world from the evil eldrazi")
+i = input("For years they have been encased in stone waiting until they can take their revenge on this planet")
+j = input("Now that the foolish humans have set them free")
+k = input("The eldrazi might be able to destroy all life on this planet")
+m = input("What would you like to do")
+
 while alive_round1 and not did_you_beat_round_one:
     beginning_choice = input("1: Open inventory 2: Look at map")
     if beginning_choice == "1":
         print(*inventory, sep=" ")
     elif beginning_choice == "2":
-        print(map_item)
+        map_item.append("Raven Gorge")
+        print("".join(map_item[len(map_item) - 1]))
         print("Would you like to go to Raven Gorge?")
         decision2 = input("1: Yes 2: No")
         if decision2 == "1":
@@ -42,10 +59,9 @@ while alive_round1 and not did_you_beat_round_one:
             print("What would you like to do?")
             decision3 = input("1: Attack 2: Run")
             if decision3 == "2":
-                alive_round1 = False
                 print("The eldrazi killed you")
                 print("Try again")
-                break
+                alive_round1 = False
             while eldrazi_scion_health > 0:
                 if decision3 == "1":
                     print("What would you like to attack with?")
@@ -60,7 +76,6 @@ while alive_round1 and not did_you_beat_round_one:
             print("What would you like to do?")
             decision5 = input("1: Fight 2: Run")
             if decision5 == "2":
-                alive_round1 = False
                 print("The eldrazi killed you")
                 print("Try again")
                 break
@@ -103,8 +118,16 @@ while alive_round1 and not did_you_beat_round_one:
                 print("Would you like to remain in the shop")
                 decision9 = input("1: Yes 2: No")
             did_you_beat_round_one = True
+
 if did_you_beat_round_one:
     print("You destroyed a couple of scouts but that is nothing compared to what is coming")
+    print()
+    print()
+    print()
+    print()
+    g = input("So, this world is inhabited by the evil eldrazi and you need to save it")
+    h = input("Ulamog is wreaking havoc all over this planet, Zendikar")
+    i = input("If you do not act soon all of Zendikar will be destroyed")
 elif not did_you_beat_round_one or not alive_round1:
     print("You died")
     # alive_round2 = False
@@ -113,16 +136,15 @@ did_you_beat_round_two = False
 did_you_get_to_the_mountain = False
 did_you_get_to_the_desert = False
 did_you_get_to_the_lake = False
-g = input("So, this world is inhabited by the evil eldrazi and you need to save it")
-h = input("Ulamog is wreaking havoc all over this planet, Zendikar")
-i = input("If you do not act soon all of Zendikar will be destroyed")
+
+map_item.append("Sheltered Valley")
 
 while alive_round2 and not did_you_beat_round_two:
     beginning_choice2 = input("1: Open inventory 2: Look at map")
     if beginning_choice2 == "1":
         print(*inventory, sep=" ")
     elif beginning_choice2 == "2":
-        print("Sheltered Valley")
+        print("".join(map_item[len(map_item)-1]))
         print("Would you like to go there?")
         dec1 = input("1: Yes 2: No")
         if dec1 == "1":
@@ -223,9 +245,17 @@ while alive_round2 and not did_you_beat_round_two:
 alive_in_the_mountain = True
 alive_in_the_lake = True
 alive_in_the_desert = True
+
+crab_thing_health = 10
+crab_thing_attack = 3
+
 while did_you_get_to_the_mountain and alive_in_the_mountain:
     print("You are now near the mountain")
     print("There are 2 paths to climb the mountain")
+    print("One leads to the left and it is very defined")
+    print("The other leads to the left and is very faint")
+    print("Which path would you like to take")
+    mountain1 = input("1: Left 2: Right")
 while did_you_get_to_the_desert and alive_in_the_desert:
     print("You are now in the desert")
 while did_you_get_to_the_lake and alive_in_the_lake:

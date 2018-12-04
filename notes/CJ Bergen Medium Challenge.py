@@ -16,7 +16,7 @@ print(volume(2))
 
 # 7th Challenge
 def integer_stuff(integer):
-    return integer + (integer + integer) + (integer + integer + integer)
+    return integer + (integer * integer) + (integer * integer * integer)
 
 
 print(integer_stuff(2))

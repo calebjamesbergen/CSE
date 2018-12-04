@@ -256,6 +256,11 @@ while did_you_get_to_the_mountain and alive_in_the_mountain:
     print("The other leads to the left and is very faint")
     print("Which path would you like to take")
     mountain1 = input("1: Left 2: Right")
+    if mountain1 == "1":
+        print("You are path on the right")
+        print("This path is very well worn")
+        print("You start walking and the sun starts to shine a lot")
+
 while did_you_get_to_the_desert and alive_in_the_desert:
     print("You are now in the desert")
 while did_you_get_to_the_lake and alive_in_the_lake:

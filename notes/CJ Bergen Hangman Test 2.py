@@ -15,3 +15,5 @@ while guesses > 0 and not "".join(word_guessed) == truly_random_word:
             print("".join(word_guessed))
 if "".join(word_guessed) == truly_random_word:
     print("You won")
+else:
+    print("You lose")

@@ -15,6 +15,7 @@ did_you_beat_round_one = False
 did_you_beat_round_two = False
 map_item = []
 
+
 a = input("Press enter to scroll through dialogue")
 b = input("Hello human")
 if b == "Give me the money":
@@ -43,7 +44,35 @@ i = input("For years they have been encased in stone waiting until they can take
 j = input("Now that the foolish humans have set them free")
 k = input("The eldrazi might be able to destroy all life on this planet")
 m = input("What would you like to do")
+if m == "Ascend":
+    print("You have ascended")
+    print("You fly above the world")
+    print("In the far distance you see Ulamog")
+    print("You speed toward at the speed of light")
+    print("Suddenly")
+    print()
+    print()
+    print()
+    print()
+    print()
+    print("Out of nowhere")
+    print()
+    print()
+    print()
+    print()
+    print()
+    print("Comes")
+    print()
+    print()
+    print()
+    print()
+    print()
+    print("Kozilek")
+    print("RRRRRrRRroeeeeoeoeoEEAOaoeoeRRrrrr")
+    
 
+
+"""
 while alive_round1 and not did_you_beat_round_one:
     beginning_choice = input("1: Open inventory 2: Look at map")
     if beginning_choice == "1":
@@ -179,6 +208,7 @@ while alive_round2 and not did_you_beat_round_two:
                         print("You decide not to take a drink of water because it might be unsanitary")
                         print("Ahead in the distance you begin to see what looks like a mountain")
                         did_you_beat_round_two = True
+                        did_you_get_to_the_mountain = True
                 elif dec3 == "2":
                     print("You turned around and started walking the other way")
                     print("Suddenly, you hear a loud snap and see a flash of movement beside you")
@@ -203,6 +233,7 @@ while alive_round2 and not did_you_beat_round_two:
                             print("You find a sign that says, You have made it into the Great Desert, "
                                   "you are going to die")
                             did_you_beat_round_two = True
+                            did_you_get_to_the_desert = True
                         if dec5 == "2":
                             print("The sound you heard earlier starts to come back")
                             print("It gets louder and louder until it seems like it is completely surrounding you")
@@ -241,15 +272,27 @@ while alive_round2 and not did_you_beat_round_two:
                     elif dec8 == "2":
                         print("You keep walking for what seems like hours and you finally make it out of the trees")
                         print("Out in front of you is a vast lake that goes on farther than your eye can see")
+                        did_you_get_to_the_lake = True
                         did_you_beat_round_two = True
+"""
+
 alive_in_the_mountain = True
 alive_in_the_lake = True
 alive_in_the_desert = True
+
+did_you_get_to_the_mountain = True
+did_you_get_to_the_desert = False
+did_you_get_to_the_lake = False
 
 crab_thing_health = 10
 crab_thing_attack = 3
 
 while did_you_get_to_the_mountain and alive_in_the_mountain:
+    print()
+    print()
+    print()
+    print()
+    print()
     print("You are now near the mountain")
     print("There are 2 paths to climb the mountain")
     print("One leads to the left and it is very defined")
@@ -260,6 +303,24 @@ while did_you_get_to_the_mountain and alive_in_the_mountain:
         print("You are path on the right")
         print("This path is very well worn")
         print("You start walking and the sun starts to shine a lot")
+        print("You can feel the sweat flowing down your face")
+        print("As you get higher you start to have trouble breathing")
+        print("You know you need to turn back or keep going")
+        print("Do you want to turn back or keep going?")
+        mountain2 = input("1: Turn back 2: Keep going")
+        if mountain2 == "2":
+            alive_in_the_mountain = False
+            print("You start to feel light headed")
+            print("All of a sudden it is hard to control your movements")
+            print("You are spinning around and around in circles slowly getting closer to the edge of the mountain")
+            print("You fell of the edge of the mountain")
+            print("You died")
+            print("Try again")
+        elif mountain2 == "1":
+            print("It becomes easier to breathe but you are still thirsty")
+            print("Do you want to keep going or turn back")
+            mountain3 = input("1: Keep going 2: Turn back")
+
 
 while did_you_get_to_the_desert and alive_in_the_desert:
     print("You are now in the desert")

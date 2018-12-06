@@ -13,6 +13,9 @@ alive_round1 = True
 alive_round2 = True
 did_you_beat_round_one = False
 did_you_beat_round_two = False
+skip_round_one = False
+skip_round_two = False
+did_you_beat_the_entire_game = False
 map_item = []
 
 
@@ -43,37 +46,60 @@ h = input("Take back the world from the evil eldrazi")
 i = input("For years they have been encased in stone waiting until they can take their revenge on this planet")
 j = input("Now that the foolish humans have set them free")
 k = input("The eldrazi might be able to destroy all life on this planet")
-m = input("What would you like to do")
-if m == "Ascend":
+thing = input("What would you like to do")
+if thing == "Skip1 Skip2":
+    skip_round_one = True
+    skip_round_two = True
+    did_you_beat_round_one = True
+    did_you_beat_round_two = True
+elif thing == "Skip1":
+    skip_round_one = True
+    did_you_beat_round_one = True
+elif thing == "Skip2":
+    skip_round_two = True
+    did_you_beat_round_two = True
+if thing == "Planeswalk":
+    print("You went to another plane")
+    print("Now you can relax")
+    did_you_beat_round_one = True
+    did_you_beat_round_two = True
+    did_you_beat_the_entire_game = True
+if thing == "Ascend":
     print("You have ascended")
     print("You fly above the world")
     print("In the far distance you see Ulamog")
     print("You speed toward at the speed of light")
-    print("Suddenly")
+    m = input("Suddenly")
     print()
     print()
     print()
     print()
     print()
-    print("Out of nowhere")
+    print()
+    n = input("Out of nowhere")
     print()
     print()
     print()
     print()
     print()
-    print("Comes")
+    print()
+    o = input("Comes")
     print()
     print()
     print()
     print()
     print()
-    print("Kozilek")
-    print("RRRRRrRRroeeeeoeoeoEEAOaoeoeRRrrrr")
-    
+    print()
+    p = input("Kozilek")
+    q = input("RRRRRrRRroeeeeoeoeoEEAOaoeoeRRrrrr")
+    r = input("Kozilek swings one of his giant arms at you")
+    s = input("You dodge effortlessly")
+    t = input("Before he can react you swing your enchanted sword")
+    u = input("BooooooOOoooOOoOooOooooOOMMMmmmMMmmMMMMmmmm")
+    v = input("Anyone want sushi?")
 
 
-"""
-while alive_round1 and not did_you_beat_round_one:
+while alive_round1 and not did_you_beat_round_one and not skip_round_one and not did_you_beat_the_entire_game:
     beginning_choice = input("1: Open inventory 2: Look at map")
     if beginning_choice == "1":
         print(*inventory, sep=" ")
@@ -149,7 +175,6 @@ while alive_round1 and not did_you_beat_round_one:
             did_you_beat_round_one = True
 
 if did_you_beat_round_one:
-    print("You destroyed a couple of scouts but that is nothing compared to what is coming")
     print()
     print()
     print()
@@ -157,7 +182,7 @@ if did_you_beat_round_one:
     g = input("So, this world is inhabited by the evil eldrazi and you need to save it")
     h = input("Ulamog is wreaking havoc all over this planet, Zendikar")
     i = input("If you do not act soon all of Zendikar will be destroyed")
-elif not did_you_beat_round_one or not alive_round1:
+else:
     print("You died")
     # alive_round2 = False
 
@@ -168,7 +193,7 @@ did_you_get_to_the_lake = False
 
 map_item.append("Sheltered Valley")
 
-while alive_round2 and not did_you_beat_round_two:
+while alive_round2 and not did_you_beat_round_two and not skip_round_two and not did_you_beat_the_entire_game:
     beginning_choice2 = input("1: Open inventory 2: Look at map")
     if beginning_choice2 == "1":
         print(*inventory, sep=" ")
@@ -274,7 +299,7 @@ while alive_round2 and not did_you_beat_round_two:
                         print("Out in front of you is a vast lake that goes on farther than your eye can see")
                         did_you_get_to_the_lake = True
                         did_you_beat_round_two = True
-"""
+
 
 alive_in_the_mountain = True
 alive_in_the_lake = True
@@ -284,10 +309,15 @@ did_you_get_to_the_mountain = True
 did_you_get_to_the_desert = False
 did_you_get_to_the_lake = False
 
+did_you_beat_the_mountain = False
+did_you_beat_the_lake = False
+did_you_beat_the_desert = False
+
 crab_thing_health = 10
 crab_thing_attack = 3
 
-while did_you_get_to_the_mountain and alive_in_the_mountain:
+while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat_the_entire_game \
+        and not did_you_beat_the_mountain:
     print()
     print()
     print()
@@ -322,7 +352,9 @@ while did_you_get_to_the_mountain and alive_in_the_mountain:
             mountain3 = input("1: Keep going 2: Turn back")
 
 
-while did_you_get_to_the_desert and alive_in_the_desert:
+while did_you_get_to_the_desert and alive_in_the_desert and not did_you_beat_the_entire_game \
+        and not did_you_beat_the_desert:
     print("You are now in the desert")
-while did_you_get_to_the_lake and alive_in_the_lake:
+while did_you_get_to_the_lake and alive_in_the_lake and not did_you_beat_the_entire_game\
+        and not did_you_beat_the_lake:
     print("You are now by the lake")

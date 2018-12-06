@@ -30,3 +30,7 @@ How do you denote a list?
 How do you find the length of a list?
 len()
 """
+
+# The adventure game just meeting the basics will be about 550 lines
+# Something that is very good is about 1000 lines
+# Something that is amazing is about 2800 to 3200 lines

@@ -1,6 +1,14 @@
-# Do not forgot to compare responses to "1" not just 1
-inventory = ["Stick,", "Leather armor,",  "Map,"]
-damage = 1
+import random
+stuff = ["Map, "]
+weapons = ["Stick, "]
+armors = ["Leather armor, "]
+stick_damage = 1
+bronze_sword_damage = 3
+gold_sword_damage = 5
+silver_sword_damage = 10
+diamond_sword_damage = 15
+enchanted_sword_damage = 20
+damage = stick_damage
 armor = 1
 total_health = 5
 total_gold = 0
@@ -16,36 +24,45 @@ did_you_beat_round_two = False
 skip_round_one = False
 skip_round_two = False
 did_you_beat_the_entire_game = False
+did_you_lose_the_entire_game = False
 map_item = []
 
 
-a = input("Press enter to scroll through dialogue")
+input("Press enter to scroll through dialogue")
 b = input("Hello human")
 if b == "Give me the money":
-    total_gold += 10000000000000
+    total_gold += 1000000000000000000000000000000000
     print("You found it")
     print("You now have %s gold" % total_gold)
 c = input("It is I")
 if c == "Give me the money":
-    total_gold -= 10000000000000
+    total_gold -= 1000000000000000000000000000000000
     print("Ha, you failed")
     print("Now you have %s gold" % total_gold)
-d = input("The all knowing")
+input("The all knowing")
 print()
 print()
 print()
 print()
-e = input("Powerful")
+input("Powerful")
 print()
 print()
 print()
-print()
-f = input("Wait, I think I forgot my name")
-g = input("Anyway, you have a mission")
-h = input("Take back the world from the evil eldrazi")
-i = input("For years they have been encased in stone waiting until they can take their revenge on this planet")
-j = input("Now that the foolish humans have set them free")
-k = input("The eldrazi might be able to destroy all life on this planet")
+d = input()
+if d == "Weapons":
+    weapons.append("Wood Sword, ")
+    weapons.append("Gold Sword, ")
+    weapons.append("Silver Sword, ")
+    weapons.append("Diamond Sword, ")
+    weapons.append("Enchanted Sword ")
+    print("You now have these weapons: %s" % "".join(weapons))
+    damage = enchanted_sword_damage
+input("Wait, I think I forgot my name")
+input("Anyway, you have a mission")
+input("Take back the world from the evil eldrazi")
+input("For years they have been encased in stone waiting until they can take their revenge on this planet")
+input("Now that the foolish humans have set them free")
+input("The eldrazi might be able to destroy all life on this planet")
 thing = input("What would you like to do")
 if thing == "Skip1 Skip2":
     skip_round_one = True
@@ -64,45 +81,52 @@ if thing == "Planeswalk":
     did_you_beat_round_one = True
     did_you_beat_round_two = True
     did_you_beat_the_entire_game = True
+if thing == "19A":
+    input("Mr. Wiebe: Your mom!")
+    input("You just took ∞ damage")
+    print("You died")
+    print("Try again")
+    did_you_lose_the_entire_game = True
 if thing == "Ascend":
+    did_you_beat_the_entire_game = True
     print("You have ascended")
     print("You fly above the world")
     print("In the far distance you see Ulamog")
     print("You speed toward at the speed of light")
-    m = input("Suddenly")
+    input("Suddenly")
     print()
     print()
     print()
     print()
     print()
     print()
-    n = input("Out of nowhere")
+    input("Out of nowhere")
     print()
     print()
     print()
     print()
     print()
     print()
-    o = input("Comes")
+    input("Comes")
     print()
     print()
     print()
     print()
     print()
     print()
-    p = input("Kozilek")
-    q = input("RRRRRrRRroeeeeoeoeoEEAOaoeoeRRrrrr")
-    r = input("Kozilek swings one of his giant arms at you")
-    s = input("You dodge effortlessly")
-    t = input("Before he can react you swing your enchanted sword")
-    u = input("BooooooOOoooOOoOooOooooOOMMMmmmMMmmMMMMmmmm")
-    v = input("Anyone want sushi?")
+    input("Kozilek")
+    input("RRRRRrRRroeeeeoeoeoEEAOaoeoeRRrrrr")
+    input("Kozilek swings one of his giant arms at you")
+    input("You dodge effortlessly")
+    input("Before he can react you swing your enchanted sword")
+    input("BooooooOOoooOOoOooOooooOOMMMmmmMMmmMMMMmmmm")
+    input("Anyone want sushi?")
 
-
-while alive_round1 and not did_you_beat_round_one and not skip_round_one and not did_you_beat_the_entire_game:
+while alive_round1 and not did_you_beat_round_one and not skip_round_one and not did_you_beat_the_entire_game \
+        and not did_you_lose_the_entire_game:
     beginning_choice = input("1: Open inventory 2: Look at map")
     if beginning_choice == "1":
-        print(*inventory, sep=" ")
+        print("".join(stuff), "".join(weapons), "".join(armors))
     elif beginning_choice == "2":
         map_item.append("Raven Gorge")
         print("".join(map_item[len(map_item) - 1]))
@@ -141,7 +165,10 @@ while alive_round1 and not did_you_beat_round_one and not skip_round_one and not
                     if decision6 == "1":
                         eldrazi_scout_health -= 2
                 total_health -= eldrazi_scout_attack - armor
-                print("The eldrazi scout now has %s health" % eldrazi_scout_health)
+                if eldrazi_scout_health > 0:
+                    print("The eldrazi scout now has %s health" % eldrazi_scout_health)
+                else:
+                    print("The eldrazi scout died")
                 print("You have %s health left" % total_health)
             if eldrazi_scout_health <= 0:
                 print("You won")
@@ -162,19 +189,54 @@ while alive_round1 and not did_you_beat_round_one and not skip_round_one and not
                 elif decision8 == "2" and total_gold >= 8:
                     damage = 4
                     total_gold -= 8
-                    inventory.append("Wood sword,")
+                    weapons.append("Wood sword,")
                     print("Now you deal 4 damage")
                 elif decision8 == "3" and total_gold >= 8:
                     armor = 3
                     total_gold -= 8
                     print("Now you have 3 armor points")
-                    inventory.append("Wood armor,")
+                    armors.append("Wood armor,")
+                elif decision8 == "4" and total_gold >= 1000000000000000000000000000000000:
+                    did_you_beat_the_entire_game = True
+                    total_gold -= 1000000000000000000000000000000000
+                    input("You bought the mystery box")
+                    input("You open the box")
+                    input("Suddenly you get sucked inside")
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    print()
+                    input("You have won")
+                    input("Congrats")
+                    input("You used some cheats but bravo for finding them")
+                    break
                 print("You have %s gold left" % total_gold)
                 print("Would you like to remain in the shop")
                 decision9 = input("1: Yes 2: No")
-            did_you_beat_round_one = True
+            if not did_you_beat_the_entire_game:
+                did_you_beat_round_one = True
 
-if did_you_beat_round_one:
+if did_you_beat_round_one and not skip_round_one:
     print()
     print()
     print()
@@ -182,8 +244,6 @@ if did_you_beat_round_one:
     g = input("So, this world is inhabited by the evil eldrazi and you need to save it")
     h = input("Ulamog is wreaking havoc all over this planet, Zendikar")
     i = input("If you do not act soon all of Zendikar will be destroyed")
-else:
-    print("You died")
     # alive_round2 = False
 
 did_you_beat_round_two = False
@@ -193,10 +253,11 @@ did_you_get_to_the_lake = False
 
 map_item.append("Sheltered Valley")
 
-while alive_round2 and not did_you_beat_round_two and not skip_round_two and not did_you_beat_the_entire_game:
+while alive_round2 and not did_you_beat_round_two and not skip_round_two and not did_you_beat_the_entire_game \
+        and not did_you_lose_the_entire_game:
     beginning_choice2 = input("1: Open inventory 2: Look at map")
     if beginning_choice2 == "1":
-        print(*inventory, sep=" ")
+        print("".join(stuff), "".join(weapons), "".join(armors))
     elif beginning_choice2 == "2":
         print("".join(map_item[len(map_item)-1]))
         print("Would you like to go there?")
@@ -317,7 +378,7 @@ crab_thing_health = 10
 crab_thing_attack = 3
 
 while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat_the_entire_game \
-        and not did_you_beat_the_mountain:
+        and not did_you_beat_the_mountain and not did_you_lose_the_entire_game:
     print()
     print()
     print()
@@ -348,13 +409,32 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
             print("Try again")
         elif mountain2 == "1":
             print("It becomes easier to breathe but you are still thirsty")
-            print("Do you want to keep going or turn back")
-            mountain3 = input("1: Keep going 2: Turn back")
-
+            print("Do you want to keep going or go back up")
+            mountain3 = input("1: Keep going 2: Go back up")
+            if mountain3 == "1":
+                input("You continue going down the mountain")
+                input("On your left is a cavern that you did not see when you came up")
+                input("A clicking noise comes from it and")
+                input("A")
+                input("Crab thingy pops out")
+                input("It has 4 legs and 2 ginormous pincers")
+                input("It starts to swing its pincers at you")
+                input("Do you want to parry or try to dodge")
+                mountain4 = input("1: Parry 2: Dodge")
+                number = random.randint(1, 4)
+                while crab_thing_health > 0:
+                    if mountain4 == "1":
+                        if number == 4:
+                            print("You parried the crabs attack")
+                        if not number == 4:
+                            print("The crab swung so hard he broke your %s" % weapons[0])
+                            weapons.pop(0)
+                        print("Do you want to attack or flee")
+                        mountain5 = input("1: Attack 2: Flee")
 
 while did_you_get_to_the_desert and alive_in_the_desert and not did_you_beat_the_entire_game \
-        and not did_you_beat_the_desert:
+        and not did_you_beat_the_desert and not did_you_lose_the_entire_game:
     print("You are now in the desert")
 while did_you_get_to_the_lake and alive_in_the_lake and not did_you_beat_the_entire_game\
-        and not did_you_beat_the_lake:
+        and not did_you_beat_the_lake and not did_you_lose_the_entire_game:
     print("You are now by the lake")

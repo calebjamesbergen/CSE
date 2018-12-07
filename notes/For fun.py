@@ -3,13 +3,27 @@ stuff = ["Map, "]
 weapons = ["Stick, "]
 armors = ["Leather armor, "]
 stick_damage = 1
+do_you_have_stick = True
 bronze_sword_damage = 3
+do_you_have_bronze_sword = False
 gold_sword_damage = 5
+do_you_have_gold_sword = False
 silver_sword_damage = 10
+do_you_have_silver_sword = False
 diamond_sword_damage = 15
+do_you_have_diamond_sword = False
 enchanted_sword_damage = 20
+do_you_have_enchanted_sword = False
+leather_armor_defence = 1
+do_you_have_leather_armor = True
+mail_armor_defence = 5
+do_you_have_mail_armor = False
+silver_armor_defence = 10
+do_you_have_silver_armor = False
+enchanted_armor_defence = 20
+do_you_have_enchanted_armor = False
 damage = stick_damage
-armor = 1
+armor = leather_armor_defence
 total_health = 5
 total_gold = 0
 eldrazi_scion_health = 1
@@ -431,6 +445,11 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
                             weapons.pop(0)
                         print("Do you want to attack or flee")
                         mountain5 = input("1: Attack 2: Flee")
+                        if mountain5 == "1":
+                            print("You have these weapons: %s" % "".join(weapons))
+                            if do_you_have_bronze_sword:
+                                print("Do you want to use your stick or your bronze sword")
+                                mountain_bronze = input("1: Stick 2: Bronze Sword")
 
 while did_you_get_to_the_desert and alive_in_the_desert and not did_you_beat_the_entire_game \
         and not did_you_beat_the_desert and not did_you_lose_the_entire_game:

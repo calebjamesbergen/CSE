@@ -57,18 +57,32 @@ input("The all knowing")
 print()
 print()
 print()
-print()
+d = input()
+if d == "Armor":
+    armors.append("Mail Armor, ")
+    do_you_have_mail_armor = True
+    armors.append("Silver Armor, ")
+    do_you_have_silver_armor = True
+    armors.append("Enchanted Armor")
+    do_you_have_enchanted_armor = True
+    armor = enchanted_armor_defence
+    print("Now you have these armors: %s" % "".join(armors))
 input("Powerful")
 print()
 print()
 print()
-d = input()
-if d == "Weapons":
+e = input()
+if e == "Weapons":
     weapons.append("Wood Sword, ")
+    do_you_have_wood_sword = True
     weapons.append("Gold Sword, ")
+    do_you_have_gold_sword = True
     weapons.append("Silver Sword, ")
+    do_you_have_silver_sword = True
     weapons.append("Diamond Sword, ")
+    do_you_have_diamond_sword = True
     weapons.append("Enchanted Sword ")
+    do_you_have_enchanted_sword = True
     print("You now have these weapons: %s" % "".join(weapons))
     damage = enchanted_sword_damage
 input("Wait, I think I forgot my name")
@@ -435,8 +449,8 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
                 input("It starts to swing its pincers at you")
                 input("Do you want to parry or try to dodge")
                 mountain4 = input("1: Parry 2: Dodge")
-                number = random.randint(1, 4)
                 while crab_thing_health > 0:
+                    number = random.randint(1, 4)
                     if mountain4 == "1":
                         if number == 4:
                             print("You parried the crabs attack")
@@ -447,9 +461,16 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
                         mountain5 = input("1: Attack 2: Flee")
                         if mountain5 == "1":
                             print("You have these weapons: %s" % "".join(weapons))
-                            if do_you_have_bronze_sword:
-                                print("Do you want to use your stick or your bronze sword")
-                                mountain_bronze = input("1: Stick 2: Bronze Sword")
+                            mountain_bronze = input("1: %s 2: %s" %
+                                                    (weapons[len(weapons) - 2], weapons[len(weapons) - 1]))
+                            if mountain_bronze == "1" or mountain_bronze == "2":
+                                crab_thing_health -= damage
+                            if crab_thing_health > 0:
+                                print("The crab thingy now has %s health left" % crab_thing_health)
+                                total_health -= crab_thing_attack
+                            else:
+                                print("The crab thingy now has 0 health left")
+                            print("You now have %s health" % total_health)
 
 while did_you_get_to_the_desert and alive_in_the_desert and not did_you_beat_the_entire_game \
         and not did_you_beat_the_desert and not did_you_lose_the_entire_game:

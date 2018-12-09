@@ -31,6 +31,7 @@ eldrazi_scion_attack = 0
 eldrazi_scout_health = 5
 eldrazi_scout_attack = 2
 decision9 = "1"
+dec12 = "1"
 alive_round1 = True
 alive_round2 = True
 did_you_beat_round_one = False
@@ -323,6 +324,32 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                         print("Ahead in the distance you begin to see what looks like a mountain")
                         did_you_beat_round_two = True
                         did_you_get_to_the_mountain = True
+                    input("Poof")
+                    input("A shop appears and it says")
+                    input("Mountain shop: For all your mountain needs")
+                    input("Would you like to go inside?")
+                    dec9 = input("1: Yes 2: No")
+                    while dec9 == "1" and dec12 == "1":
+                        if dec9 == "1":
+                            print("You are in the store")
+                            print("This is what there is to buy")
+                            print("Good healing Potion: 5 Gold Gold Sword: 10 Gold")
+                            dec10 = input("1: Good Healing Potion 2: Gold Sword")
+                            if dec10 == "1" and total_gold > 5:
+                                total_gold -= 5
+                                total_health += 5
+                                print("You now have %s health" % total_health)
+                                print("Now you have %s gold" % total_gold)
+                            if dec10 == "2" and total_gold > 10:
+                                total_gold -= 10
+                                weapons.append("Gold Sword, ")
+                                print("Now you have these weapons: %s" % "".join(weapons))
+                                if gold_sword_damage > damage:
+                                    damage = gold_sword_damage
+                                    print("Now you do %s damage" % damage)
+                                    print("You have %s gold" % total_gold) 
+                            print("Would you like to remain in the shop")
+                            dec12 = input("1: Yes 2: No")
                 elif dec3 == "2":
                     print("You turned around and started walking the other way")
                     print("Suddenly, you hear a loud snap and see a flash of movement beside you")
@@ -348,6 +375,11 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                                   "you are going to die")
                             did_you_beat_round_two = True
                             did_you_get_to_the_desert = True
+                            input("Poof")
+                            input("A shop appears and it says")
+                            input("Desert shop: For all your desert needs")
+                            input("Would you like to go inside")
+                            dec11 = input("1: Yes 2: No")
                         if dec5 == "2":
                             print("The sound you heard earlier starts to come back")
                             print("It gets louder and louder until it seems like it is completely surrounding you")
@@ -388,7 +420,9 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                         print("Out in front of you is a vast lake that goes on farther than your eye can see")
                         did_you_get_to_the_lake = True
                         did_you_beat_round_two = True
-
+                        input("Poof")
+                        input("A shop appears and it says")
+                        input("Lake shop: For all your lake needs")
 
 alive_in_the_mountain = True
 alive_in_the_lake = True
@@ -470,6 +504,9 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
                                 total_health -= crab_thing_attack
                             else:
                                 print("The crab thingy now has 0 health left")
+                                print("You won!")
+                                total_gold += 15
+                                print("Now you have %s gold" % total_gold)
                             print("You now have %s health" % total_health)
 
 while did_you_get_to_the_desert and alive_in_the_desert and not did_you_beat_the_entire_game \

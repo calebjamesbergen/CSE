@@ -5,10 +5,13 @@ armors = ["Leather armor, "]
 stick_damage = 1
 do_you_have_stick = True
 bronze_sword_damage = 3
+buy_bronze_sword = False
 do_you_have_bronze_sword = False
 gold_sword_damage = 5
+buy_gold_sword = False
 do_you_have_gold_sword = False
 silver_sword_damage = 10
+buy_silver_sword = False
 do_you_have_silver_sword = False
 diamond_sword_damage = 15
 do_you_have_diamond_sword = False
@@ -340,7 +343,8 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                                 total_health += 5
                                 print("You now have %s health" % total_health)
                                 print("Now you have %s gold" % total_gold)
-                            if dec10 == "2" and total_gold > 10:
+                            if dec10 == "2" and total_gold > 10 and not did_you_buy_the_gold_sword:
+                                did_you_buy_the_gold_sword = True
                                 total_gold -= 10
                                 weapons.append("Gold Sword, ")
                                 print("Now you have these weapons: %s" % "".join(weapons))

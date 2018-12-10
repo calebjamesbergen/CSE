@@ -5,25 +5,31 @@ armors = ["Leather armor, "]
 stick_damage = 1
 do_you_have_stick = True
 bronze_sword_damage = 3
-buy_bronze_sword = False
+did_you_buy_bronze_sword = False
 do_you_have_bronze_sword = False
 gold_sword_damage = 5
-buy_gold_sword = False
+did_you_buy_gold_sword = False
 do_you_have_gold_sword = False
 silver_sword_damage = 10
-buy_silver_sword = False
+did_you_buy_silver_sword = False
 do_you_have_silver_sword = False
 diamond_sword_damage = 15
+did_you_buy_diamond_sword = False
 do_you_have_diamond_sword = False
 enchanted_sword_damage = 20
+did_you_buy_enchanted_sword = False
 do_you_have_enchanted_sword = False
 leather_armor_defence = 1
+did_you_buy_leather_armor = False
 do_you_have_leather_armor = True
 mail_armor_defence = 5
+did_you_buy_mail_armor = False
 do_you_have_mail_armor = False
 silver_armor_defence = 10
+did_you_buy_silver_armor = False
 do_you_have_silver_armor = False
 enchanted_armor_defence = 20
+did_you_buy_enchanted_armor = False
 do_you_have_enchanted_armor = False
 damage = stick_damage
 armor = leather_armor_defence
@@ -35,6 +41,8 @@ eldrazi_scout_health = 5
 eldrazi_scout_attack = 2
 decision9 = "1"
 dec12 = "1"
+dec13 = "1"
+dec15 = "1"
 alive_round1 = True
 alive_round2 = True
 did_you_beat_round_one = False
@@ -45,6 +53,9 @@ did_you_beat_the_entire_game = False
 did_you_lose_the_entire_game = False
 map_item = []
 
+do_you_have_the_pickaxe = True
+do_you_have_the_boat = False
+do_you_have_the_bottled_water = False
 
 input("Press enter to scroll through dialogue")
 b = input("Hello human")
@@ -336,14 +347,14 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                         if dec9 == "1":
                             print("You are in the store")
                             print("This is what there is to buy")
-                            print("Good healing Potion: 5 Gold Gold Sword: 10 Gold")
+                            print("Good Healing Potion: 5 Gold, Gold Sword: 10 Gold")
                             dec10 = input("1: Good Healing Potion 2: Gold Sword")
                             if dec10 == "1" and total_gold > 5:
                                 total_gold -= 5
                                 total_health += 5
                                 print("You now have %s health" % total_health)
                                 print("Now you have %s gold" % total_gold)
-                            if dec10 == "2" and total_gold > 10 and not did_you_buy_the_gold_sword:
+                            if dec10 == "2" and total_gold > 10 and not did_you_buy_gold_sword:
                                 did_you_buy_the_gold_sword = True
                                 total_gold -= 10
                                 weapons.append("Gold Sword, ")
@@ -351,7 +362,7 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                                 if gold_sword_damage > damage:
                                     damage = gold_sword_damage
                                     print("Now you do %s damage" % damage)
-                                    print("You have %s gold" % total_gold) 
+                                print("You have %s gold" % total_gold)
                             print("Would you like to remain in the shop")
                             dec12 = input("1: Yes 2: No")
                 elif dec3 == "2":
@@ -384,6 +395,30 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                             input("Desert shop: For all your desert needs")
                             input("Would you like to go inside")
                             dec11 = input("1: Yes 2: No")
+                            while dec11 == "1" and dec13 == "1":
+                                print("You are in the store")
+                                print("This is what there is to buy")
+                                print("Good Healing Potion: 5 Gold, Gold Sword: 10 Gold, Bottled Water: 5 Gold")
+                                dec16 = input("1: Good Healing Potion 2: Gold Sword")
+                                if dec16 == "1" and total_gold > 5:
+                                    total_gold -= 5
+                                    total_health += 5
+                                    print("You now have %s health" % total_health)
+                                    print("Now you have %s gold" % total_gold)
+                                if dec16 == "2" and total_gold > 10 and not did_you_buy_gold_sword:
+                                    did_you_buy_the_gold_sword = True
+                                    total_gold -= 10
+                                    weapons.append("Gold Sword, ")
+                                    print("Now you have these weapons: %s" % "".join(weapons))
+                                    if gold_sword_damage > damage:
+                                        damage = gold_sword_damage
+                                        print("Now you do %s damage" % damage)
+                                    print("You have %s gold" % total_gold)
+                                print("Would you like to remain in the shop")
+                                if dec16 == "3":
+                                    print("You bought the bottled water")
+                                    
+                                dec13 = input("1: Yes 2: No")
                         if dec5 == "2":
                             print("The sound you heard earlier starts to come back")
                             print("It gets louder and louder until it seems like it is completely surrounding you")
@@ -427,6 +462,34 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                         input("Poof")
                         input("A shop appears and it says")
                         input("Lake shop: For all your lake needs")
+                        print("Would you like to go inside?")
+                        dec14 = input("1: Yes 2: No")
+                        while dec14 == "1" and dec15 == "1":
+                            print("You are in the store")
+                            print("This is what there is to buy")
+                            print("Good Healing Potion: 5 Gold, Gold Sword: 10 Gold, Boat: 20 Gold")
+                            dec17 = input("1: Good Healing Potion 2: Gold Sword 3: Boat")
+                            if dec17 == "1" and total_gold > 5:
+                                total_gold -= 5
+                                total_health += 5
+                                print("You now have %s health" % total_health)
+                                print("Now you have %s gold" % total_gold)
+                            if dec17 == "2" and total_gold > 10 and not did_you_buy_gold_sword:
+                                did_you_buy_the_gold_sword = True
+                                total_gold -= 10
+                                weapons.append("Gold Sword, ")
+                                print("Now you have these weapons: %s" % "".join(weapons))
+                                if gold_sword_damage > damage:
+                                    damage = gold_sword_damage
+                                    print("Now you do %s damage" % damage)
+                                print("You have %s gold" % total_gold)
+                            print("Would you like to remain in the shop")
+                            dec15 = input("1: Yes 2: No")
+                            if dec17 == "3" and total_gold >= 20:
+                                print("Now you bought the boat")
+                                print("You have %s gold left" % total_gold)
+                                stuff.append("Boat")
+                                do_you_have_the_boat = True
 
 alive_in_the_mountain = True
 alive_in_the_lake = True

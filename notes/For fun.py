@@ -112,6 +112,7 @@ if thing == "Skip1 Skip2":
     skip_round_two = True
     did_you_beat_round_one = True
     did_you_beat_round_two = True
+    did_you_get_to_the_mountain = True
 elif thing == "Skip1":
     skip_round_one = True
     did_you_beat_round_one = True
@@ -551,13 +552,23 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
                 input("Do you want to parry or try to dodge")
                 mountain4 = input("1: Parry 2: Dodge")
                 while crab_thing_health > 0:
-                    number = random.randint(1, 4)
+                    number_for_parry = random.randint(1, 4)
                     if mountain4 == "1":
-                        if number == 4:
+                        if number_for_parry == 4:
                             print("You parried the crabs attack")
-                        if not number == 4:
+                        if not number_for_parry == 4:
                             print("The crab swung so hard he broke your %s" % weapons[0])
                             weapons.pop(0)
+                    if mountain4 == "2":
+                        number_for_dodge = random.randint(1,4)
+                        if number_for_dodge == 1:
+                            print("You dodged the crab's attack")
+                        if not number_for_dodge == 1:
+                            damage_you_take_from_the_crab = crab_thing_attack - armor
+                            print("The crab hit you straight in the chest and you took %s damage"
+                                  % damage_you_take_from_the_crab)
+                            total_health -= damage_you_take_from_the_crab
+                            print("Now you have %s health" % health)
                         print("Do you want to attack or flee")
                         mountain5 = input("1: Attack 2: Flee")
                         if mountain5 == "1":

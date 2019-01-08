@@ -499,6 +499,8 @@ alive_in_the_desert = True
 did_you_get_to_the_mountain = True
 did_you_get_to_the_desert = False
 did_you_get_to_the_lake = False
+did_you_get_to_the_cave = False
+did_you_find_the_cave = False
 
 did_you_beat_the_mountain = False
 did_you_beat_the_lake = False
@@ -586,10 +588,25 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
                             total_gold += 15
                             print("Now you have %s gold" % total_gold)
                         print("You now have %s health" % total_health)
-                    if mountain5 == "2":
-                        print("You stumbled over a pebble and fell to your death")
-                        did_you_lose_the_entire_game = False
-                        alive_in_the_mountain = False
+                    if mountain5 == "2" or crab_thing_health < 0:
+                        did_you_find_the_cave = random.randint(1, 4)
+                        if did_you_find_the_cave == 1:
+                            print("Suddenly there is a rumble and you part of the mountain beside you moves away "
+                                  "showing a dimly lit passage leading down")
+                            print("Do you want to enter the cave?")
+                            mountain6 = input("1: Enter the cave 2: Keep going")
+                            if mountain6 == "1":
+                                print("You slowly entered the cave")
+                                did_you_get_to_the_cave = True
+                                did_you_beat_the_mountain = True
+                        if not did_you_find_the_cave == 1:
+                            print("You stumbled over a pebble and fell to your death")
+                            did_you_lose_the_entire_game = False
+                            alive_in_the_mountain = False
+
+while did_you_get_to_the_cave:
+    print("You are now in the cave")
+    break
 
 while did_you_get_to_the_desert and alive_in_the_desert and not did_you_beat_the_entire_game \
         and not did_you_beat_the_desert and not did_you_lose_the_entire_game:

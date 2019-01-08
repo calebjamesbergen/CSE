@@ -568,24 +568,28 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
                             print("The crab hit you straight in the chest and you took %s damage"
                                   % damage_you_take_from_the_crab)
                             total_health -= damage_you_take_from_the_crab
-                            print("Now you have %s health" % health)
-                        print("Do you want to attack or flee")
-                        mountain5 = input("1: Attack 2: Flee")
-                        if mountain5 == "1":
-                            print("You have these weapons: %s" % "".join(weapons))
-                            mountain_bronze = input("1: %s 2: %s" %
-                                                    (weapons[len(weapons) - 2], weapons[len(weapons) - 1]))
-                            if mountain_bronze == "1" or mountain_bronze == "2":
-                                crab_thing_health -= damage
-                            if crab_thing_health > 0:
-                                print("The crab thingy now has %s health left" % crab_thing_health)
-                                total_health -= crab_thing_attack
-                            else:
-                                print("The crab thingy now has 0 health left")
-                                print("You won!")
-                                total_gold += 15
-                                print("Now you have %s gold" % total_gold)
-                            print("You now have %s health" % total_health)
+                            print("Now you have %s health" % total_health)
+                    print("Do you want to attack or flee")
+                    mountain5 = input("1: Attack 2: Flee")
+                    if mountain5 == "1":
+                        print("You have these weapons: %s" % "".join(weapons))
+                        mountain_bronze = input("1: %s 2: %s" %
+                                                (weapons[len(weapons) - 2], weapons[len(weapons) - 1]))
+                        if mountain_bronze == "1" or mountain_bronze == "2":
+                            crab_thing_health -= damage
+                        if crab_thing_health > 0:
+                            print("The crab thingy now has %s health left" % crab_thing_health)
+                            total_health -= crab_thing_attack
+                        else:
+                            print("The crab thingy now has 0 health left")
+                            print("You won!")
+                            total_gold += 15
+                            print("Now you have %s gold" % total_gold)
+                        print("You now have %s health" % total_health)
+                    if mountain5 == "2":
+                        print("You stumbled over a pebble and fell to your death")
+                        did_you_lose_the_entire_game = False
+                        alive_in_the_mountain = False
 
 while did_you_get_to_the_desert and alive_in_the_desert and not did_you_beat_the_entire_game \
         and not did_you_beat_the_desert and not did_you_lose_the_entire_game:

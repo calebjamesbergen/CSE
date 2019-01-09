@@ -21,3 +21,7 @@ colors = ["red ", "orange ", "yellow ", "green ", "blue ", "purple "]
 print("".join(colors))
 colors.append("brown ")
 print("".join(colors))
+colors.pop(0)
+print("".join(colors))
+print(colors[1])
+print(len(colors))

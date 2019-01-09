@@ -522,8 +522,35 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
     print("The other leads to the left and is very faint")
     print("Which path would you like to take")
     mountain1 = input("1: Left 2: Right")
-    if mountain1 == "1":
-        print("You are path on the right")
+    if mountain1 == "2":
+        print("You are on the path on the right")
+        print("You start going higher up on the path")
+        print("There is a strange button on the ground and you press it")
+        input("Crreeeeaaeeeaeeaeeaeekkk")
+        input("The ground moves away from under you and you free start to free fall")
+        input("When you come to there are torches leading to your left and to your right")
+        input("Do you want to go to the left or the right?")
+        mountain7 = input("1: Left 2: Right")
+        if mountain7 == "1":
+            print("You start going left and the torches start to get brighter and brighter")
+            input("Suddenly another trapdoor opens and this time you don't survive the fall")
+            print("You died")
+            print("Try again")
+            alive_in_the_mountain = False
+            did_you_lose_the_entire_game = True
+        if mountain7 == "2":
+            print("You start going to the right")
+            input("Suddenly you are surrounded by strange creatures that are very pale")
+            input("They start closing in on you and you have to act fast")
+            input("Do you want to run or wave your sword at them")
+            mountain8 = input("1: Run 2: Wave your sword")
+            if mountain8 == "1":
+                print("You run but some of the creatures grab your leg and you trip")
+                input("Before you can get up you are being swarmed by the creatures")
+                input("They grab your limbs and start carrying you down the dimly lit corridor")
+                
+    elif mountain1 == "1":
+        print("You are path on the left")
         print("This path is very well worn")
         print("You start walking and the sun starts to shine a lot")
         print("You can feel the sweat flowing down your face")
@@ -562,7 +589,7 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
                             print("The crab swung so hard he broke your %s" % weapons[0])
                             weapons.pop(0)
                     if mountain4 == "2":
-                        number_for_dodge = random.randint(1,4)
+                        number_for_dodge = random.randint(1, 4)
                         if number_for_dodge == 1:
                             print("You dodged the crab's attack")
                         if not number_for_dodge == 1:

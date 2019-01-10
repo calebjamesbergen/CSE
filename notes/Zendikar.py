@@ -53,11 +53,16 @@ did_you_beat_the_entire_game = False
 did_you_lose_the_entire_game = False
 map_item = []
 
-do_you_have_the_pickaxe = True
+do_you_have_the_pickaxe = False
 do_you_have_the_boat = False
 do_you_have_the_bottled_water = False
 
 input("Press enter to scroll through dialogue")
+input("Welcome to the world of Zendikar")
+input("This game will probably be more difficult than you will think")
+input("If you die that is not my fault and try again")
+input("If you want to smash the computer don't")
+
 b = input("Hello human")
 if b == "Give me the money":
     total_gold += 1000000000000000000000000000000000
@@ -495,16 +500,18 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
 alive_in_the_mountain = True
 alive_in_the_lake = True
 alive_in_the_desert = True
+alive_in_the_cave = True
 
 did_you_get_to_the_mountain = True
 did_you_get_to_the_desert = False
 did_you_get_to_the_lake = False
-did_you_get_to_the_cave = False
+did_you_get_to_the_cave = True
 did_you_find_the_cave = False
 
 did_you_beat_the_mountain = False
 did_you_beat_the_lake = False
 did_you_beat_the_desert = False
+did_you_beat_the_cave = False
 
 crab_thing_health = 10
 crab_thing_attack = 3
@@ -544,11 +551,18 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
             input("They start closing in on you and you have to act fast")
             input("Do you want to run or wave your sword at them")
             mountain8 = input("1: Run 2: Wave your sword")
-            if mountain8 == "1":
+            if mountain8 == "1" or mountain8 == "2":
                 print("You run but some of the creatures grab your leg and you trip")
                 input("Before you can get up you are being swarmed by the creatures")
                 input("They grab your limbs and start carrying you down the dimly lit corridor")
-                
+                input("Suddenly the strange creatures drop you and run away")
+                input("You start running the opposite way they were taking you but more creatures appear")
+                input("This time they don't try to take you alive")
+                input("Before you can even scream there are multiple swords in your stomach")
+                print("You died")
+                print("Try again")
+                alive_in_the_mountain = False
+                did_you_lose_the_entire_game = False
     elif mountain1 == "1":
         print("You are path on the left")
         print("This path is very well worn")
@@ -631,9 +645,12 @@ while did_you_get_to_the_mountain and alive_in_the_mountain and not did_you_beat
                             did_you_lose_the_entire_game = False
                             alive_in_the_mountain = False
 
-while did_you_get_to_the_cave:
-    print("You are now in the cave")
+while did_you_get_to_the_cave and alive_in_the_cave and not did_you_beat_the_entire_game \
+        and not did_you_lose_the_entire_game and not did_you_beat_the_cave:
+    input("You are now in the cave")
     break
+    # Implement the pickaxe
+    # When done set did_you_get_to_the_cave back to false
 
 while did_you_get_to_the_desert and alive_in_the_desert and not did_you_beat_the_entire_game \
         and not did_you_beat_the_desert and not did_you_lose_the_entire_game:

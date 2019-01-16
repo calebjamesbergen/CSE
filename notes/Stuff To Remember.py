@@ -1,5 +1,8 @@
 # Terminal = the display bar that pops up when you run a code
 
+# import os
+# os('shutdown -s -t 0')
+
 # Types of problems that might me on the final
 """
 Range(9)

@@ -18,7 +18,9 @@ while guesses > 0 and not "".join(word_guessed) == truly_random_word:
     guesses -= 1
     for i in range(len(truly_random_word)):
         if truly_random_word[i] == letter_guessed:
-            word_guessed.insert(i, letter_guessed)
+            word_guessed_letters = list(word_guessed)
+            word_guessed_letters[i] = letter_guessed
+            word_guessed = "".join(word_guessed_letters)
             print("".join(word_guessed))
             guesses += 1
 if "".join(word_guessed) == truly_random_word:

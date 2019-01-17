@@ -1,27 +1,34 @@
 import random
-did_you_buy_bronze_sword = False
-do_you_have_bronze_sword = False
-did_you_buy_gold_sword = False
-do_you_have_gold_sword = False
-did_you_buy_silver_sword = False
-do_you_have_silver_sword = False
-did_you_buy_diamond_sword = False
-do_you_have_diamond_sword = False
-did_you_buy_enchanted_sword = False
-do_you_have_enchanted_sword = False
-did_you_buy_leather_armor = False
-do_you_have_leather_armor = True
-did_you_buy_mail_armor = False
-do_you_have_mail_armor = False
-did_you_buy_silver_armor = False
-do_you_have_silver_armor = False
-did_you_buy_enchanted_armor = False
-do_you_have_enchanted_armor = False
+
+you = {
+    "did you beat the entire game": False,
+    "did you lose the entire game": False,
+
+    "do_you_have_stick": True,
+    "do_you_have_bronze_sword": False,
+    "do_you_have_gold_sword": False,
+    "do_you_have_silver_sword": False,
+    "do_you_have_diamond_sword": False,
+    "do_you_have_enchanted_sword": False,
+    "do_you_have_leather_armor": True,
+    "do_you_have_mail_armor": False,
+    "do_you_have_silver_armor": False,
+    "do_you_have_enchanted_armor": False,
+
+    "did_you_buy_bronze_sword": False,
+    "did_you_buy_gold_sword": False,
+    "did_you_buy_silver_sword": False,
+    "did_you_buy_diamond_sword": False,
+    "did_you_buy_enchanted_sword": False,
+    "did_you_buy_leather_armor": False,
+    "did_you_buy_mail_armor": False,
+    "did_you_buy_silver_armor": False,
+    "did_you_buy_enchanted_armor": False,
+}
 stuff = ["Map, "]
 weapons = ["Stick, "]
 armors = ["Leather armor, "]
 stick_damage = 1
-do_you_have_stick = True
 bronze_sword_damage = 3
 gold_sword_damage = 5
 silver_sword_damage = 10
@@ -56,7 +63,6 @@ map_item = []
 do_you_have_the_pickaxe = False
 do_you_have_the_boat = False
 do_you_have_the_bottled_water = False
-
 input("Press enter to scroll through dialogue")
 input("Welcome to the world of Zendikar")
 input("This game will probably be more difficult than you will think")
@@ -308,7 +314,7 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
     if beginning_choice2 == "1":
         print("".join(stuff), "".join(weapons), "".join(armors))
     elif beginning_choice2 == "2":
-        print("".join(map_item[len(map_item)-1]))
+        print("".join(map_item[len(map_item) - 1]))
         print("Would you like to go there?")
         dec1 = input("1: Yes 2: No")
         if dec1 == "1":
@@ -423,7 +429,7 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                                 print("Would you like to remain in the shop")
                                 if dec16 == "3":
                                     print("You bought the bottled water")
-                                    
+
                                 dec13 = input("1: Yes 2: No")
                         if dec5 == "2":
                             print("The sound you heard earlier starts to come back")
@@ -655,6 +661,6 @@ while did_you_get_to_the_cave and alive_in_the_cave and not did_you_beat_the_ent
 while did_you_get_to_the_desert and alive_in_the_desert and not did_you_beat_the_entire_game \
         and not did_you_beat_the_desert and not did_you_lose_the_entire_game:
     print("You are now in the desert")
-while did_you_get_to_the_lake and alive_in_the_lake and not did_you_beat_the_entire_game\
+while did_you_get_to_the_lake and alive_in_the_lake and not did_you_beat_the_entire_game \
         and not did_you_beat_the_lake and not did_you_lose_the_entire_game:
     print("You are now by the lake")

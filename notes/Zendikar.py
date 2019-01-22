@@ -1,61 +1,81 @@
 import random
-did_you_buy_bronze_sword = False
-do_you_have_bronze_sword = False
-did_you_buy_gold_sword = False
-do_you_have_gold_sword = False
-did_you_buy_silver_sword = False
-do_you_have_silver_sword = False
-did_you_buy_diamond_sword = False
-do_you_have_diamond_sword = False
-did_you_buy_enchanted_sword = False
-do_you_have_enchanted_sword = False
-did_you_buy_leather_armor = False
-do_you_have_leather_armor = True
-did_you_buy_mail_armor = False
-do_you_have_mail_armor = False
-did_you_buy_silver_armor = False
-do_you_have_silver_armor = False
-did_you_buy_enchanted_armor = False
-do_you_have_enchanted_armor = False
-stuff = ["Map, "]
-weapons = ["Stick, "]
-armors = ["Leather armor, "]
-stick_damage = 1
-do_you_have_stick = True
-bronze_sword_damage = 3
-gold_sword_damage = 5
-silver_sword_damage = 10
-diamond_sword_damage = 15
-enchanted_sword_damage = 20
-leather_armor_defence = 1
-mail_armor_defence = 5
-silver_armor_defence = 10
-enchanted_armor_defence = 20
-damage = stick_damage
-armor = leather_armor_defence
-total_health = 5
-total_gold = 0
-eldrazi_scion_health = 1
-eldrazi_scion_attack = 0
-eldrazi_scout_health = 5
-eldrazi_scout_attack = 2
-decision9 = "1"
-dec12 = "1"
-dec13 = "1"
-dec15 = "1"
-alive_round1 = True
-alive_round2 = True
-did_you_beat_round_one = False
-did_you_beat_round_two = False
-skip_round_one = False
-skip_round_two = False
-did_you_beat_the_entire_game = False
-did_you_lose_the_entire_game = False
-map_item = []
 
-do_you_have_the_pickaxe = False
-do_you_have_the_boat = False
-do_you_have_the_bottled_water = False
+
+class MyClass:
+    do_you_have_stick = True
+    do_you_have_bronze_sword = False
+    do_you_have_gold_sword = False
+    do_you_have_silver_sword = False
+    do_you_have_diamond_sword = False
+    do_you_have_enchanted_sword = False
+    do_you_have_leather_armor = True
+    do_you_have_mail_armor = False
+    do_you_have_silver_armor = False
+    do_you_have_enchanted_armor = False
+    do_you_have_the_pickaxe = False
+    do_you_have_the_boat = False
+    do_you_have_the_bottled_water = False
+
+    did_you_buy_gold_sword = False
+    did_you_buy_bronze_sword = False
+    did_you_buy_silver_sword = False
+    did_you_buy_diamond_sword = False
+    did_you_buy_enchanted_sword = False
+    did_you_buy_leather_armor = False
+    did_you_buy_mail_armor = False
+    did_you_buy_silver_armor = False
+    did_you_buy_enchanted_armor = False
+
+    alive_round1 = True
+    alive_round2 = True
+    did_you_beat_round_one = False
+    did_you_beat_round_two = False
+    skip_round_one = False
+    skip_round_two = False
+    did_you_beat_the_entire_game = False
+    did_you_lose_the_entire_game = False
+    did_you_get_to_the_mountain = False
+    did_you_get_to_the_desert = False
+    did_you_get_to_the_lake = False
+    alive_in_the_mountain = True
+    alive_in_the_lake = True
+    alive_in_the_desert = True
+    alive_in_the_cave = True
+    did_you_get_to_the_cave = True
+    did_you_find_the_cave = False
+    did_you_beat_the_mountain = False
+    did_you_beat_the_lake = False
+    did_you_beat_the_desert = False
+    did_you_beat_the_cave = False
+
+    stick_damage = 1
+    bronze_sword_damage = 3
+    gold_sword_damage = 5
+    silver_sword_damage = 10
+    diamond_sword_damage = 15
+    enchanted_sword_damage = 20
+    leather_armor_defence = 1
+    mail_armor_defence = 5
+    silver_armor_defence = 10
+    enchanted_armor_defence = 20
+    damage = stick_damage
+    armor = leather_armor_defence
+    total_health = 5
+    total_gold = 0
+
+    stuff = ["Map, "]
+    weapons = ["Stick, "]
+    armors = ["Leather armor, "]
+    map_item = []
+
+    eldrazi_scion_health = 1
+    eldrazi_scion_attack = 0
+    eldrazi_scout_health = 5
+    eldrazi_scout_attack = 2
+
+
+you = MyClass()
+
 
 input("Press enter to scroll through dialogue")
 input("Welcome to the world of Zendikar")
@@ -65,46 +85,46 @@ input("If you want to smash the computer don't")
 
 b = input("Hello human")
 if b == "Give me the money":
-    total_gold += 1000000000000000000000000000000000
+    you.total_gold += 1000000000000000000000000000000000
     print("You found it")
-    print("You now have %s gold" % total_gold)
+    print("You now have %s gold" % you.total_gold)
 c = input("It is I")
 if c == "Give me the money":
-    total_gold -= 1000000000000000000000000000000000
+    you.total_gold -= 1000000000000000000000000000000000
     print("Ha, you failed")
-    print("Now you have %s gold" % total_gold)
+    print("Now you have %s gold" % you.total_gold)
 input("The all knowing")
 print()
 print()
 print()
 d = input()
 if d == "Armor":
-    armors.append("Mail Armor, ")
+    you.armors.append("Mail Armor, ")
     do_you_have_mail_armor = True
-    armors.append("Silver Armor, ")
+    you.armors.append("Silver Armor, ")
     do_you_have_silver_armor = True
-    armors.append("Enchanted Armor")
+    you.armors.append("Enchanted Armor")
     do_you_have_enchanted_armor = True
-    armor = enchanted_armor_defence
-    print("Now you have these armors: %s" % "".join(armors))
+    you.armor = you.enchanted_armor_defence
+    print("Now you have these armors: %s" % "".join(you.armors))
 input("Powerful")
 print()
 print()
 print()
 e = input()
 if e == "Weapons":
-    weapons.append("Wood Sword, ")
+    you.weapons.append("Wood Sword, ")
     do_you_have_wood_sword = True
-    weapons.append("Gold Sword, ")
+    you.weapons.append("Gold Sword, ")
     do_you_have_gold_sword = True
-    weapons.append("Silver Sword, ")
+    you.weapons.append("Silver Sword, ")
     do_you_have_silver_sword = True
-    weapons.append("Diamond Sword, ")
+    you.weapons.append("Diamond Sword, ")
     do_you_have_diamond_sword = True
-    weapons.append("Enchanted Sword ")
+    you.weapons.append("Enchanted Sword ")
     do_you_have_enchanted_sword = True
-    print("You now have these weapons: %s" % "".join(weapons))
-    damage = enchanted_sword_damage
+    print("You now have these weapons: %s" % "".join(you.weapons))
+    you.damage = you.enchanted_sword_damage
 input("Wait, I think I forgot my name")
 input("Anyway, you have a mission")
 input("Take back the world from the evil eldrazi")
@@ -294,11 +314,6 @@ if did_you_beat_round_one and not skip_round_one:
     h = input("Ulamog is wreaking havoc all over this planet, Zendikar")
     i = input("If you do not act soon all of Zendikar will be destroyed")
     # alive_round2 = False
-
-did_you_beat_round_two = False
-did_you_get_to_the_mountain = False
-did_you_get_to_the_desert = False
-did_you_get_to_the_lake = False
 
 map_item.append("Sheltered Valley")
 
@@ -496,22 +511,6 @@ while alive_round2 and not did_you_beat_round_two and not skip_round_two and not
                                 print("You have %s gold left" % total_gold)
                                 stuff.append("Boat")
                                 do_you_have_the_boat = True
-
-alive_in_the_mountain = True
-alive_in_the_lake = True
-alive_in_the_desert = True
-alive_in_the_cave = True
-
-did_you_get_to_the_mountain = True
-did_you_get_to_the_desert = False
-did_you_get_to_the_lake = False
-did_you_get_to_the_cave = True
-did_you_find_the_cave = False
-
-did_you_beat_the_mountain = False
-did_you_beat_the_lake = False
-did_you_beat_the_desert = False
-did_you_beat_the_cave = False
 
 crab_thing_health = 10
 crab_thing_attack = 3

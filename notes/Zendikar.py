@@ -530,9 +530,10 @@ while you.alive_round2 and not you.did_you_beat_round_two and not you.skip_round
                                 you.stuff.append("Boat")
                                 you.do_you_have_the_boat = True
 
-print("For beating round 2 you got 50 gold")
-you.total_gold += 50
-print("Now you have %s gold" % you.total_gold)
+if you.did_you_beat_round_two:
+    print("For beating round 2 you got 50 gold")
+    you.total_gold += 50
+    print("Now you have %s gold" % you.total_gold)
 
 you.crab_thing_health = 10
 you.crab_thing_attack = 3

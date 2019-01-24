@@ -35,3 +35,42 @@ for release in released:
 
 # Get only the keys from a dictionary
 print("This dictionary contains these keys: ", " ".join(released))
+
+nested_dictionary = {
+    "KEY": "Value",
+    "key1": {
+        "key1": 12,
+        "key2": True
+    },
+
+}
+
+world_map = {
+    "room1": {
+        "NAME": "Starting room",
+        "DESCRIPTION": "Thsdhflaskhdf",
+        "PATHS": {
+            "NORTH": "room2"
+        }
+    },
+    "room2": {
+        "NAME": "next room",
+        "DESCRIPTION": "dhaslkdhga",
+        "PATHS": {
+            "SOUTH": "room1"
+        }
+    }
+}
+
+
+def moving():
+    moving.move = input("Where do you want to go")
+
+
+hi = 2
+bye = 1
+print(hi - bye)
+moving()
+print(moving.move)
+if moving.move == "1":
+    print("Hi")

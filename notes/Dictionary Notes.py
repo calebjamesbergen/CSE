@@ -64,13 +64,9 @@ world_map = {
 
 
 def moving():
-    moving.move = input("Where do you want to go")
+    global move
+    move = input("Where do you want to go")
 
 
-hi = 2
-bye = 1
-print(hi - bye)
 moving()
-print(moving.move)
-if moving.move == "1":
-    print("Hi")
+print(move)

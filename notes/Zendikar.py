@@ -573,8 +573,20 @@ while you.did_you_get_to_the_mountain and you.alive_in_the_mountain and not you.
             input("They start closing in on you and you have to act fast")
             input("Do you want to run or wave your sword at them")
             mountain8 = input("1: Run 2: Wave your sword")
-            if mountain8 == "1" or mountain8 == "2":
+            if mountain8 == "1":
                 print("You run but some of the creatures grab your leg and you trip")
+                input("Before you can get up you are being swarmed by the creatures")
+                input("They grab your limbs and start carrying you down the dimly lit corridor")
+                input("Suddenly the strange creatures drop you and run away")
+                input("You start running the opposite way they were taking you but more creatures appear")
+                input("This time they don't try to take you alive")
+                input("Before you can even scream there are multiple swords in your stomach")
+                print("You died")
+                print("Try again")
+                you.alive_in_the_mountain = False
+                you.did_you_lose_the_entire_game = False
+            if mountain8 == "2":
+                print("You wave your sword but some of the creatures grab your leg and you trip")
                 input("Before you can get up you are being swarmed by the creatures")
                 input("They grab your limbs and start carrying you down the dimly lit corridor")
                 input("Suddenly the strange creatures drop you and run away")
@@ -606,6 +618,14 @@ while you.did_you_get_to_the_mountain and you.alive_in_the_mountain and not you.
             print("It becomes easier to breathe but you are still thirsty")
             print("Do you want to keep going or go back up")
             mountain3 = input("1: Keep going 2: Go back up")
+            if mountain3 == " 2":
+                print("You keep going, but from around a corner a felidar cub appears")
+                print("Before you can react it pounces on you and sinks its claws into your chest")
+                print("You died")
+                print("Try again")
+                you.alive_in_the_mountain = False
+                you.did_you_lose_the_entire_game = False
+                you.did_you_beat_the_mountain = False
             if mountain3 == "1":
                 input("You continue going down the mountain")
                 input("On your left is a cavern that you did not see when you came up")

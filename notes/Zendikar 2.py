@@ -50,7 +50,7 @@ raven_gorge_map = {
         "NAME": "Raven Gorge 4",
         "DESCRIPTION": "Shop",
         "PATHS": {
-            # None
+            "Spawn Point Sheltered Valley"
         }
     }
 }
@@ -92,11 +92,58 @@ sheltered_valley_map = {
         "NAME": "Mountain",
         "DESCRIPTION": "Mountain",
         "PATHS": {
-            # None
+            "Spawn Point Mountain"
         }
     },
     "Sheltered Valley 7": {
-        
+        "NAME": "Sheltered Valley 7",
+        "DESCRIPTION": "Strange Noise",
+        "PATHS": {
+            "South": "Sheltered Valley 8"
+        }
+    },
+    "Sheltered Valley 8": {
+        "NAME": "Sheltered Valley 8",
+        "DESCRIPTION": "Making a fire",
+        "PATHS": {
+            "South": "Great Desert",
+            "North": "Sheltered Valley 7"
+        }
+    },
+    "Desert": {
+        "NAME": "Desert",
+        "DESCRIPTION": "Desert",
+        "PATHS": {
+            "Spawn Point Desert"
+        }
+    },
+    "Sheltered Valley 4": {
+        "NAME": "Sheltered Valley 4",
+        "DESCRIPTION": "Mass of trees",
+        "PATHS": {
+            "North": "Sheltered Valley 5",
+            "East": "Sheltered Valley 6"
+        }
+    },
+    "Sheltered Valley 5": {
+        "NAME": "Sheltered Valley 5",
+        "DESCRIPTION": "Heavy canopy",
+        "PATHS": {
+            "North": "Lake",
+            "South": "Sheltered Valley 4"
+        }
+    },
+    "Lake": {
+        "NAME": "Lake",
+        "DESCRIPTION": "Lake",
+        "PATHS": {
+            "Spawn Point Lake"
+        }
+    },
+    "Sheltered Valley 6": {
+        "NAME": "Sheltered Valley 6",
+        "DESCRIPTION": "Cabin, instant death",
+        "PATHS": {}
+        # None
     }
-
 }

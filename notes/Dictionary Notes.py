@@ -1,72 +1,74 @@
-# Creating a dictionary
-released = {
-    "Are you alive": True,
-    "Did you die": False,
-    "iphone 3GS": False,
-    "iphone 4": False,
-    "iphone 4S": False,
-    "iphone 5": False
+# Dictionary are a file type used for many different things
+states = {
+    "CA": "California",
+    "NJ": "New Jersey",
+    "WI": "Wisconsin",
+    "NY": "New York"
 }
-# Adding new values
-released["iphone 5S"] = 2013
 
-# Deleting stuff
-del released["Are you alive"]
-
-# Length of a dictionary
-print(len(released))
-
-# Checking if stuff is in your list
-for item in released:
-    if "iphone 5" in released:
-        print("Key found")
-        break
-    else:
-        print("No keys found")
-
-# Getting a value of a specific thing
-print(released.get("iphone 3G", "none"))
-
-print("-" * 10)
-print("iphone releases so far: ")
-print("-" * 10)
-for release in released:
-    print(release)
-
-# Get only the keys from a dictionary
-print("This dictionary contains these keys: ", " ".join(released))
+print(states["CA"])
+print(states["WI"])
 
 nested_dictionary = {
-    "KEY": "Value",
-    "key1": {
-        "key1": 12,
-        "key2": True
+    "CA": {
+        "NAME": "California",
+        "POPULATION": 39500000
     },
-
-}
-
-world_map = {
-    "room1": {
-        "NAME": "Starting room",
-        "DESCRIPTION": "Thsdhflaskhdf",
-        "PATHS": {
-            "NORTH": "room2"
-        }
+    "NJ": {
+        "NAME": "New Jersey",
+        "POPULATION": 9000000
     },
-    "room2": {
-        "NAME": "next room",
-        "DESCRIPTION": "dhaslkdhga",
-        "PATHS": {
-            "SOUTH": "room1"
-        }
+    "WI": {
+        "NAME": "Wisconsin",
+        "POPULATION": 5800000
+    },
+    "NY": {
+        "NAME": "New York",
+        "POPULATION": 19500000
     }
 }
 
+# How to print a dictionary in a dictionary
+print(nested_dictionary["CA"])
+# How to print a specific part of a nested dictionary
+print(nested_dictionary["CA"]["POPULATION"])
+print(nested_dictionary["NY"]["NAME"])
 
-def moving():
-    global move
-    move = input("Where do you want to go")
-
-
-moving()
-print(move)
+complex_dictionary = {
+    "CA": {
+        "NAME": "California",
+        "POPULATION": 39500000,
+        "CITIES": [
+            "Fresno",
+            "San Francisco,"
+            "Los Angeles"
+        ]
+    },
+    "NJ": {
+        "NAME": "New Jersey",
+        "POPULATION": 9000000,
+        "CITIES": [
+            "Newark",
+            "Trenton",
+            "Princeton"
+        ]
+    },
+    "WI": {
+        "NAME": "Wisconsin",
+        "POPULATION": 5800000,
+        "CITIES": [
+            "Madison",
+            "Milwaukee",
+            "Green Bay"
+        ]
+    },
+    "NY": {
+        "NAME": "New York",
+        "POPULATION": 19500000,
+        "CITIES": [
+            "New York City",
+            "Rockester",
+            "Buffalo"
+        ]
+    }
+}

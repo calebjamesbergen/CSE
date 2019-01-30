@@ -72,3 +72,25 @@ complex_dictionary = {
         ]
     }
 }
+
+print(complex_dictionary["NY"]["CITIES"][0])
+print(complex_dictionary["NJ"]["CITIES"][2])
+
+# Shows you each thing in it
+print(complex_dictionary.keys())
+# Turns it into a tuple
+print(complex_dictionary.items())
+# This has 2 items, a string and a dictionary
+print(nested_dictionary.items())
+
+for key, value in complex_dictionary.items():
+    print(key)
+    print(value)
+    print("-" * 20)
+
+for state, info in complex_dictionary.items():
+    for title, desc in info.items():
+        print(title)
+        print(desc)
+        print("-" * 20)
+    print("=" * 20)

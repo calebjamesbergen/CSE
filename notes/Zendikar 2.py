@@ -150,6 +150,7 @@ world_map = {
     }
 }
 
+
 directions = ["NORTH", "SOUTH", "EAST", "WEST", ""]
 alive_raven_gorge = True
 current_node = world_map["Raven Gorge Map"]["Spawn Point Sheltered Valley"]

@@ -249,6 +249,27 @@ world_map = {
     }
 }
 
+heads = 1
+
+
+class Monster:
+    def __init__(self, monster_health, monster_attack, monster_exp, monster_gold, did_you_beat_monster):
+        self.monster_health = monster_health
+        self.monster_attack = monster_attack
+        self.monster_exp = monster_exp
+        self.monster_gold = monster_gold
+        self.did_you_beat_monster = did_you_beat_monster
+
+
+eldrazi_scout = Monster(2, 1, 5, 5, False)
+eldrazi_scion = Monster(3, 2, 5, 5, False)
+crab = Monster(5, 3, 5, 5, False)
+krayt_dragon = Monster(10, 5, 10, 10, False)
+sidewinder_naga = Monster(5, 4, 10, 5, False)
+hydra = Monster(20, 1 * heads, 15, 20, False)
+fire_elemental = Monster(20, 5, 20, 20, False)
+volcano_hellion = Monster(15, 10, 15, 10, False)
+
 
 def combine_attack(damage1, damage_from_level1):
     return damage1 + damage_from_level1
@@ -329,17 +350,17 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
     elif current_node["NAME"] == "Raven Gorge 2":
         print("You are in %s" % current_node["NAME"])
         print("You see the eldrazi scout in front of you")
-        while eldrazi_scout_health > 0 and health > 0 and not did_you_beat_the_eldrazi_scout:
+        while eldrazi_scout.monster_health > 0 and health > 0 and not eldrazi_scout.did_you_beat_monster:
             print("The eldrazi scout attacked you")
             print("You took %i damage" % int(eldrazi_scout_attack - defence))
-            health = health - (eldrazi_scout_attack - defence)
+            health = health - (eldrazi_scout.monster_attack - defence)
             print("Now you have %s health left" % health)
             print("What would you like to do")
             eldrazi_fight = input("ATTACK or FLEE")
             if eldrazi_fight == "ATTACK":
                 print("You swing your %s at the eldrazi scout" % weapon)
                 print("You did %s damage to the eldrazi scout" % damage)
-                eldrazi_scout_health -= damage
+                eldrazi_scout. monster_health -= damage
                 print("The eldrazi scion has %s health left" % eldrazi_scout_health)
             if eldrazi_fight == "FLEE":
                 alive_raven_gorge = False

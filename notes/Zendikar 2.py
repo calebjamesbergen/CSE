@@ -55,7 +55,6 @@ world_map = {
             }
         }
     },
-
     "Sheltered Valley Map": {
         "Spawn Point Sheltered Valley": {
             "NAME": "Spawn Point Sheltered Valley",
@@ -86,21 +85,22 @@ world_map = {
             "DESCRIPTION": "Stream",
             "PATHS": {
                 "SOUTH": "Sheltered Valley 2",
-                "NORTH": "Mountain"
+                "NORTH": "Mountain in Distance"
             }
         },
-        "Mountain": {
-            "NAME": "Mountain",
-            "DESCRIPTION": "Mountain",
+        "Mountain in Distance": {
+            "NAME": "Mountain in Distance",
+            "DESCRIPTION": "Mountain in Distance",
             "PATHS": {
-                "": "Spawn Point Mountain"
+                "SOUTH": "Sheltered Valley 3"
             }
         },
         "Sheltered Valley 7": {
             "NAME": "Sheltered Valley 7",
             "DESCRIPTION": "Strange Noise",
             "PATHS": {
-                "SOUTH": "Sheltered Valley 8"
+                "SOUTH": "Sheltered Valley 8",
+                "NORTH": "Sheltered Valley 1"
             }
         },
         "Sheltered Valley 8": {
@@ -111,11 +111,11 @@ world_map = {
                 "NORTH": "Sheltered Valley 7"
             }
         },
-        "Desert": {
-            "NAME": "Desert",
+        "Great Desert": {
+            "NAME": "Great Desert",
             "DESCRIPTION": "Desert",
             "PATHS": {
-                "": "Spawn Point Desert"
+                "NORTH": "Sheltered Valley 8"
             }
         },
         "Sheltered Valley 4": {
@@ -138,14 +138,15 @@ world_map = {
             "NAME": "Lake",
             "DESCRIPTION": "Lake",
             "PATHS": {
-                "": "Spawn Point Lake"
+                "SOUTH": "Sheltered Valley 5"
             }
         },
         "Sheltered Valley 6": {
             "NAME": "Sheltered Valley 6",
             "DESCRIPTION": "Cabin, instant death",
-            "PATHS": {}
-            # None
+            "PATHS": {
+                "WEST": "Sheltered Valley 4"
+            }
         }
     },
     "Mountain Map": {
@@ -232,6 +233,20 @@ world_map = {
             }
         }
     },
+    "Desert Map": {
+        "Spawn Point Desert": {
+            "NAME": "",
+            "DESCRIPTION": "",
+            "PATHS": ""
+        }
+    },
+    "Lake Map": {
+        "Spawn Point Lake": {
+            "NAME": "",
+            "DESCRIPTION": "",
+            "PATHS": ""
+        }
+    }
 }
 
 
@@ -243,8 +258,9 @@ def combine_health(health1, health_from_level1):
     return health1 + health_from_level1
 
 
-directions = ["NORTH", "SOUTH", "EAST", "WEST", "", "N", "S", "E", "W", "Skip"]
+directions = ["NORTH", "SOUTH", "EAST", "WEST", "", "Skip"]
 alive_raven_gorge = True
+
 current_node = world_map["Raven Gorge Map"]["Spawn Point Sheltered Valley"]
 playing = True
 read_starting_text = False
@@ -288,6 +304,7 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
         print("Welcome to Zendikar")
         print("This is a game of skill and quite a bit of luck")
         print("Try checking your stats and inventory by typing i")
+        print("Or try moving by typing NORTH")
         read_starting_text = True
         print("You are in %s" % current_node["NAME"])
     command = input(">")
@@ -400,6 +417,7 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
         print("You have reached the end of this area")
         print("Poof a shop appears")
         print("Would you like to enter the shop")
+        print("You have %s gold" % total_gold)
         choice = input("YES or NO")
         if choice == "YES":
             print("This is what is offered")
@@ -435,9 +453,158 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
         if choice == "NO":
             pass
 
+
+if playing:
+    print("You beat round 1, congrats")
+    print("Here is 25 gold for doing that")
+    total_gold += 25
+    print("Now you have %s gold" % total_gold)
+
 alive_sheltered_valley = True
 did_you_beat_sheltered_valley = False
+first_time = False
+current_node = world_map["Sheltered Valley Map"]["Spawn Point Sheltered Valley"]
+get_gold = False
+did_you_get_to_the_desert = False
+did_you_get_to_the_mountain = False
+did_you_get_to_the_lake = False
 
 while alive_sheltered_valley and playing and not did_you_beat_sheltered_valley:
-    print("You are now in Sheltered Valley")
+    if not first_time:
+        print("You are now in Sheltered Valley")
+        first_time = True
+    command = input(">")
+    if command.lower() in ["q", "quit", "exit"]:
+        playing = False
+    elif command.lower() == "i":
+        check_self()
+    elif command in directions:
+        try:
+            room_name = current_node["PATHS"][command]
+            current_node = world_map["Sheltered Valley Map"][room_name]
+        except KeyError:
+            print("You can't go that way")
+    else:
+        print("Command not recognized")
+    if current_node["NAME"] == "Sheltered Valley 1":
+        print("You are now in %s" % current_node["NAME"])
+        print("You see a dead body in the distance \nWhat do you want to do?")
+        dead_body = input("Walk NORTH towards it or walk SOUTH away from it")
+        if dead_body == "NORTH":
+            current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 2"]
+            if not get_gold:
+                print("You start walking towards the dead body")
+                print("Whoever it was dropped a lot of gold")
+                print("You found 50 gold")
+                total_gold += 50
+                print("Now you have %s gold" % total_gold)
+                get_gold = True
+        if dead_body == "SOUTH":
+            current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 7"]
+            print("You walk away from the dead body so whatever killed it hopefully won't kill you")
+    if current_node["NAME"] == "Sheltered Valley 2":
+        print("You are now in %s" % current_node["NAME"])
+    if current_node["NAME"] == "Sheltered Valley 3":
+        print("You are now in %s" % current_node["NAME"])
+        print("You see a stream running beside you and it makes you thirsty")
+        print("Do you want to drink the water")
+        water = input("YES or NO")
+        if water == "YES":
+            print("You drink the water and within a few hours you collapse because of it")
+            print("You died")
+            print("Try again")
+            playing = False
+            alive_sheltered_valley = False
+        if water == "NO":
+            print("You don't take the water and that is probably a good thing")
+    if current_node["NAME"] == "Mountain in Distance":
+        print("You are now in %s" % current_node["NAME"])
+        print("You continue walking and you see a mountain in the distance")
+        did_you_get_to_the_mountain = True
+        did_you_beat_sheltered_valley = True
+        current_node = world_map["Mountain Map"]["Spawn Point Mountain"]
+    if current_node["NAME"] == "Sheltered Valley 7":
+        print("You are now in %s" % current_node["NAME"])
+        print("It starts to darken and suddenly you hear a snap in the grass around you")
+        print("Do you want to investigate or stay put")
+        noise = input("INVESTIGATE or STAY PUT")
+        if noise == "INVESTIGATE":
+            print("You go to investigate the noise")
+            print("Suddenly you look down and there are multiple swords sticking out of your chest")
+            print("You died")
+            print("Try again")
+            playing = False
+            alive_sheltered_valley = False
+        if noise == "STAY PUT":
+            print("You stayed where you are and nothing appears")
+    if current_node["NAME"] == "Sheltered Valley 8":
+        print("You are now in %s" % current_node["NAME"])
+        print("It is starting to get very dark")
+        print("Do you want to make a fire")
+        fire = input("YES or NO")
+        if fire == "YES":
+            print("You make a fire and the heat slowly lulls you to sleep")
+            print("When you wake up nothing has changed")
+        if fire == "NO":
+            print("When darkness strikes so do they")
+            print("You feel a small prick in your neck and as the world fades you see a strange humanoid "
+                  "standing over you")
+    if current_node["NAME"] == "Great Desert":
+        print("You are now in %s" % current_node["NAME"])
+        print("All in front of you is a vast desert")
+        print("You see a sign and it says")
+        print("You are in the Great Desert \nYou are going to die")
+        did_you_get_to_the_desert = True
+        did_you_beat_sheltered_valley = True
+        current_node = world_map["Desert Map"]["Spawn Point Desert"]
+    if current_node["NAME"] == "Sheltered Valley 4":
+        print("You are now in %s" % current_node["NAME"])
+        print("There is a wall of trees in front of you with little room to pass into it")
+        print("Do you want to go into it or try to go around it")
+        tree = input("Go NORTH through it or EAST around it")
+        if tree == "NORTH":
+            current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 5"]
+            print("You enter the mass of trees")
+        if tree == "EAST":
+            print("You start going along the tree line")
+            current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 6"]
+    if current_node["NAME"] == "Sheltered Valley 5":
+        print("You are now in %s" % current_node["NAME"])
+        print("You start to get very tired")
+        print("What would you like to do")
+        trees = input("Lie down among the trees and SLEEP or keep GOING")
+        if trees == "SLEEP":
+            print("You lie down on a tree and while you are asleep the tree slowly envelops you")
+            print("You died")
+            print("Try again")
+            playing = False
+            alive_sheltered_valley = False
+        if trees == "GOING":
+            print("You keep on going")
+    if current_node["NAME"] == "Lake":
+        print("You are now in %s" % current_node["NAME"])
+        did_you_get_to_the_lake = True
+    if current_node["NAME"] == "Sheltered Valley 6":
+        print("You are now in %s" % current_node["NAME"])
+        print("You see a cabin and you enter it")
+        print("When you enter it there is an eldrazi who kills you")
+        print("You died")
+        print("Try again")
+        playing = False
+        alive_sheltered_valley = False
+
+alive_desert = True
+alive_lake = True
+alive_mountain = True
+
+while playing and alive_desert and did_you_get_to_the_desert:
+    print("You are now in the Great Desert")
+    break
+
+while playing and alive_mountain and did_you_get_to_the_mountain:
+    print("You are at the base of the mountain")
+    break
+
+while playing and alive_lake and did_you_get_to_the_lake:
+    print("You got to the lake")
     break

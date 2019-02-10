@@ -159,24 +159,24 @@ world_map = {
             }
         },
         "Mountain 1": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Mountain 1",
+            "DESCRIPTION": "You start climbing the west side of the mountain",
             "PATHS": {
                 "SOUTH": "Spawn Point Mountain",
                 "NORTH": "Mountain 2"
             }
         },
         "Mountain 2": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Mountain 2",
+            "DESCRIPTION": "Out of breath",
             "PATHS": {
                 "NORTH": "Mountain 5",
                 "SOUTH": "Mountain 3"
             }
         },
         "Mountain 3": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Mountain 3",
+            "DESCRIPTION": "Thirsty",
             "PATHS": {
                 "NORTH": "Mountain 2",
                 "SOUTH": "Mountain 4",
@@ -184,66 +184,67 @@ world_map = {
             }
         },
         "Mountain 4": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Mountain 4",
+            "DESCRIPTION": "Crab",
             "PATHS": {
                 "NORTH": "Mountain 3"
             }
         },
         "Cave": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Cave",
+            "DESCRIPTION": "Cave",
             "PATHS": {
                 # None
             }
         },
         "Mountain 5": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Mountain 5",
+            "DESCRIPTION": "Instant death from dehydration",
             "PATHS": {
                 # None
             }
         },
         "Mountain 6": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Mountain 6",
+            "DESCRIPTION": "Button",
             "PATHS": {
-
+                "WEST": "Spawn Point Mountain"
             }
         },
         "Spawn Point Pit": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Spawn Point Pit",
+            "DESCRIPTION": "Spawn Point Pit",
             "PATHS": {
-
+                "EAST": "Pit 2",
+                "WEST": "Pit 1"
             }
         },
         "Pit 1": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Pit 1",
+            "DESCRIPTION": "Another pit",
             "PATHS": {
-
+                # None
             }
         },
         "Pit 2": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Pit 2",
+            "DESCRIPTION": "Kor grab you",
             "PATHS": {
-
+                # None
             }
         }
     },
     "Desert Map": {
         "Spawn Point Desert": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Spawn Point Desert",
+            "DESCRIPTION": "Spawn Point Desert",
             "PATHS": ""
         }
     },
     "Lake Map": {
         "Spawn Point Lake": {
-            "NAME": "",
-            "DESCRIPTION": "",
+            "NAME": "Spawn Point Lake",
+            "DESCRIPTION": "Spawn Point Lake",
             "PATHS": ""
         }
     }
@@ -294,18 +295,12 @@ defence = 1
 total_gold = 0
 health = 5
 health_from_level = 0
-health_potions_owned = 0
 level = 0
 exp = 15
 exp_to_level_up = 20
-eldrazi_scout_attack = 1
-eldrazi_scout_health = 2
-eldrazi_scion_attack = 2
-eldrazi_scion_health = 3
 shop = "YES"
-did_you_beat_the_eldrazi_scout = False
-did_you_beat_the_eldrazi_scion = False
 in_shop = True
+key_items = []
 
 
 def check_self():
@@ -342,7 +337,7 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
     else:
         print("Command not recognized")
     if command == "Skip":
-        current_node = world_map["Raven Gorge Map"]["Raven Gorge 4"]
+        did_you_beat_raven_gorge = True
         total_gold += 100
     if current_node["NAME"] == "Raven Gorge 1":
         print("You are in %s" % current_node["NAME"])
@@ -352,7 +347,7 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
         print("You see the eldrazi scout in front of you")
         while eldrazi_scout.monster_health > 0 and health > 0 and not eldrazi_scout.did_you_beat_monster:
             print("The eldrazi scout attacked you")
-            print("You took %i damage" % int(eldrazi_scout_attack - defence))
+            print("You took %i damage" % int(eldrazi_scout.monster_attack - defence))
             health = health - (eldrazi_scout.monster_attack - defence)
             print("Now you have %s health left" % health)
             print("What would you like to do")
@@ -361,7 +356,7 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
                 print("You swing your %s at the eldrazi scout" % weapon)
                 print("You did %s damage to the eldrazi scout" % damage)
                 eldrazi_scout. monster_health -= damage
-                print("The eldrazi scion has %s health left" % eldrazi_scout_health)
+                print("The eldrazi scion has %s health left" % eldrazi_scout.monster_health)
             if eldrazi_fight == "FLEE":
                 alive_raven_gorge = False
                 playing = False
@@ -369,7 +364,7 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
                 print("You died")
                 print("Try again")
                 break
-        if eldrazi_scout_health <= 0:
+        if eldrazi_scout.monster_health <= 0:
             print("You slayed the eldrazi")
             print("You got 5 gold")
             total_gold += 5
@@ -395,19 +390,19 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
         print("What would you like to do")
         eldrazi_scion_fight = input("ATTACK or FLEE")
         if eldrazi_scion_fight == "ATTACK":
-            while eldrazi_scion_health > 0 and combine_health(health, health_from_level) > 0 \
-                    and not did_you_beat_the_eldrazi_scion:
+            while eldrazi_scion.monster_health > 0 and combine_health(health, health_from_level) > 0 \
+                    and not eldrazi_scion.did_you_beat_monster:
                 print("The eldrazi attacked you")
-                print("You took % i damage" % int(eldrazi_scion_attack - defence))
-                health -= int(eldrazi_scion_attack - defence)
+                print("You took % i damage" % int(eldrazi_scion.monster_attack - defence))
+                health -= int(eldrazi_scion.monster_attack - defence)
                 print("Now you have %s health left" % combine_health(health, health_from_level))
                 print("What would you like to attack with?")
                 eldrazi_scion_fight1 = input("%s" % weapon)
                 print("You swing your %s at the eldrazi" % weapon)
                 print("The eldrazi takes %s damage" % damage)
-                eldrazi_scion_health -= damage
-                print("The eldrazi has %s health left" % eldrazi_scion_health)
-            if eldrazi_scion_health <= 0:
+                eldrazi_scion.monster_health -= damage
+                print("The eldrazi has %s health left" % eldrazi_scion.monster_health)
+            if eldrazi_scion.monster_health <= 0:
                 print("You defeated the eldrazi")
                 total_gold += 5
                 print("Now you have %s gold" % total_gold)
@@ -489,11 +484,38 @@ get_gold = False
 did_you_get_to_the_desert = False
 did_you_get_to_the_mountain = False
 did_you_get_to_the_lake = False
+shop3 = "YES"
+
 
 while alive_sheltered_valley and playing and not did_you_beat_sheltered_valley:
     if not first_time:
         print("You are now in Sheltered Valley")
         first_time = True
+    print("Poof a shop appears")
+    print("Would you like to enter it")
+    shop1 = input("YES or NO")
+    while shop1 == "YES" and shop3 == "YES":
+        print("You entered the shop")
+        print("This is what is offered")
+        print("Stone Sword: 15 Gold, Health Potion: 5 Gold")
+        shop2 = input("STONE SWORD or HEALTH POTION")
+        if shop2 == "STONE SWORD" and total_gold >= 15:
+            print("You bought a stone sword")
+            weapon = "Stone Sword"
+            damage = 5
+            total_gold -= 15
+            print("Now you do %s damage" % combine_attack(damage, damage_from_level))
+            print("You have %s gold left" % total_gold)
+        if shop2 == "HEALTH POTION" and total_gold >= 5:
+            print("You bought a health potion")
+            health += 3
+            total_gold -= 5
+            print("Now you have %s health" % combine_health(health, health_from_level))
+            print("You have %s gold left" % total_gold)
+        print("Would you like to remain in the shop")
+        shop3 = input("YES or NO")
+    if shop1 == "NO":
+        pass
     command = input(">")
     if command.lower() in ["q", "quit", "exit"]:
         playing = False

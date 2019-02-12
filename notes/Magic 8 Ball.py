@@ -1,3 +1,4 @@
+import random
 while 0 == 0:
     answer = ""
     import random

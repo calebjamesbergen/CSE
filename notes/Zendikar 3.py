@@ -315,6 +315,33 @@ def check_self():
     print("Your best weapon is a/an %s" % weapon)
 
 
+class Room(object):
+    def __init__(self, location, monster_in_it, north, south, east, west, health,
+                 weapon, damage, gold, exp, exp_to_level_up, decision, decision_text= ""):
+        self.location = location
+        self.monster_in_it = monster_in_it
+        self.north = north
+        self.south = south
+        self.east = east
+        self.west = west
+        self.health = health
+        self.weapon = weapon
+        self.damage = damage
+        self.gold = gold
+        self.exp = exp
+        self.exp_to_level_up = exp_to_level_up
+        self.decision = decision
+        self.decision_text = decision_text
+
+    def room(self):
+        print(self.location)
+        print(self.monster_in_it)
+
+
+room1 = Room(current_node["NAME"], False, current_node["PATHS"], current_node["PATHS"], current_node["PATHS"],
+             current_node["PATHS"], health, weapon, damage, total_gold, exp, exp_to_level_up, False)
+print(room1.room())
+
 while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
     if not read_starting_text:
         print("Welcome to Zendikar")

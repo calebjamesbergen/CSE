@@ -1,7 +1,7 @@
 world_map = {
     "Raven Gorge Map": {
-        "Spawn Point Sheltered Valley": {
-            "NAME": "Spawn Point Sheltered Valley",
+        "Spawn Point Raven Gorge": {
+            "NAME": "Spawn Point Raven Gorge",
             "DESCRIPTION": "Test room",
             "PATHS": {
                 "NORTH": "Raven Gorge 1"
@@ -254,7 +254,8 @@ heads = 1
 
 
 class Monster:
-    def __init__(self, monster_health, monster_attack, monster_exp, monster_gold, did_you_beat_monster):
+    def __init__(self, name, monster_health, monster_attack, monster_exp, monster_gold, did_you_beat_monster):
+        self.name = name
         self.monster_health = monster_health
         self.monster_attack = monster_attack
         self.monster_exp = monster_exp
@@ -262,62 +263,136 @@ class Monster:
         self.did_you_beat_monster = did_you_beat_monster
 
 
-eldrazi_scout = Monster(2, 1, 5, 5, False)
-eldrazi_scion = Monster(3, 2, 5, 5, False)
-crab = Monster(5, 3, 5, 5, False)
-krayt_dragon = Monster(10, 5, 10, 10, False)
-sidewinder_naga = Monster(5, 4, 10, 5, False)
-hydra = Monster(20, 1 * heads, 15, 20, False)
-fire_elemental = Monster(20, 5, 20, 20, False)
-volcano_hellion = Monster(15, 10, 15, 10, False)
+eldrazi_scout = Monster("Eldrazi Scout", 2, 1, 5, 5, False)
+eldrazi_scion = Monster("Eldrazi Scion", 3, 2, 5, 5, False)
+crab = Monster("Crab", 5, 3, 5, 5, False)
+krayt_dragon = Monster("Krayt Dragon", 10, 5, 10, 10, False)
+sidewinder_naga = Monster("Sidewinder Naga", 5, 4, 10, 5, False)
+hydra = Monster("Hydra", 20, 1 * heads, 15, 20, False)
+fire_elemental = Monster("Fire Elemental", 20, 5, 20, 20, False)
+volcano_hellion = Monster("Volcano Hellion", 15, 10, 15, 10, False)
 
 
-def combine_attack(damage1, damage_from_level1):
-    return damage1 + damage_from_level1
+class Person:
+    def __init__(self):
+        self.alive_raven_gorge = True
+        self.directions = ["NORTH", "SOUTH", "EAST", "WEST", "", "Skip"]
+        self.current_node = world_map["Raven Gorge Map"]["Spawn Point Raven Gorge"]
+        self.playing = True
+        self.read_starting_text = False
+        self.did_you_beat_raven_gorge = False
+        self.weapon = "Stick"
+        self.damage = 1
+        self.damage_from_level = 0
+        self.armor = "Leather armor"
+        self.defence = 1
+        self.total_gold = 0
+        self.health = 5
+        self.health_from_level = 0
+        self.level = 0
+        self.exp = 15
+        self.exp_to_level_up = 20
+        self.shop = "YES"
+        self.in_shop = True
+        self.key_items = []
+        self.room_name = ""
+        self.alive_sheltered_valley = True
+        self.did_you_beat_sheltered_valley = False
+        self.first_time = False
+        self.get_gold = False
+        self.did_you_get_to_the_desert = False
+        self.did_you_get_to_the_mountain = False
+        self.did_you_get_to_the_lake = False
+        self.shop3 = "YES"
+        self.total_health = self.health + self.health_from_level
+        self.total_damage = self.damage + self.damage_from_level
+
+    def combine_health(self):
+        self.total_health = self.health + self.health_from_level
+        print("You have %s total health" % self.total_health)
+
+    def combine_attack(self):
+        self.total_damage = self.damage + self.damage_from_level
+        print("You deal %s damage" % self.total_damage)
+
+    def attack(self):
+        return self.damage + self.damage_from_level
+
+    def health(self):
+        return self.health + self.health_from_level
+
+    def level_up(self):
+        if self.exp >= self.exp_to_level_up:
+            self.exp -= 20
+            print("You leveled up")
+            print("Your health and attack increased by one")
+            self.damage_from_level += 1
+            self.health_from_level += 1
+            self.level += 1
+            print("Now you are level %s" % self.level)
+
+    def check_self(self):
+        print("You have this weapon: %s" % self.weapon)
+        print("You deal %s damage" % self.damage)
+        print("You have this armor: %s" % self.armor)
+        print("You have %s defence" % self.defence)
+        print("You have %s health" % self.health)
+        print("You have %s gold" % self.total_gold)
+        print("You are level %s" % self.level)
+        print("You are %s exp away from leveling up" % (self.exp_to_level_up - self.exp))
+        print("Your best weapon is a/an %s" % self.weapon)
+
+    def command(self):
+        command = input(">")
+        if command.lower() in ["q", "quit", "exit"]:
+            self.playing = False
+        elif command.lower() == "i":
+            self.check_self()
+        elif command in self.directions:
+            try:
+                self.room_name = self.current_node["PATHS"][command]
+                self.current_node = world_map["Raven Gorge Map"][self.room_name]
+            except KeyError:
+                print("You can't go that way")
+        else:
+            print("Command not recognized")
+        if command == "Skip":
+            self.did_you_beat_raven_gorge = True
+            self.total_gold += 100
+
+    def fight(self, name, health, attack, exp, gold, did_you_beat_it):
+        print("What would you like to do")
+        fighting = input("ATTACK or FLEE")
+        if fighting == "ATTACK":
+            while health > 0 and not did_you_beat_it:
+                print("You swung your %s at the %s" % (self.weapon, name))
+                print("The %s took %s damage" % (name, self.attack))
+                health -= attack
+                print("Now the %s has %s health left" % (name, health))
+                print("The %s attacked you and you took %s damage" % (name, attack))
+                self.health -= attack
+                print("Now you have %s health" % self.combine_health())
+            if health <= 0:
+                print("You defeated the %s" % name)
+                print("You got %s gold" % gold)
+                self.total_gold += gold
+                print("Now you have %s gold" % gold)
+                self.exp += exp
+                print("You got %s exp" % exp)
+                print("Now you have %s exp" % exp)
+                self.level_up()
+        if fighting == "FLEE":
+            print("You died")
+            print("Try again")
+            self.playing = False
 
 
-def combine_health(health1, health_from_level1):
-    return health1 + health_from_level1
-
-
-directions = ["NORTH", "SOUTH", "EAST", "WEST", "", "Skip"]
-alive_raven_gorge = True
-
-current_node = world_map["Raven Gorge Map"]["Spawn Point Sheltered Valley"]
-playing = True
-read_starting_text = False
-did_you_beat_raven_gorge = False
-weapon = "Stick"
-damage = 1
-damage_from_level = 0
-armor = "Leather armor"
-defence = 1
-total_gold = 0
-health = 5
-health_from_level = 0
-level = 0
-exp = 15
-exp_to_level_up = 20
-shop = "YES"
-in_shop = True
-key_items = []
-
-
-def check_self():
-    print("You have this weapon: %s" % weapon)
-    print("You deal %s damage" % damage)
-    print("You have this armor: %s" % armor)
-    print("You have %s defence" % defence)
-    print("You have %s health" % health)
-    print("You have %s gold" % total_gold)
-    print("You are level %s" % level)
-    print("You are %s exp away from leveling up" % (exp_to_level_up - exp))
-    print("Your best weapon is a/an %s" % weapon)
+you = Person()
 
 
 class Room(object):
     def __init__(self, location, monster_in_it, north, south, east, west, health,
-                 weapon, damage, gold, exp, exp_to_level_up, decision, decision_text= ""):
+                 weapon, damage, gold, exp, exp_to_level_up, decision, decision_text=""):
         self.location = location
         self.monster_in_it = monster_in_it
         self.north = north
@@ -338,107 +413,63 @@ class Room(object):
         print(self.monster_in_it)
 
 
-room1 = Room(current_node["NAME"], False, current_node["PATHS"], current_node["PATHS"], current_node["PATHS"],
-             current_node["PATHS"], health, weapon, damage, total_gold, exp, exp_to_level_up, False)
+room1 = Room(you.current_node["NAME"], False, you.current_node["PATHS"], you.current_node["PATHS"],
+             you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon, you.damage,
+             you.total_gold, you.exp, you.exp_to_level_up, False)
 print(room1.room())
 
-while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
-    if not read_starting_text:
+while you.alive_raven_gorge and you.playing and not you.did_you_beat_raven_gorge:
+    if not you.read_starting_text:
         print("Welcome to Zendikar")
         print("This is a game of skill and quite a bit of luck")
         print("Try checking your stats and inventory by typing i")
         print("Or try moving by typing NORTH")
-        read_starting_text = True
-        print("You are in %s" % current_node["NAME"])
-    command = input(">")
-    if command.lower() in ["q", "quit", "exit"]:
-        playing = False
-    elif command.lower() == "i":
-        check_self()
-    elif command in directions:
-        try:
-            room_name = current_node["PATHS"][command]
-            current_node = world_map["Raven Gorge Map"][room_name]
-        except KeyError:
-            print("You can't go that way")
-    else:
-        print("Command not recognized")
-    if command == "Skip":
-        did_you_beat_raven_gorge = True
-        total_gold += 100
-    if current_node["NAME"] == "Raven Gorge 1":
-        print("You are in %s" % current_node["NAME"])
-        print("You start walking forward and you see an eldrazi scout north of you")
-    elif current_node["NAME"] == "Raven Gorge 2":
-        print("You are in %s" % current_node["NAME"])
+        you.read_starting_text = True
+        print("You are in %s" % you.current_node["NAME"])
+    you.command()
+    if you.current_node["NAME"] == "Raven Gorge 1":
+        print("You are in %s" % you.current_node["NAME"])
+        if not eldrazi_scout.did_you_beat_monster:
+            print("You start walking forward and you see an eldrazi scout north of you")
+    elif you.current_node["NAME"] == "Raven Gorge 2":
+        print("You are in %s" % you.current_node["NAME"])
         print("You see the eldrazi scout in front of you")
-        while eldrazi_scout.monster_health > 0 and health > 0 and not eldrazi_scout.did_you_beat_monster:
-            print("The eldrazi scout attacked you")
-            print("You took %i damage" % int(eldrazi_scout.monster_attack - defence))
-            health = health - (eldrazi_scout.monster_attack - defence)
-            print("Now you have %s health left" % health)
-            print("What would you like to do")
-            eldrazi_fight = input("ATTACK or FLEE")
-            if eldrazi_fight == "ATTACK":
-                print("You swing your %s at the eldrazi scout" % weapon)
-                print("You did %s damage to the eldrazi scout" % damage)
-                eldrazi_scout. monster_health -= damage
-                print("The eldrazi scion has %s health left" % eldrazi_scout.monster_health)
-            if eldrazi_fight == "FLEE":
-                alive_raven_gorge = False
-                playing = False
-                print("You tried to flee but you tripped and the eldrazi killed you")
-                print("You died")
-                print("Try again")
-                break
-        if eldrazi_scout.monster_health <= 0:
-            print("You slayed the eldrazi")
-            print("You got 5 gold")
-            total_gold += 5
-            print("Now you have %s gold" % total_gold)
-            exp += 5
-            print("You got 5 exp")
-            if exp >= exp_to_level_up:
-                exp -= 20
-                level += 1
-                damage_from_level += 1
-                health_from_level += 1
-                print("You leveled up")
-                print("Your damage and health increased by 1")
-        did_you_beat_the_eldrazi_scout = True
-    elif current_node["NAME"] == "Raven Gorge 2 Left":
-        print("You are in %s" % current_node["NAME"])
+        you.fight(eldrazi_scout.name, eldrazi_scout.monster_health, eldrazi_scout.monster_attack,
+                  eldrazi_scout.monster_gold, eldrazi_scout.monster_exp, eldrazi_scout.did_you_beat_monster)
+    elif you.current_node["NAME"] == "Raven Gorge 2 Left":
+        print("You are in %s" % you.current_node["NAME"])
         print("You found 25 gold")
-        total_gold += 25
-        print("Now you have %s gold" % total_gold)
-    elif current_node["NAME"] == "Raven Gorge 3":
-        print("You are in %s" % current_node["NAME"])
+        you.total_gold += 25
+        print("Now you have %s gold" % you.total_gold)
+    elif you.current_node["NAME"] == "Raven Gorge 3":
+        print("You are in %s" % you.current_node["NAME"])
         print("An eldrazi scion appears")
         print("What would you like to do")
         eldrazi_scion_fight = input("ATTACK or FLEE")
         if eldrazi_scion_fight == "ATTACK":
-            while eldrazi_scion.monster_health > 0 and combine_health(health, health_from_level) > 0 \
+            while eldrazi_scion.monster_health > 0 and you.total_health > 0 \
                     and not eldrazi_scion.did_you_beat_monster:
                 print("The eldrazi attacked you")
-                print("You took % i damage" % int(eldrazi_scion.monster_attack - defence))
-                health -= int(eldrazi_scion.monster_attack - defence)
-                print("Now you have %s health left" % combine_health(health, health_from_level))
+                print("You took % i damage" % int(eldrazi_scion.monster_attack - you.defence))
+                you.health -= int(eldrazi_scion.monster_attack - you.defence)
+                print("Now you have %s health left" % you.combine_health())
                 print("What would you like to attack with?")
-                eldrazi_scion_fight1 = input("%s" % weapon)
-                print("You swing your %s at the eldrazi" % weapon)
-                print("The eldrazi takes %s damage" % damage)
-                eldrazi_scion.monster_health -= damage
+                eldrazi_scion_fight1 = input("%s" % you.weapon)
+                print("You swing your %s at the eldrazi" % you.weapon)
+                print("The eldrazi takes %s damage" % you.damage)
+                eldrazi_scion.monster_health -= you.damage
                 print("The eldrazi has %s health left" % eldrazi_scion.monster_health)
+                you.combine_health()
             if eldrazi_scion.monster_health <= 0:
                 print("You defeated the eldrazi")
-                total_gold += 5
-                print("Now you have %s gold" % total_gold)
-                exp += 5
-                if exp >= exp_to_level_up:
-                    exp -= 20
-                    level += 1
-                    damage_from_level += 1
-                    health_from_level += 1
+                you.total_gold += 5
+                print("Now you have %s gold" % you.total_gold)
+                you.exp += 5
+                if you.exp >= you.exp_to_level_up:
+                    you.exp -= 20
+                    you.level += 1
+                    you.damage_from_level += 1
+                    you.health_from_level += 1
                     print("You leveled up")
                     print("Your damage and health increased by 1")
                     did_you_beat_the_eldrazi_scion = True
@@ -446,48 +477,48 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
             print("You tripped and the eldrazi killed you")
             print("You died")
             print("Try again")
-            alive_raven_gorge = False
+            you.alive_raven_gorge = False
             playing = False
-    elif current_node["NAME"] == "Raven Gorge 3 Right":
-        print("You are in %s" % current_node["NAME"])
+    elif you.current_node["NAME"] == "Raven Gorge 3 Right":
+        print("You are in %s" % you.current_node["NAME"])
         print("You disturbed an eldrazi devastator")
         print("It turns around and rips you in half with only 2 of its 4 arms")
         print("You died")
         print("Try again")
-        alive_raven_gorge = False
+        you.alive_raven_gorge = False
         playing = False
-    elif current_node["NAME"] == "Raven Gorge 4":
+    elif you.current_node["NAME"] == "Raven Gorge 4":
         print("You have reached the end of this area")
         print("Poof a shop appears")
         print("Would you like to enter the shop")
-        print("You have %s gold" % total_gold)
+        print("You have %s gold" % you.total_gold)
         choice = input("YES or NO")
         if choice == "YES":
             print("This is what is offered")
             print("Wood Sword: 5 Gold, Copper Armor: 5 Gold, Health Potion: 5 Gold")
             print("What would you like to buy")
-            while total_gold > 0 and shop == "YES" and in_shop:
+            while you.total_gold > 0 and you.shop == "YES" and you.in_shop:
                 raven_gorge_shop = input("WOOD SWORD or COPPER ARMOR or HEALTH POTION")
-                if raven_gorge_shop == "WOOD SWORD" and total_gold >= 5:
-                    total_gold -= 5
+                if raven_gorge_shop == "WOOD SWORD" and you.total_gold >= 5:
+                    you.total_gold -= 5
                     weapon = "WOOD SWORD"
                     damage = 3
                     print("You bought the Wood Sword")
-                    print("Now you deal %s damage" % combine_attack(damage, damage_from_level))
-                    print("Now you have %s gold" % total_gold)
-                if raven_gorge_shop == "COPPER ARMOR" and total_gold >= 5:
-                    total_gold -= 5
+                    print("Now you deal %s damage" % you.combine_attack())
+                    print("Now you have %s gold" % you.total_gold)
+                if raven_gorge_shop == "COPPER ARMOR" and you.total_gold >= 5:
+                    you.total_gold -= 5
                     armor = "COPPER ARMOR"
                     defence = 3
                     print("You bought the Copper Armor")
                     print("Now you have %s defence" % defence)
-                    print("Now you have %s gold" % total_gold)
-                if raven_gorge_shop == "HEALTH POTION" and total_gold >= 5:
-                    total_gold -= 5
-                    health += 3
+                    print("Now you have %s gold" % you.total_gold)
+                if raven_gorge_shop == "HEALTH POTION" and you.total_gold >= 5:
+                    you.total_gold -= 5
+                    you.health += 3
                     print("You bought the Health Potion")
-                    print("Now you have %s health" % combine_health(health, health_from_level))
-                    print("Now you have %s gold" % total_gold)
+                    print("Now you have %s health" % you.combine_health())
+                    print("Now you have %s gold" % you.total_gold)
                 print("Would you like to remain in the shop")
                 shop = input("YES or NO")
                 if shop == "NO":
@@ -497,85 +528,62 @@ while alive_raven_gorge and playing and not did_you_beat_raven_gorge:
             pass
 
 
-if playing:
+if you.playing:
     print("You beat round 1, congrats")
     print("Here is 25 gold for doing that")
-    total_gold += 25
-    print("Now you have %s gold" % total_gold)
+    you.total_gold += 25
+    print("Now you have %s gold" % you.total_gold)
 
-alive_sheltered_valley = True
-did_you_beat_sheltered_valley = False
-first_time = False
-current_node = world_map["Sheltered Valley Map"]["Spawn Point Sheltered Valley"]
-get_gold = False
-did_you_get_to_the_desert = False
-did_you_get_to_the_mountain = False
-did_you_get_to_the_lake = False
-shop3 = "YES"
-
-
-while alive_sheltered_valley and playing and not did_you_beat_sheltered_valley:
-    if not first_time:
+while you.alive_sheltered_valley and you.playing and not you.did_you_beat_sheltered_valley:
+    if not you.first_time:
         print("You are now in Sheltered Valley")
-        first_time = True
+        you.first_time = True
     print("Poof a shop appears")
     print("Would you like to enter it")
     shop1 = input("YES or NO")
-    while shop1 == "YES" and shop3 == "YES":
+    while shop1 == "YES" and you.shop3 == "YES":
         print("You entered the shop")
         print("This is what is offered")
         print("Stone Sword: 15 Gold, Health Potion: 5 Gold")
         shop2 = input("STONE SWORD or HEALTH POTION")
-        if shop2 == "STONE SWORD" and total_gold >= 15:
+        if shop2 == "STONE SWORD" and you.total_gold >= 15:
             print("You bought a stone sword")
             weapon = "Stone Sword"
             damage = 5
-            total_gold -= 15
-            print("Now you do %s damage" % combine_attack(damage, damage_from_level))
-            print("You have %s gold left" % total_gold)
-        if shop2 == "HEALTH POTION" and total_gold >= 5:
+            you.total_gold -= 15
+            print("Now you do %s damage" % you.combine_attack())
+            print("You have %s gold left" % you.total_gold)
+        if shop2 == "HEALTH POTION" and you.total_gold >= 5:
             print("You bought a health potion")
-            health += 3
-            total_gold -= 5
-            print("Now you have %s health" % combine_health(health, health_from_level))
-            print("You have %s gold left" % total_gold)
+            you.health += 3
+            you.total_gold -= 5
+            print("Now you have %s health" % you.combine_health())
+            print("You have %s gold left" % you.total_gold)
         print("Would you like to remain in the shop")
         shop3 = input("YES or NO")
     if shop1 == "NO":
         pass
-    command = input(">")
-    if command.lower() in ["q", "quit", "exit"]:
-        playing = False
-    elif command.lower() == "i":
-        check_self()
-    elif command in directions:
-        try:
-            room_name = current_node["PATHS"][command]
-            current_node = world_map["Sheltered Valley Map"][room_name]
-        except KeyError:
-            print("You can't go that way")
-    else:
-        print("Command not recognized")
-    if current_node["NAME"] == "Sheltered Valley 1":
-        print("You are now in %s" % current_node["NAME"])
+    you.command()
+    if you.current_node["NAME"] == "Sheltered Valley 1":
+        print("You are now in %s" % you.current_node["NAME"])
         print("You see a dead body in the distance \nWhat do you want to do?")
         dead_body = input("Walk NORTH towards it or walk SOUTH away from it")
         if dead_body == "NORTH":
-            current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 2"]
-            if not get_gold:
+            you.current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 2"]
+            if not you.get_gold:
                 print("You start walking towards the dead body")
                 print("Whoever it was dropped a lot of gold")
                 print("You found 50 gold")
-                total_gold += 50
-                print("Now you have %s gold" % total_gold)
+                you.total_gold += 50
+                print("Now you have %s gold" % you.total_gold)
                 get_gold = True
         if dead_body == "SOUTH":
-            current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 7"]
+            you.current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 7"]
             print("You walk away from the dead body so whatever killed it hopefully won't kill you")
-    if current_node["NAME"] == "Sheltered Valley 2":
-        print("You are now in %s" % current_node["NAME"])
-    if current_node["NAME"] == "Sheltered Valley 3":
-        print("You are now in %s" % current_node["NAME"])
+    if you.current_node["NAME"] == "Sheltered Valley 2":
+        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node["NAME"] == "Sheltered Valley 3":
+        print("You are now in %s" % you.current_node["NAME"])
         print("You see a stream running beside you and it makes you thirsty")
         print("Do you want to drink the water")
         water = input("YES or NO")
@@ -587,14 +595,14 @@ while alive_sheltered_valley and playing and not did_you_beat_sheltered_valley:
             alive_sheltered_valley = False
         if water == "NO":
             print("You don't take the water and that is probably a good thing")
-    if current_node["NAME"] == "Mountain in Distance":
-        print("You are now in %s" % current_node["NAME"])
+    if you.current_node["NAME"] == "Mountain in Distance":
+        print("You are now in %s" % you.current_node["NAME"])
         print("You continue walking and you see a mountain in the distance")
         did_you_get_to_the_mountain = True
         did_you_beat_sheltered_valley = True
-        current_node = world_map["Mountain Map"]["Spawn Point Mountain"]
-    if current_node["NAME"] == "Sheltered Valley 7":
-        print("You are now in %s" % current_node["NAME"])
+        you.current_node = world_map["Mountain Map"]["Spawn Point Mountain"]
+    if you.current_node["NAME"] == "Sheltered Valley 7":
+        print("You are now in %s" % you.current_node["NAME"])
         print("It starts to darken and suddenly you hear a snap in the grass around you")
         print("Do you want to investigate or stay put")
         noise = input("INVESTIGATE or STAY PUT")
@@ -607,8 +615,8 @@ while alive_sheltered_valley and playing and not did_you_beat_sheltered_valley:
             alive_sheltered_valley = False
         if noise == "STAY PUT":
             print("You stayed where you are and nothing appears")
-    if current_node["NAME"] == "Sheltered Valley 8":
-        print("You are now in %s" % current_node["NAME"])
+    if you.current_node["NAME"] == "Sheltered Valley 8":
+        print("You are now in %s" % you.current_node["NAME"])
         print("It is starting to get very dark")
         print("Do you want to make a fire")
         fire = input("YES or NO")
@@ -619,27 +627,27 @@ while alive_sheltered_valley and playing and not did_you_beat_sheltered_valley:
             print("When darkness strikes so do they")
             print("You feel a small prick in your neck and as the world fades you see a strange humanoid "
                   "standing over you")
-    if current_node["NAME"] == "Great Desert":
-        print("You are now in %s" % current_node["NAME"])
+    if you.current_node["NAME"] == "Great Desert":
+        print("You are now in %s" % you.current_node["NAME"])
         print("All in front of you is a vast desert")
         print("You see a sign and it says")
         print("You are in the Great Desert \nYou are going to die")
         did_you_get_to_the_desert = True
         did_you_beat_sheltered_valley = True
-        current_node = world_map["Desert Map"]["Spawn Point Desert"]
-    if current_node["NAME"] == "Sheltered Valley 4":
-        print("You are now in %s" % current_node["NAME"])
+        you.current_node = world_map["Desert Map"]["Spawn Point Desert"]
+    if you.current_node["NAME"] == "Sheltered Valley 4":
+        print("You are now in %s" % you.current_node["NAME"])
         print("There is a wall of trees in front of you with little room to pass into it")
         print("Do you want to go into it or try to go around it")
         tree = input("Go NORTH through it or EAST around it")
         if tree == "NORTH":
-            current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 5"]
+            you.current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 5"]
             print("You enter the mass of trees")
         if tree == "EAST":
             print("You start going along the tree line")
-            current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 6"]
-    if current_node["NAME"] == "Sheltered Valley 5":
-        print("You are now in %s" % current_node["NAME"])
+            you.current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 6"]
+    if you.current_node["NAME"] == "Sheltered Valley 5":
+        print("You are now in %s" % you.current_node["NAME"])
         print("You start to get very tired")
         print("What would you like to do")
         trees = input("Lie down among the trees and SLEEP or keep GOING")
@@ -651,11 +659,11 @@ while alive_sheltered_valley and playing and not did_you_beat_sheltered_valley:
             alive_sheltered_valley = False
         if trees == "GOING":
             print("You keep on going")
-    if current_node["NAME"] == "Lake":
-        print("You are now in %s" % current_node["NAME"])
+    if you.current_node["NAME"] == "Lake":
+        print("You are now in %s" % you.current_node["NAME"])
         did_you_get_to_the_lake = True
-    if current_node["NAME"] == "Sheltered Valley 6":
-        print("You are now in %s" % current_node["NAME"])
+    if you.current_node["NAME"] == "Sheltered Valley 6":
+        print("You are now in %s" % you.current_node["NAME"])
         print("You see a cabin and you enter it")
         print("When you enter it there is an eldrazi who kills you")
         print("You died")
@@ -667,14 +675,14 @@ alive_desert = True
 alive_lake = True
 alive_mountain = True
 
-while playing and alive_desert and did_you_get_to_the_desert:
+while you.playing and alive_desert and you.did_you_get_to_the_desert:
     print("You are now in the Great Desert")
     break
 
-while playing and alive_mountain and did_you_get_to_the_mountain:
+while you.playing and alive_mountain and you.did_you_get_to_the_mountain:
     print("You are at the base of the mountain")
     break
 
-while playing and alive_lake and did_you_get_to_the_lake:
+while you.playing and alive_lake and you.did_you_get_to_the_lake:
     print("You got to the lake")
     break

@@ -403,7 +403,7 @@ you = Person()
 class Room(object):
     def __init__(self, location, monster_in_it, north, south, east, west, health,
                  weapon, damage, gold, exp, exp_to_level_up, surprise, room_text, gold_in_it, how_much_gold=0,
-                 surprise_name=""):
+                 surprise_name="", instant_death=False):
         self.location = location
         self.monster_in_it = monster_in_it
         self.north = north
@@ -421,8 +421,10 @@ class Room(object):
         self.gold_in_it = gold_in_it
         self.how_much_gold = how_much_gold
         self.surprise_name = surprise_name
+        self.instant_death = instant_death
 
-    def run_room(self, name="", health="", attack="", gold="", exp="", did_you_beat_it=""):
+    def run_room(self, did_you_beat_it="", name=you.current_node["NAME"], health=you.combine_health(),
+                 attack=you.combine_attack(), gold=you.total_gold, exp=you.exp):
         print(self.location)
         print(self.room_text)
         if self.gold_in_it:
@@ -433,13 +435,11 @@ class Room(object):
             print("A/an %s appeared" % name)
             you.fight(name, health, attack, gold, exp, did_you_beat_it)
         you.command()
+        if self.instant_death:
+            you.playing = False
+            print("You died")
+            print("Try again")
 
-
-room1 = Room(you.current_node["NAME"], True, you.current_node["PATHS"], you.current_node["PATHS"],
-             you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon, you.damage,
-             you.total_gold, you.exp, you.exp_to_level_up, False, "", False)
-room1.run_room(eldrazi_scout.name, eldrazi_scout.monster_health, eldrazi_scout.monster_attack,
-               eldrazi_scout.monster_exp, eldrazi_scout.did_you_beat_monster)
 
 spawn_point_sheltered_valley = Room(you.current_node, False, you.current_node["PATHS"], you.current_node["PATHS"],
                                     you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
@@ -450,7 +450,8 @@ raven_gorge1 = Room(you.current_node, False, you.current_node["PATHS"], you.curr
                     "There is an eldrazi scout north of you", False)
 raven_gorge2 = Room(you.current_node, True, you.current_node["PATHS"], you.current_node["PATHS"],
                     you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
-                    you.damage, you.total_gold, you.exp, you.exp_to_level_up, False, "", False)
+                    you.damage, you.total_gold, you.exp, you.exp_to_level_up, False, "", False,
+                    eldrazi_scout.did_you_beat_monster)
 raven_gorge2_left = Room(you.current_node, False, you.current_node["PATHS"], you.current_node["PATHS"],
                          you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
                          you.damage, you.total_gold, you.exp, you.exp_to_level_up, False,
@@ -458,12 +459,31 @@ raven_gorge2_left = Room(you.current_node, False, you.current_node["PATHS"], you
 raven_gorge3 = Room(you.current_node, True, you.current_node["PATHS"], you.current_node["PATHS"],
                     you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
                     you.damage, you.total_gold, you.exp, you.exp_to_level_up, False,
-                    "", False)
+                    "", False, eldrazi_scion.did_you_beat_monster)
 raven_gorge3_right = Room(you.current_node, False, you.current_node["PATHS"], you.current_node["PATHS"],
+                          you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
+                          you.damage, you.total_gold, you.exp, you.exp_to_level_up, True,
+                          "An eldrazi devestator appears and rips you apart", False, True)
+raven_gorge4 = Room(you.current_node, False, you.current_node["PATHS"], you.current_node["PATHS"],
                     you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
                     you.damage, you.total_gold, you.exp, you.exp_to_level_up, True,
                     "", False)
-raven_gorge4 = Room()
+
+while you.playing:
+    if you.current_node["NAME"] == "Spawn Point Sheltered Valley":
+        spawn_point_sheltered_valley.run_room()
+    if you.current_node["NAME"] == "Raven Gorge 1":
+        raven_gorge1.run_room()
+    if you.current_node["NAME"] == "Raven Gorge 1":
+        raven_gorge2.run_room(eldrazi_scout.did_you_beat_monster)
+    if you.current_node["NAME"] == "Raven Gorge 1":
+        raven_gorge2_left.run_room()
+    if you.current_node["NAME"] == "Raven Gorge 1":
+        raven_gorge3.run_room(eldrazi_scion.did_you_beat_monster)
+    if you.current_node["NAME"] == "Raven Gorge 1":
+        raven_gorge3_right.run_room()
+    if you.current_node["NAME"] == "Raven Gorge 1":
+        raven_gorge4.run_room()
 
 while you.alive_raven_gorge and you.playing and not you.did_you_beat_raven_gorge:
     if not you.read_starting_text:

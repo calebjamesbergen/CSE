@@ -1,255 +1,3 @@
-world_map = {
-    "Raven Gorge Map": {
-        "Spawn Point Raven Gorge": {
-            "NAME": "Spawn Point Raven Gorge",
-            "DESCRIPTION": "Test room",
-            "PATHS": {
-                "NORTH": "Raven Gorge 1"
-            }
-        },
-        "Raven Gorge 1": {
-            "NAME": "Raven Gorge 1",
-            "DESCRIPTION": "Nothing",
-            "PATHS": {
-                "SOUTH": "Spawn Point Sheltered Valley",
-                "NORTH": "Raven Gorge 2"
-            }
-        },
-        "Raven Gorge 2": {
-            "NAME": "Raven Gorge 2",
-            "DESCRIPTION": "Eldrazi Scout",
-            "PATHS": {
-                "SOUTH": "Raven Gorge 1",
-                "NORTH": "Raven Gorge 3",
-                "WEST": "Raven Gorge 2 Left"
-            }
-        },
-        "Raven Gorge 2 Left": {
-          "NAME": "Raven Gorge 2 Left",
-          "DESCRIPTION": "25 Gold",
-          "PATHS": {
-                "EAST": "Raven Gorge 2"
-            }
-        },
-        "Raven Gorge 3": {
-            "NAME": "Raven Gorge 3",
-            "DESCRIPTION": "Eldrazi Scion",
-            "PATHS": {
-                "EAST": "Raven Gorge 3 Right",
-                "NORTH": "Raven Gorge 4",
-                "SOUTH": "Raven Gorge 2"
-            }
-        },
-        "Raven Gorge 3 Right": {
-            "NAME": "Raven Gorge 3 Right",
-            "DESCRIPTION": "Eldrazi Devastator",
-            "PATHS": {
-                "WEST": "Raven Gorge 3"
-            }
-        },
-        "Raven Gorge 4": {
-            "NAME": "Raven Gorge 4",
-            "DESCRIPTION": "Shop",
-            "PATHS": {
-                "SOUTH": "Raven Gorge 3"
-            }
-        }
-    },
-    "Sheltered Valley Map": {
-        "Spawn Point Sheltered Valley": {
-            "NAME": "Spawn Point Sheltered Valley",
-            "DESCRIPTION": "Spawn Point",
-            "PATHS": {
-                "WEST": "Sheltered Valley 1",
-                "EAST": "Sheltered Valley 4"
-            }
-        },
-        "Sheltered Valley 1": {
-            "NAME": "Sheltered Valley 1",
-            "DESCRIPTION": "Spawn Point",
-            "PATHS": {
-                "SOUTH": "Sheltered Valley 7",
-                "NORTH": "Sheltered Valley 2"
-            }
-        },
-        "Sheltered Valley 2": {
-            "NAME": "Sheltered Valley 2",
-            "DESCRIPTION": "Dead body with 50 gold",
-            "PATHS": {
-                "SOUTH": "Sheltered Valley 1",
-                "NORTH": "Sheltered Valley 3"
-            }
-        },
-        "Sheltered Valley 3": {
-            "NAME": "Sheltered Valley 3",
-            "DESCRIPTION": "Stream",
-            "PATHS": {
-                "SOUTH": "Sheltered Valley 2",
-                "NORTH": "Mountain in Distance"
-            }
-        },
-        "Mountain in Distance": {
-            "NAME": "Mountain in Distance",
-            "DESCRIPTION": "Mountain in Distance",
-            "PATHS": {
-                "SOUTH": "Sheltered Valley 3"
-            }
-        },
-        "Sheltered Valley 7": {
-            "NAME": "Sheltered Valley 7",
-            "DESCRIPTION": "Strange Noise",
-            "PATHS": {
-                "SOUTH": "Sheltered Valley 8",
-                "NORTH": "Sheltered Valley 1"
-            }
-        },
-        "Sheltered Valley 8": {
-            "NAME": "Sheltered Valley 8",
-            "DESCRIPTION": "Making a fire",
-            "PATHS": {
-                "SOUTH": "Great Desert",
-                "NORTH": "Sheltered Valley 7"
-            }
-        },
-        "Great Desert": {
-            "NAME": "Great Desert",
-            "DESCRIPTION": "Desert",
-            "PATHS": {
-                "NORTH": "Sheltered Valley 8"
-            }
-        },
-        "Sheltered Valley 4": {
-            "NAME": "Sheltered Valley 4",
-            "DESCRIPTION": "Mass of trees",
-            "PATHS": {
-                "NORTH": "Sheltered Valley 5",
-                "EAST": "Sheltered Valley 6"
-            }
-        },
-        "Sheltered Valley 5": {
-            "NAME": "Sheltered Valley 5",
-            "DESCRIPTION": "Heavy canopy",
-            "PATHS": {
-                "NORTH": "Lake",
-                "SOUTH": "Sheltered Valley 4"
-            }
-        },
-        "Lake": {
-            "NAME": "Lake",
-            "DESCRIPTION": "Lake",
-            "PATHS": {
-                "SOUTH": "Sheltered Valley 5"
-            }
-        },
-        "Sheltered Valley 6": {
-            "NAME": "Sheltered Valley 6",
-            "DESCRIPTION": "Cabin, instant death",
-            "PATHS": {
-                "WEST": "Sheltered Valley 4"
-            }
-        }
-    },
-    "Mountain Map": {
-        "Spawn Point Mountain": {
-            "NAME": "Spawn Point Mountain",
-            "DESCRIPTION": "Spawn Point Mountain",
-            "PATHS": {
-                "WEST": "Mountain 1",
-                "EAST": "Mountain 6"
-            }
-        },
-        "Mountain 1": {
-            "NAME": "Mountain 1",
-            "DESCRIPTION": "You start climbing the west side of the mountain",
-            "PATHS": {
-                "SOUTH": "Spawn Point Mountain",
-                "NORTH": "Mountain 2"
-            }
-        },
-        "Mountain 2": {
-            "NAME": "Mountain 2",
-            "DESCRIPTION": "Out of breath",
-            "PATHS": {
-                "NORTH": "Mountain 5",
-                "SOUTH": "Mountain 3"
-            }
-        },
-        "Mountain 3": {
-            "NAME": "Mountain 3",
-            "DESCRIPTION": "Thirsty",
-            "PATHS": {
-                "NORTH": "Mountain 2",
-                "SOUTH": "Mountain 4",
-                "EAST": "Mountain 5"
-            }
-        },
-        "Mountain 4": {
-            "NAME": "Mountain 4",
-            "DESCRIPTION": "Crab",
-            "PATHS": {
-                "NORTH": "Mountain 3"
-            }
-        },
-        "Cave": {
-            "NAME": "Cave",
-            "DESCRIPTION": "Cave",
-            "PATHS": {
-                # None
-            }
-        },
-        "Mountain 5": {
-            "NAME": "Mountain 5",
-            "DESCRIPTION": "Instant death from dehydration",
-            "PATHS": {
-                # None
-            }
-        },
-        "Mountain 6": {
-            "NAME": "Mountain 6",
-            "DESCRIPTION": "Button",
-            "PATHS": {
-                "WEST": "Spawn Point Mountain"
-            }
-        },
-        "Spawn Point Pit": {
-            "NAME": "Spawn Point Pit",
-            "DESCRIPTION": "Spawn Point Pit",
-            "PATHS": {
-                "EAST": "Pit 2",
-                "WEST": "Pit 1"
-            }
-        },
-        "Pit 1": {
-            "NAME": "Pit 1",
-            "DESCRIPTION": "Another pit",
-            "PATHS": {
-                # None
-            }
-        },
-        "Pit 2": {
-            "NAME": "Pit 2",
-            "DESCRIPTION": "Kor grab you",
-            "PATHS": {
-                # None
-            }
-        }
-    },
-    "Desert Map": {
-        "Spawn Point Desert": {
-            "NAME": "Spawn Point Desert",
-            "DESCRIPTION": "Spawn Point Desert",
-            "PATHS": ""
-        }
-    },
-    "Lake Map": {
-        "Spawn Point Lake": {
-            "NAME": "Spawn Point Lake",
-            "DESCRIPTION": "Spawn Point Lake",
-            "PATHS": ""
-        }
-    }
-}
-
 heads = 1
 
 
@@ -263,21 +11,11 @@ class Monster:
         self.did_you_beat_monster = did_you_beat_monster
 
 
-eldrazi_scout = Monster("Eldrazi Scout", 2, 1, 5, 5, False)
-eldrazi_scion = Monster("Eldrazi Scion", 3, 2, 5, 5, False)
-crab = Monster("Crab", 5, 3, 5, 5, False)
-krayt_dragon = Monster("Krayt Dragon", 10, 5, 10, 10, False)
-sidewinder_naga = Monster("Sidewinder Naga", 5, 4, 10, 5, False)
-hydra = Monster("Hydra", 20, 1 * heads, 15, 20, False)
-fire_elemental = Monster("Fire Elemental", 20, 5, 20, 20, False)
-volcano_hellion = Monster("Volcano Hellion", 15, 10, 15, 10, False)
-
-
-class Person:
-    def __init__(self):
+class Person(object):
+    def __init__(self, assigned_room=None):
         self.alive_raven_gorge = True
-        self.directions = ["NORTH", "SOUTH", "EAST", "WEST", "", "Skip"]
-        self.current_node = world_map["Raven Gorge Map"]["Spawn Point Raven Gorge"]
+        self.directions = ["north", "south", "east", "west", "", "Skip"]
+        self.current_node = assigned_room
         self.playing = True
         self.read_starting_text = False
         self.did_you_beat_raven_gorge = False
@@ -350,8 +88,8 @@ class Person:
             self.check_self()
         elif command in self.directions:
             try:
-                self.room_name = self.current_node["PATHS"][command]
-                self.current_node = world_map["Raven Gorge Map"][self.room_name]
+                room_name = getattr(self.current_node, command)
+                self.current_node = globals()[room_name]
             except KeyError:
                 print("You can't go that way")
         else:
@@ -368,7 +106,7 @@ class Person:
     def fight(self, name, health, attack, exp, gold, did_you_beat_it):
         print("What would you like to do")
         fighting = input("ATTACK or FLEE")
-        if fighting == "ATTACK":
+        if fighting == "ATTACK" or "attack":
             while health > 0 and not did_you_beat_it:
                 print("You swung your %s at the %s" % (self.weapon, name))
                 print("The %s took %s damage" % (name, self.get_attack()))
@@ -378,60 +116,51 @@ class Person:
                 self.health -= attack
                 print("Now you have %s health" % self.get_health())
             if health <= 0:
-                print("You defeated the %s" % name)
-                print("You got %s gold" % gold)
-                self.total_gold += gold
-                print("Now you have %s gold" % gold)
-                self.exp += exp
-                print("You got %s exp" % exp)
-                print("Now you have %s exp" % self.exp)
-                self.level_up()
-                eldrazi_scout.did_you_beat_monster = True
+                if you.total_health + you.health_from_level > 0:
+                    print("You defeated the %s" % name)
+                    print("You got %s gold" % gold)
+                    self.total_gold += gold
+                    print("Now you have %s gold" % gold)
+                    self.exp += exp
+                    print("You got %s exp" % exp)
+                    print("Now you have %s exp" % self.exp)
+                    self.level_up()
+                    eldrazi_scout.did_you_beat_monster = True
             else:
                 print("You died")
                 print("Try again")
                 self.playing = False
-        if fighting == "FLEE":
+        if fighting == "FLEE" or "flee":
             print("You died")
             print("Try again")
             self.playing = False
 
 
-you = Person()
-
-
 class Room(object):
-    def __init__(self, location, monster_in_it, north, south, east, west, health,
-                 weapon, damage, gold, exp, exp_to_level_up, surprise, room_text, gold_in_it, how_much_gold=0,
-                 surprise_name="", instant_death=False):
-        self.location = location
-        self.monster_in_it = monster_in_it
+    def __init__(self, name, north, south, east, west, surprise, room_text,
+                 surprise_name="", instant_death=False, monster_in_it=[], gold_in_it=False, how_much_gold=0):
+        self.monsters = monster_in_it
         self.north = north
+        self.name = name
         self.south = south
         self.east = east
         self.west = west
-        self.health = health
-        self.weapon = weapon
-        self.damage = damage
-        self.gold = gold
-        self.exp = exp
-        self.exp_to_level_up = exp_to_level_up
         self.surprise = surprise
         self.room_text = room_text
-        self.gold_in_it = gold_in_it
-        self.how_much_gold = how_much_gold
         self.surprise_name = surprise_name
         self.instant_death = instant_death
+        self.gold_in_it = gold_in_it
+        self.how_much_gold = how_much_gold
 
-    def run_room(self, did_you_beat_it="", name=you.current_node["NAME"], health=you.combine_health(),
-                 attack=you.combine_attack(), gold=you.total_gold, exp=you.exp):
-        print(self.location)
+    def run_room(self, name, health,
+                 attack, gold, exp, did_you_beat_it):
+        print(self.name)
         print(self.room_text)
         if self.gold_in_it:
             print("You found %s gold" % self.how_much_gold)
             you.total_gold += self.how_much_gold
             print("Now you have %s gold" % you.total_gold)
-        if self.monster_in_it:
+        if self.monsters:
             print("A/an %s appeared" % name)
             you.fight(name, health, attack, gold, exp, did_you_beat_it)
         you.command()
@@ -441,49 +170,35 @@ class Room(object):
             print("Try again")
 
 
-spawn_point_sheltered_valley = Room(you.current_node, False, you.current_node["PATHS"], you.current_node["PATHS"],
-                                    you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
-                                    you.damage, you.total_gold, you.exp, you.exp_to_level_up, False, "", False)
-raven_gorge1 = Room(you.current_node, False, you.current_node["PATHS"], you.current_node["PATHS"],
-                    you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
-                    you.damage, you.total_gold, you.exp, you.exp_to_level_up, False,
-                    "There is an eldrazi scout north of you", False)
-raven_gorge2 = Room(you.current_node, True, you.current_node["PATHS"], you.current_node["PATHS"],
-                    you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
-                    you.damage, you.total_gold, you.exp, you.exp_to_level_up, False, "", False,
-                    eldrazi_scout.did_you_beat_monster)
-raven_gorge2_left = Room(you.current_node, False, you.current_node["PATHS"], you.current_node["PATHS"],
-                         you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
-                         you.damage, you.total_gold, you.exp, you.exp_to_level_up, False,
-                         "", True, 25)
-raven_gorge3 = Room(you.current_node, True, you.current_node["PATHS"], you.current_node["PATHS"],
-                    you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
-                    you.damage, you.total_gold, you.exp, you.exp_to_level_up, False,
-                    "", False, eldrazi_scion.did_you_beat_monster)
-raven_gorge3_right = Room(you.current_node, False, you.current_node["PATHS"], you.current_node["PATHS"],
-                          you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
-                          you.damage, you.total_gold, you.exp, you.exp_to_level_up, True,
-                          "An eldrazi devestator appears and rips you apart", False, True)
-raven_gorge4 = Room(you.current_node, False, you.current_node["PATHS"], you.current_node["PATHS"],
-                    you.current_node["PATHS"], you.current_node["PATHS"], you.health, you.weapon,
-                    you.damage, you.total_gold, you.exp, you.exp_to_level_up, True,
-                    "", False)
+you = Person()
 
-while you.playing:
-    if you.current_node["NAME"] == "Spawn Point Sheltered Valley":
-        spawn_point_sheltered_valley.run_room()
-    if you.current_node["NAME"] == "Raven Gorge 1":
-        raven_gorge1.run_room()
-    if you.current_node["NAME"] == "Raven Gorge 1":
-        raven_gorge2.run_room(eldrazi_scout.did_you_beat_monster)
-    if you.current_node["NAME"] == "Raven Gorge 1":
-        raven_gorge2_left.run_room()
-    if you.current_node["NAME"] == "Raven Gorge 1":
-        raven_gorge3.run_room(eldrazi_scion.did_you_beat_monster)
-    if you.current_node["NAME"] == "Raven Gorge 1":
-        raven_gorge3_right.run_room()
-    if you.current_node["NAME"] == "Raven Gorge 1":
-        raven_gorge4.run_room()
+
+# Monsters
+eldrazi_scout = Monster("Eldrazi Scout", 2, 1, 5, 5, False)
+eldrazi_scion = Monster("Eldrazi Scion", 3, 2, 5, 5, False)
+crab = Monster("Crab", 5, 3, 5, 5, False)
+krayt_dragon = Monster("Krayt Dragon", 10, 5, 10, 10, False)
+sidewinder_naga = Monster("Sidewinder Naga", 5, 4, 10, 5, False)
+hydra = Monster("Hydra", 20, 1 * heads, 15, 20, False)
+fire_elemental = Monster("Fire Elemental", 20, 5, 20, 20, False)
+volcano_hellion = Monster("Volcano Hellion", 15, 10, 15, 10, False)
+
+# Rooms
+spawn_point_raven_gorge = Room("Spawn Point Raven Gorge", "raven_gorge1", None,
+                               None, None, None, None)
+raven_gorge1 = Room("Raven Gorge 2", "raven_gorge2", None, None, "raven_gorge2_left", None,
+                    "There is an eldrazi scout north of you")
+raven_gorge2 = Room("Raven Gorge 2", "raven_gorge3", "raven_gorge1", None, "raven_gorge2_left", None,
+                    "An eldrazi scout is here")
+raven_gorge2_left = Room("Raven Gorge 2 Left", None, None, "raven_gorge2", None, None, "", "", False, [], True, 25)
+raven_gorge3 = Room("Raven Gorge 3", "raven_gorge4", "raven_gorge2", "raven_gorge3_right", None, None, None)
+raven_gorge3_right = Room("Raven Gorge 3 Right", None, None, None, "raven_gorge3", True,
+                          "An eldrazi devastator appeared and ripped you apart", "Eldrazi Devastator", True)
+raven_gorge4 = Room("Raven Gorge 4", None, "raven_gorge3", None, None, None, None)
+
+
+you.current_node = spawn_point_raven_gorge
+
 
 while you.alive_raven_gorge and you.playing and not you.did_you_beat_raven_gorge:
     if not you.read_starting_text:
@@ -492,25 +207,25 @@ while you.alive_raven_gorge and you.playing and not you.did_you_beat_raven_gorge
         print("Try checking your stats and inventory by typing i")
         print("Or try moving by typing NORTH")
         you.read_starting_text = True
-        print("You are in %s" % you.current_node["NAME"])
+        print("You are in %s" % you.current_node.name)
     you.command()
-    if you.current_node["NAME"] == "Raven Gorge 1":
-        print("You are in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Raven Gorge 1":
+        print("You are in %s" % you.current_node.name)
         if not eldrazi_scout.did_you_beat_monster:
             print("You start walking forward and you see an eldrazi scout north of you")
-    elif you.current_node["NAME"] == "Raven Gorge 2":
-        print("You are in %s" % you.current_node["NAME"])
+    elif you.current_node.name == "Raven Gorge 2":
+        print("You are in %s" % you.current_node.name)
         if not eldrazi_scout.did_you_beat_monster:
             print("You see the eldrazi scout in front of you")
             you.fight(eldrazi_scout.name, eldrazi_scout.monster_health, eldrazi_scout.monster_attack,
                       eldrazi_scout.monster_gold, eldrazi_scout.monster_exp, eldrazi_scout.did_you_beat_monster)
-    elif you.current_node["NAME"] == "Raven Gorge 2 Left":
-        print("You are in %s" % you.current_node["NAME"])
+    elif you.current_node.name == "Raven Gorge 2 Left":
+        print("You are in %s" % you.current_node.name)
         print("You found 25 gold")
         you.total_gold += 25
         print("Now you have %s gold" % you.total_gold)
-    elif you.current_node["NAME"] == "Raven Gorge 3":
-        print("You are in %s" % you.current_node["NAME"])
+    elif you.current_node.name == "Raven Gorge 3":
+        print("You are in %s" % you.current_node.name)
         print("An eldrazi scion appears")
         print("What would you like to do")
         eldrazi_scion_fight = input("ATTACK or FLEE")
@@ -547,15 +262,15 @@ while you.alive_raven_gorge and you.playing and not you.did_you_beat_raven_gorge
             print("Try again")
             you.alive_raven_gorge = False
             playing = False
-    elif you.current_node["NAME"] == "Raven Gorge 3 Right":
-        print("You are in %s" % you.current_node["NAME"])
+    elif you.current_node.name == "Raven Gorge 3 Right":
+        print("You are in %s" % you.current_node.name)
         print("You disturbed an eldrazi devastator")
         print("It turns around and rips you in half with only 2 of its 4 arms")
         print("You died")
         print("Try again")
         you.alive_raven_gorge = False
         playing = False
-    elif you.current_node["NAME"] == "Raven Gorge 4":
+    elif you.current_node.name == "Raven Gorge 4":
         print("You have reached the end of this area")
         print("Poof a shop appears")
         print("Would you like to enter the shop")
@@ -602,6 +317,7 @@ if you.playing:
     you.total_gold += 25
     print("Now you have %s gold" % you.total_gold)
 
+"""
 while you.alive_sheltered_valley and you.playing and not you.did_you_beat_sheltered_valley:
     if not you.first_time:
         print("You are now in Sheltered Valley")
@@ -632,8 +348,8 @@ while you.alive_sheltered_valley and you.playing and not you.did_you_beat_shelte
     if shop1 == "NO":
         pass
     you.command()
-    if you.current_node["NAME"] == "Sheltered Valley 1":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Sheltered Valley 1":
+        print("You are now in %s" % you.current_node.name)
         print("You see a dead body in the distance \nWhat do you want to do?")
         dead_body = input("Walk NORTH towards it or walk SOUTH away from it")
         if dead_body == "NORTH":
@@ -648,10 +364,10 @@ while you.alive_sheltered_valley and you.playing and not you.did_you_beat_shelte
         if dead_body == "SOUTH":
             you.current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 7"]
             print("You walk away from the dead body so whatever killed it hopefully won't kill you")
-    if you.current_node["NAME"] == "Sheltered Valley 2":
-        print("You are now in %s" % you.current_node["NAME"])
-    if you.current_node["NAME"] == "Sheltered Valley 3":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Sheltered Valley 2":
+        print("You are now in %s" % you.current_node.name)
+    if you.current_node.name == "Sheltered Valley 3":
+        print("You are now in %s" % you.current_node.name)
         print("You see a stream running beside you and it makes you thirsty")
         print("Do you want to drink the water")
         water = input("YES or NO")
@@ -663,14 +379,14 @@ while you.alive_sheltered_valley and you.playing and not you.did_you_beat_shelte
             alive_sheltered_valley = False
         if water == "NO":
             print("You don't take the water and that is probably a good thing")
-    if you.current_node["NAME"] == "Mountain in Distance":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Mountain in Distance":
+        print("You are now in %s" % you.current_node.name)
         print("You continue walking and you see a mountain in the distance")
         did_you_get_to_the_mountain = True
         did_you_beat_sheltered_valley = True
         you.current_node = world_map["Mountain Map"]["Spawn Point Mountain"]
-    if you.current_node["NAME"] == "Sheltered Valley 7":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Sheltered Valley 7":
+        print("You are now in %s" % you.current_node.name)
         print("It starts to darken and suddenly you hear a snap in the grass around you")
         print("Do you want to investigate or stay put")
         noise = input("INVESTIGATE or STAY PUT")
@@ -683,8 +399,8 @@ while you.alive_sheltered_valley and you.playing and not you.did_you_beat_shelte
             alive_sheltered_valley = False
         if noise == "STAY PUT":
             print("You stayed where you are and nothing appears")
-    if you.current_node["NAME"] == "Sheltered Valley 8":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Sheltered Valley 8":
+        print("You are now in %s" % you.current_node.name)
         print("It is starting to get very dark")
         print("Do you want to make a fire")
         fire = input("YES or NO")
@@ -695,16 +411,16 @@ while you.alive_sheltered_valley and you.playing and not you.did_you_beat_shelte
             print("When darkness strikes so do they")
             print("You feel a small prick in your neck and as the world fades you see a strange humanoid "
                   "standing over you")
-    if you.current_node["NAME"] == "Great Desert":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Great Desert":
+        print("You are now in %s" % you.current_node.name)
         print("All in front of you is a vast desert")
         print("You see a sign and it says")
         print("You are in the Great Desert \nYou are going to die")
         did_you_get_to_the_desert = True
         did_you_beat_sheltered_valley = True
         you.current_node = world_map["Desert Map"]["Spawn Point Desert"]
-    if you.current_node["NAME"] == "Sheltered Valley 4":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Sheltered Valley 4":
+        print("You are now in %s" % you.current_node.name)
         print("There is a wall of trees in front of you with little room to pass into it")
         print("Do you want to go into it or try to go around it")
         tree = input("Go NORTH through it or EAST around it")
@@ -714,8 +430,8 @@ while you.alive_sheltered_valley and you.playing and not you.did_you_beat_shelte
         if tree == "EAST":
             print("You start going along the tree line")
             you.current_node = world_map["Sheltered Valley Map"]["Sheltered Valley 6"]
-    if you.current_node["NAME"] == "Sheltered Valley 5":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Sheltered Valley 5":
+        print("You are now in %s" % you.current_node.name)
         print("You start to get very tired")
         print("What would you like to do")
         trees = input("Lie down among the trees and SLEEP or keep GOING")
@@ -727,11 +443,11 @@ while you.alive_sheltered_valley and you.playing and not you.did_you_beat_shelte
             alive_sheltered_valley = False
         if trees == "GOING":
             print("You keep on going")
-    if you.current_node["NAME"] == "Lake":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Lake":
+        print("You are now in %s" % you.current_node.name)
         did_you_get_to_the_lake = True
-    if you.current_node["NAME"] == "Sheltered Valley 6":
-        print("You are now in %s" % you.current_node["NAME"])
+    if you.current_node.name == "Sheltered Valley 6":
+        print("You are now in %s" % you.current_node.name)
         print("You see a cabin and you enter it")
         print("When you enter it there is an eldrazi who kills you")
         print("You died")
@@ -754,3 +470,4 @@ while you.playing and alive_mountain and you.did_you_get_to_the_mountain:
 while you.playing and alive_lake and you.did_you_get_to_the_lake:
     print("You got to the lake")
     break
+"""

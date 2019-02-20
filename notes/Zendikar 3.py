@@ -111,15 +111,15 @@ class Person(object):
         print("What would you like to do")
         fighting = input("ATTACK or FLEE")
         if fighting == "ATTACK" or "attack":
-            while health > 0 and not did_you_beat_it:
+            while health > 0 and not did_you_beat_it and self.get_health() > 0:
+                print("The %s attacked you and you took %s damage" % (name, you.damage_you_take(attack)))
+                self.health -= you.damage_you_take(attack)
+                print("Now you have %s health" % self.get_health())
                 print("You swung your %s at the %s" % (self.weapon, name))
                 print("The %s took %s damage" % (name, self.get_attack()))
                 health -= you.get_attack()
                 print("Now the %s has %s health left" % (name, health))
-                print("The %s attacked you and you took %s damage" % (name, you.damage_you_take(attack)))
-                self.health -= you.damage_you_take(attack)
-                print("Now you have %s health" % self.get_health())
-            if you.get_health() > 0:
+            if you.health + you.health_from_level > 0:
                 print("You defeated the %s" % name)
                 print("You got %s gold" % gold)
                 self.total_gold += gold
@@ -129,15 +129,10 @@ class Person(object):
                 print("Now you have %s exp" % self.exp)
                 self.level_up()
                 eldrazi_scout.did_you_beat_monster = True
-            elif you.get_health() <= 0:
-                print("You died")
-                print("Try again")
-                self.playing = False
-                afgaafdsf
-        if fighting == "FLEE" or "flee":
-            print("You died")
-            print("Try again")
-            self.playing = False
+            elif you.health + you.health_from_level <= 0:
+                self.die()
+        if fighting in ["FLEE", "flee"]:
+            self.die()
 
 
 class Room(object):
@@ -191,7 +186,7 @@ volcano_hellion = Monster("Volcano Hellion", 15, 10, 15, 10, False)
 # Rooms
 spawn_point_raven_gorge = Room("Spawn Point Raven Gorge", "raven_gorge1", None,
                                None, None, None, None)
-raven_gorge1 = Room("Raven Gorge 1", "raven_gorge2", None, None, "raven_gorge2_left", None,
+raven_gorge1 = Room("Raven Gorge 1", "raven_gorge2", "spawn_point_raven_gorge", None, None, None,
                     "There is an eldrazi scout north of you")
 raven_gorge2 = Room("Raven Gorge 2", "raven_gorge3", "raven_gorge1", None, "raven_gorge2_left", None,
                     "An eldrazi scout is here", "", False, True, "Eldrazi Scout")
@@ -318,7 +313,7 @@ while you.alive_raven_gorge and you.playing and not you.did_you_beat_raven_gorge
                     armor = "COPPER ARMOR"
                     you.defence = 3
                     print("You bought the Copper Armor")
-                    print("Now you have %s defence" % defence)
+                    print("Now you have %s defence" % you.defence)
                     print("Now you have %s gold" % you.total_gold)
                 if raven_gorge_shop == "HEALTH POTION" and you.total_gold >= 5:
                     you.total_gold -= 5

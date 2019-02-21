@@ -67,14 +67,65 @@ class Person(object):
         self.total_health = self.health + self.health_from_level
         self.total_damage = self.damage + self.damage_from_level
         self.defence = 1
+        self.health_potions = ["Health Potion", "Good Health Potion", "Great Health Potion"]
+        self.weapons_list = ["Wood Sword", "Stone Sword", "Ice Sword", "Cave Sword", "Diamond Sword", "Enchanted Sword"]
+        self.weapons_damage = [3, 5, 15, 15, 15, 25]
+        self.armor_list = ["Copper Armor", "Iron Armor", "Diamond Armor", "Enchanted Armor"]
+        self.armor_defence = [3, 10, 15, 20]
+        self.health_potion_heal = 3
+        self.good_health_potion_heal = 5
+        self.great_health_potion_heal = 10
+
+    def is_it_a_health_potion(self, health_potion):
+        if health_potion == self.health_potions[0]:
+            return 3
+        if health_potion == self.health_potions[1]:
+            return 5
+        if health_potion == self.health_potions[2]:
+            return 10
+
+    def is_it_a_weapon(self, weapon):
+        if weapon == self.weapons_list[0]:
+            self.damage = self.weapons_damage[0]
+            self.weapon = self.weapons_list[0]
+        if weapon == self.weapons_list[1]:
+            self.damage = self.weapons_damage[1]
+            self.weapon = self.weapons_list[1]
+        if weapon == self.weapons_list[2]:
+            self.damage = self.weapons_damage[2]
+            self.weapon = self.weapons_list[2]
+        if weapon == self.weapons_list[3]:
+            self.damage = self.weapons_damage[3]
+            self.weapon = self.weapons_list[3]
+        if weapon == self.weapons_list[4]:
+            self.damage = self.weapons_damage[4]
+            self.weapon = self.weapons_list[4]
+        if weapon == self.weapons_list[5]:
+            self.damage = self.weapons_damage[5]
+            self.weapon = self.weapons_list[5]
+        print("Now you deal %s damage" % self.combine_attack())
+
+    def is_it_armor(self, armor):
+        if armor == self.armor_list[0]:
+            self.armor = self.armor_list[0]
+            self.defence = self.armor_defence[0]
+        if armor == self.armor_list[1]:
+            self.armor = self.armor_list[1]
+            self.defence = self.armor_defence[1]
+        if armor == self.armor_list[2]:
+            self.armor = self.armor_list[2]
+            self.defence = self.armor_defence[2]
+        if armor == self.armor_list[3]:
+            self.armor = self.armor_list[3]
+            self.defence = self.armor_defence[3]
+        print("Now you have %s defence" % self.defence)
 
     def combine_health(self):
         self.total_health = self.health + self.health_from_level
         print("You have %s total health" % self.total_health)
 
     def combine_attack(self):
-        self.total_damage = self.damage + self.damage_from_level
-        print("You deal %s damage" % self.total_damage)
+        return self.damage + self.damage_from_level
 
     def get_attack(self):
         return self.damage + self.damage_from_level
@@ -89,6 +140,9 @@ class Person(object):
         if self.exp >= self.exp_to_level_up:
             self.exp -= 20
             print("You leveled up")
+            print("You got 5 gold for leveling up")
+            self.total_gold += 5
+            print("Now you have %s gold" % self.total_gold)
             print("Your health and attack increased by one")
             self.damage_from_level += 1
             self.health_from_level += 1
@@ -159,7 +213,9 @@ class Person(object):
 
 class Room(object):
     def __init__(self, name, north, south, east, west, surprise, room_text, surprise_name="", instant_death=False,
-                 monster_in_it=False, monster_name="", gold_in_it=False, how_much_gold=0):
+                 monster_in_it=False, monster_name="", gold_in_it=False, how_much_gold=0, shop=False, shop_item1=None,
+                 shop_item2=None, shop_item3=None, shop_item4=None, shop_item1_cost=None, shop_item2_cost=None,
+                 shop_item3_cost=None, shop_item4_cost=None, stay_in_shop="YES", next_place=None):
         self.monsters = monster_in_it
         self.north = north
         self.name = name
@@ -173,6 +229,92 @@ class Room(object):
         self.gold_in_it = gold_in_it
         self.how_much_gold = how_much_gold
         self.monster_name = monster_name
+        self.shop = shop
+        self.shop_item1 = shop_item1
+        self.shop_item2 = shop_item2
+        self.shop_item3 = shop_item3
+        self.shop_item4 = shop_item4
+        self.shop_item1_cost = shop_item1_cost
+        self.shop_item2_cost = shop_item2_cost
+        self.shop_item3_cost = shop_item3_cost
+        self.shop_item4_cost = shop_item4_cost
+        self.stay_in_shop = stay_in_shop
+        self.next_place = next_place
+
+    def run_shop(self):
+        if self.shop:
+            print("Would you like to enter the shop?")
+            choice = input("YES or NO")
+            while you.total_gold > 0 and self.stay_in_shop == "YES" and choice == "YES":
+                print("You entered the shop")
+                print("Here is what they offer")
+                print("%s: %s, %s: %s, %s: %s, %s: %s" % (self.shop_item1, self.shop_item1_cost, self.shop_item2,
+                                                          self.shop_item2_cost, self.shop_item3, self.shop_item3_cost,
+                                                          self.shop_item4, self.shop_item4_cost))
+                what_you_buy = input("%s or %s or %s or %s" % (self.shop_item1, self.shop_item2, self.shop_item3,
+                                                               self.shop_item4))
+                if what_you_buy == self.shop_item1 and you.total_gold > self.shop_item1_cost:
+                    print("You bought a/an %s" % self.shop_item1)
+                    you.total_gold -= self.shop_item1_cost
+                    print("Now you have %s gold left" % you.total_gold)
+                    if self.shop_item1 in you.health_potions:
+                        you.health += you.is_it_a_health_potion(self.shop_item1)
+
+                    if self.shop_item1 in you.weapons_list:
+                        you.is_it_a_weapon(self.shop_item1)
+
+                    if self.shop_item1 in you.armor_list:
+                        you.is_it_armor(self.shop_item1)
+
+                if what_you_buy == self.shop_item2 and you.total_gold > self.shop_item2_cost:
+                    print("You bought a/an %s" % self.shop_item2)
+                    you.total_gold -= self.shop_item2_cost
+                    print("Now you have %s gold left" % you.total_gold)
+                    if self.shop_item2 in you.health_potions:
+                        you.health += you.is_it_a_health_potion(self.shop_item2)
+
+                    if self.shop_item2 in you.weapons_list:
+                        you.is_it_a_weapon(self.shop_item2)
+
+                    if self.shop_item2 in you.armor_list:
+                        you.is_it_armor(self.shop_item2)
+
+                if what_you_buy == self.shop_item3 and you.total_gold > self.shop_item3_cost:
+                    print("You bought a/an %s" % self.shop_item3)
+                    you.total_gold -= self.shop_item3_cost
+                    print("Now you have %s gold left" % you.total_gold)
+                    if self.shop_item3 in you.health_potions:
+                        you.health += you.is_it_a_health_potion(self.shop_item3)
+
+                    if self.shop_item3 in you.weapons_list:
+                        you.is_it_a_weapon(self.shop_item3)
+
+                    if self.shop_item3 in you.armor_list:
+                        you.is_it_armor(self.shop_item3)
+
+                if what_you_buy == self.shop_item4 and you.total_gold > self.shop_item4_cost:
+                    print("You bought a/an %s" % self.shop_item4)
+                    you.total_gold -= self.shop_item4_cost
+                    print("Now you have %s gold left" % you.total_gold)
+                    if self.shop_item4 in you.health_potions:
+                        you.health += you.is_it_a_health_potion(self.shop_item4)
+
+                    if self.shop_item4 in you.weapons_list:
+                        you.is_it_a_weapon(self.shop_item4)
+
+                    if self.shop_item4 in you.armor_list:
+                        you.is_it_armor(self.shop_item4)
+
+                print("Would you like to stay in the shop?")
+                self.stay_in_shop = input("YES or NO")
+            print("Would you like to leave this area")
+            print("You can not return once you leave")
+            leave = input("YES or NO")
+            if leave == "YES":
+                you.room_name = self.next_place
+                you.current_node = globals()[you.room_name]
+            if leave == "NO":
+                pass
 
     def run_room(self, name=None, health=None, attack=None, gold=None, exp=None, did_you_beat_it=None):
         print(self.name)
@@ -189,6 +331,9 @@ class Room(object):
             you.playing = False
             print("You died")
             print("Try again")
+        if self.shop:
+            print("There is a shop here")
+            self.run_shop()
         if you.playing:
             you.command()
 
@@ -219,32 +364,35 @@ raven_gorge3 = Room("Raven Gorge 3", "raven_gorge4", "raven_gorge2", "raven_gorg
                     True, "Eldrazi Scion")
 raven_gorge3_right = Room("Raven Gorge 3 Right", None, None, None, "raven_gorge3", True,
                           "An eldrazi devastator appeared and ripped you apart", "Eldrazi Devastator", True)
-raven_gorge4 = Room("Raven Gorge 4", None, "raven_gorge3", None, None, None, None)
+raven_gorge4 = Room("Raven Gorge 4", None, "raven_gorge3", None, None, None, None, "", False, False, "", False, 0,
+                    True, "Wood Sword", "Health Potion", "Copper Armor", None, 5, 5, 5, None, "YES",
+                    "spawn_point_sheltered_valley")
 # Sheltered Valley
-spawn_point_sheltered_valley = Room("Spawn Point Sheltered Valley", None, None, "sheltered_valley4", "sheltered_valley1",
-                                    None, "You are now in a valley with grass going out in every direction")
+spawn_point_sheltered_valley = Room("Spawn Point Sheltered Valley", None, None, "sheltered_valley4",
+                                    "sheltered_valley1", None,
+                                    "You are now in a valley with grass going out in every direction")
 sheltered_valley1 = Room("Sheltered Valley 1", "sheltered_valley2", "sheltered_valley7",
                          "spawn_point_sheltered_valley", None, None, "There is a dead body north of you")
 sheltered_valley2 = Room("Sheltered Valley 2", "sheltered_valley3", None, None, None,
                          None, "Who ever died here dropped a lot of gold", "", False, False, "", True, 50)
 sheltered_valley3 = Room("Sheltered Valley 3", "mountain", None, "sheltered_valley4", "sheltered_valley1",
                          None, "There is a stream here and you are very thirsty")
-sheltered_valley4 = Room("Sheltered Valley 4", None, None, "sheltered_valley4", "sheltered_valley1",
-                         None, "You are now in a valley with grass going out in every direction")
-sheltered_valley5 = Room("Sheltered Valley 5", None, None, "sheltered_valley4", "sheltered_valley1",
-                         None, "You are now in a valley with grass going out in every direction")
-sheltered_valley6 = Room("Sheltered Valley 6", None, None, "sheltered_valley4", "sheltered_valley1",
-                         None, "You are now in a valley with grass going out in every direction")
-sheltered_valley7 = Room("Sheltered Valley 7", None, None, "sheltered_valley4", "sheltered_valley1",
-                         None, "You are now in a valley with grass going out in every direction")
-sheltered_valley8 = Room("Sheltered Valley 8", None, None, "sheltered_valley4", "sheltered_valley1",
-                         None, "You are now in a valley with grass going out in every direction")
-great_desert = Room("Great Desert", None, None, "sheltered_valley4", "sheltered_valley1",
-                    None, "You are now in a valley with grass going out in every direction")
-lake = Room("Lake", None, None, "sheltered_valley4", "sheltered_valley1",
-            None, "You are now in a valley with grass going out in every direction")
-mountain = Room("Mountain", None, None, "sheltered_valley4", "sheltered_valley1",
-                None, "You are now in a valley with grass going out in every direction")
+sheltered_valley4 = Room("Sheltered Valley 4", "sheltered_valley5", None, "sheltered_valley6",
+                         "spawn_point_sheltered_valley", None,
+                         "You start heading east and you see a mass of trees in front of you")
+sheltered_valley5 = Room("Sheltered Valley 5", "lake", "sheltered_valley_4", None, None, None,
+                         "You are now completely surrounded by trees")
+sheltered_valley6 = Room("Sheltered Valley 6", None, None, None, None,
+                         True, "You enter the cabin and an eldrazi is in there", "Eldrazi", True)
+sheltered_valley7 = Room("Sheltered Valley 7", "sheltered_valley1", "sheltered_valley8", None, None,
+                         None, "You hear a strange noise")
+sheltered_valley8 = Room("Sheltered Valley 8", "sheltered_valley7", "great_desert", None, None,
+                         None, "Night starts to fall and it gets very dark")
+great_desert = Room("Great Desert", None, None, None, None, None,
+                    "You see a sign and it says \n You are in the great desert \n You are going to die")
+lake = Room("Lake", None, None, None, None, None,
+            "The trees open and in front of you is a vast lake")
+mountain = Room("Mountain", None, None, None, None, None, "Ahead of you is a large mountain")
 
 you.current_node = spawn_point_raven_gorge
 
@@ -265,3 +413,27 @@ while you.playing:
         raven_gorge3_right.run_room()
     if you.current_node.name == "Raven Gorge 4":
         raven_gorge4.run_room()
+    if you.current_node.name == "Spawn Point Sheltered Valley":
+        spawn_point_sheltered_valley.run_room()
+    if you.current_node.name == "Sheltered Valley 1":
+        sheltered_valley1.run_room()
+    if you.current_node.name == "Sheltered Valley 2":
+        sheltered_valley2.run_room()
+    if you.current_node.name == "Sheltered Valley 3":
+        sheltered_valley3.run_room()
+    if you.current_node.name == "Sheltered Valley 4":
+        sheltered_valley4.run_room()
+    if you.current_node.name == "Sheltered Valley 5":
+        sheltered_valley5.run_room()
+    if you.current_node.name == "Sheltered Valley 6":
+        sheltered_valley6.run_room()
+    if you.current_node.name == "Sheltered Valley 7":
+        sheltered_valley7.run_room()
+    if you.current_node.name == "Sheltered Valley 8":
+        sheltered_valley8.run_room()
+    if you.current_node.name == "Great Desert":
+        great_desert.run_room()
+    if you.current_node.name == "Lake":
+        lake.run_room()
+    if you.current_node.name == "Mountain":
+        mountain.run_room()

@@ -161,22 +161,29 @@ class Person(object):
         print("Your best weapon is a/an %s" % self.weapon)
 
     def command(self):
-        command = input(">")
-        if command.lower() in ["q", "quit", "exit"]:
-            self.playing = False
-        elif command.lower() == "i":
-            self.check_self()
-        elif command in self.directions:
-            try:
-                room_name = getattr(self.current_node, command)
+        if self.playing:
+            command = input(">")
+            if command.lower() in ["q", "quit", "exit"]:
+                self.playing = False
+            elif command.lower() == "i":
+                self.check_self()
+            elif command in self.directions:
+                try:
+                    room_name = getattr(self.current_node, command)
+                    self.current_node = globals()[room_name]
+                except KeyError:
+                    print("You can't go that way")
+            else:
+                print("Command not recognized")
+            if command == "s":
+                room_name = "spawn_point_sheltered_valley"
                 self.current_node = globals()[room_name]
-            except KeyError:
-                print("You can't go that way")
-        else:
-            print("Command not recognized")
-        if command == "Skip":
-            self.did_you_beat_raven_gorge = True
-            self.total_gold += 100
+                self.total_gold += 100
+                self.weapon = "Wood Sword"
+                self.damage = 3
+                self.armor = "Copper Armor"
+                self.defence = 3
+                self.health = 10
 
     def die(self):
         print("You died")
@@ -245,7 +252,7 @@ class Room(object):
         if self.shop:
             print("Would you like to enter the shop?")
             choice = input("YES or NO")
-            while you.total_gold > 0 and self.stay_in_shop == "YES" and choice == "YES":
+            while you.total_gold > 0 and self.stay_in_shop.upper() == "YES" and choice.upper() == "YES":
                 print("You entered the shop")
                 print("Here is what they offer")
                 print("%s: %s, %s: %s, %s: %s, %s: %s" % (self.shop_item1, self.shop_item1_cost, self.shop_item2,
@@ -253,12 +260,13 @@ class Room(object):
                                                           self.shop_item4, self.shop_item4_cost))
                 what_you_buy = input("%s or %s or %s or %s" % (self.shop_item1, self.shop_item2, self.shop_item3,
                                                                self.shop_item4))
-                if what_you_buy == self.shop_item1 and you.total_gold > self.shop_item1_cost:
+                if what_you_buy == self.shop_item1 and you.total_gold >= self.shop_item1_cost:
                     print("You bought a/an %s" % self.shop_item1)
                     you.total_gold -= self.shop_item1_cost
                     print("Now you have %s gold left" % you.total_gold)
                     if self.shop_item1 in you.health_potions:
                         you.health += you.is_it_a_health_potion(self.shop_item1)
+                        print("Now you have %i health" % (you.health + you.health_from_level))
 
                     if self.shop_item1 in you.weapons_list:
                         you.is_it_a_weapon(self.shop_item1)
@@ -266,12 +274,13 @@ class Room(object):
                     if self.shop_item1 in you.armor_list:
                         you.is_it_armor(self.shop_item1)
 
-                if what_you_buy == self.shop_item2 and you.total_gold > self.shop_item2_cost:
+                if what_you_buy == self.shop_item2 and you.total_gold >= self.shop_item2_cost:
                     print("You bought a/an %s" % self.shop_item2)
                     you.total_gold -= self.shop_item2_cost
                     print("Now you have %s gold left" % you.total_gold)
                     if self.shop_item2 in you.health_potions:
                         you.health += you.is_it_a_health_potion(self.shop_item2)
+                        print("Now you have %i health" % (you.health + you.health_from_level))
 
                     if self.shop_item2 in you.weapons_list:
                         you.is_it_a_weapon(self.shop_item2)
@@ -279,12 +288,13 @@ class Room(object):
                     if self.shop_item2 in you.armor_list:
                         you.is_it_armor(self.shop_item2)
 
-                if what_you_buy == self.shop_item3 and you.total_gold > self.shop_item3_cost:
+                if what_you_buy == self.shop_item3 and you.total_gold >= self.shop_item3_cost:
                     print("You bought a/an %s" % self.shop_item3)
                     you.total_gold -= self.shop_item3_cost
                     print("Now you have %s gold left" % you.total_gold)
                     if self.shop_item3 in you.health_potions:
                         you.health += you.is_it_a_health_potion(self.shop_item3)
+                        print("Now you have %i health" % (you.health + you.health_from_level))
 
                     if self.shop_item3 in you.weapons_list:
                         you.is_it_a_weapon(self.shop_item3)
@@ -292,12 +302,13 @@ class Room(object):
                     if self.shop_item3 in you.armor_list:
                         you.is_it_armor(self.shop_item3)
 
-                if what_you_buy == self.shop_item4 and you.total_gold > self.shop_item4_cost:
+                if what_you_buy == self.shop_item4 and you.total_gold >= self.shop_item4_cost:
                     print("You bought a/an %s" % self.shop_item4)
                     you.total_gold -= self.shop_item4_cost
                     print("Now you have %s gold left" % you.total_gold)
                     if self.shop_item4 in you.health_potions:
                         you.health += you.is_it_a_health_potion(self.shop_item4)
+                        print("Now you have %i health" % (you.health + you.health_from_level))
 
                     if self.shop_item4 in you.weapons_list:
                         you.is_it_a_weapon(self.shop_item4)
@@ -310,11 +321,30 @@ class Room(object):
             print("Would you like to leave this area")
             print("You can not return once you leave")
             leave = input("YES or NO")
-            if leave == "YES":
+            if leave.upper() == "YES":
                 you.room_name = self.next_place
                 you.current_node = globals()[you.room_name]
-            if leave == "NO":
+            if leave.upper() == "NO":
                 pass
+
+    def decision_room(self, name=None, health=None, attack=None, gold=None, exp=None, did_you_beat_it=None):
+        print(self.name)
+        if self.room_text:
+            print(self.room_text)
+        if self.gold_in_it:
+            print("You found %s gold" % self.how_much_gold)
+            you.total_gold += self.how_much_gold
+            print("Now you have %s gold" % you.total_gold)
+        if self.monsters:
+            print("A/an %s appeared" % name)
+            you.fight(name, health, attack, gold, exp, did_you_beat_it)
+        if self.instant_death:
+            you.playing = False
+            print("You died")
+            print("Try again")
+        if self.shop:
+            print("There is a shop here")
+            self.run_shop()
 
     def run_room(self, name=None, health=None, attack=None, gold=None, exp=None, did_you_beat_it=None):
         print(self.name)
@@ -379,7 +409,8 @@ sheltered_valley3 = Room("Sheltered Valley 3", "mountain", None, "sheltered_vall
                          None, "There is a stream here and you are very thirsty")
 sheltered_valley4 = Room("Sheltered Valley 4", "sheltered_valley5", None, "sheltered_valley6",
                          "spawn_point_sheltered_valley", None,
-                         "You start heading east and you see a mass of trees in front of you")
+                         "You start heading east and you see a mass of trees in front of you \n Also to your east you"
+                         "see a cabin")
 sheltered_valley5 = Room("Sheltered Valley 5", "lake", "sheltered_valley_4", None, None, None,
                          "You are now completely surrounded by trees")
 sheltered_valley6 = Room("Sheltered Valley 6", None, None, None, None,
@@ -389,11 +420,24 @@ sheltered_valley7 = Room("Sheltered Valley 7", "sheltered_valley1", "sheltered_v
 sheltered_valley8 = Room("Sheltered Valley 8", "sheltered_valley7", "great_desert", None, None,
                          None, "Night starts to fall and it gets very dark")
 great_desert = Room("Great Desert", None, None, None, None, None,
-                    "You see a sign and it says \n You are in the great desert \n You are going to die")
+                    "You see a sign and it says \n You are in the great desert \n You are going to die", "", False,
+                    False, "", False, 0, True, "Stone Sword", "Health Potion", None, None, 10, 5, None, None, "YES",
+                    "spawn_point_great_desert")
 lake = Room("Lake", None, None, None, None, None,
-            "The trees open and in front of you is a vast lake")
-mountain = Room("Mountain", None, None, None, None, None, "Ahead of you is a large mountain")
+            "The trees open and in front of you is a vast lake", "", False,
+            False, "", False, 0, True, "Stone Sword", "Health Potion", None, None, 10, 5, None, None, "YES",
+            "spawn_point_lake")
+mountain = Room("Mountain", None, None, None, None, None, "Ahead of you is a large mountain", "", False,
+                False, "", False, 0, True, "Stone Sword", "Health Potion", None, None, 10, 5, None, None, "YES",
+                "spawn_point_mountain")
 
+# Mountain
+spawn_point_mountain = Room("Spawn Point Mountain", None, None, None, None, None, "You are in Spawn Point Mountain")
+# Lake
+spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You are in Spawn Point Mountain")
+# Desert
+spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, None, None, None,
+                                "You are in Spawn Point Mountain")
 you.current_node = spawn_point_raven_gorge
 
 while you.playing:
@@ -420,7 +464,17 @@ while you.playing:
     if you.current_node.name == "Sheltered Valley 2":
         sheltered_valley2.run_room()
     if you.current_node.name == "Sheltered Valley 3":
-        sheltered_valley3.run_room()
+        sheltered_valley3.decision_room()
+        print("You start to get very thirsty and there is a stream beside you")
+        print("Do you want to drink from it")
+        stream = input("YES or NO")
+        if stream.upper() == "YES":
+            print("You drank from the stream and you are no longer thirsty")
+            print("Sadly within a couple of minutes you fall over and do not get back up")
+            you.die()
+        if stream.upper() == "NO":
+            print("You do not drink from the stream and that is probably a good thing")
+        you.command()
     if you.current_node.name == "Sheltered Valley 4":
         sheltered_valley4.run_room()
     if you.current_node.name == "Sheltered Valley 5":

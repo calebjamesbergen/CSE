@@ -20,10 +20,11 @@ R19A.north = parking_lot
 R19A = Room("Mr. Wiebe's Room", "parking_lot")
 parking_lot = Room("The Parking Lot", None, "R19A")
 """
+
 heads = 1
 
 
-class Monster:
+class Monster(object):
     def __init__(self, name, monster_health, monster_attack, monster_exp, monster_gold, did_you_beat_monster):
         self.name = name
         self.monster_health = monster_health
@@ -31,6 +32,12 @@ class Monster:
         self.monster_exp = monster_exp
         self.monster_gold = monster_gold
         self.did_you_beat_monster = did_you_beat_monster
+        self.heads = heads
+
+    def hydra_damage_up(self):
+        self.heads += 1
+        self.monster_attack = self.heads * 1
+        print("Another head appeared on the hydra and it's damage went up by 1")
 
 
 class Person(object):
@@ -75,6 +82,8 @@ class Person(object):
         self.health_potion_heal = 3
         self.good_health_potion_heal = 5
         self.great_health_potion_heal = 10
+        self.did_command = False
+        self.did_attack = False
 
     def is_it_a_health_potion(self, health_potion):
         if health_potion == self.health_potions[0]:
@@ -161,29 +170,32 @@ class Person(object):
         print("Your best weapon is a/an %s" % self.weapon)
 
     def command(self):
-        if self.playing:
-            command = input(">")
-            if command.lower() in ["q", "quit", "exit"]:
-                self.playing = False
-            elif command.lower() == "i":
-                self.check_self()
-            elif command in self.directions:
-                try:
-                    room_name = getattr(self.current_node, command)
+        while not self.did_command:
+            if self.playing:
+                command = input(">")
+                if command.lower() in ["q", "quit", "exit"]:
+                    self.playing = False
+                elif command.lower() == "i":
+                    self.check_self()
+                elif command in self.directions:
+                    try:
+                        room_name = getattr(self.current_node, command)
+                        self.current_node = globals()[room_name]
+                        self.did_command = True
+                    except KeyError:
+                        print("You can't go that way")
+                else:
+                    print("Command not recognized")
+                if command == "s":
+                    room_name = "spawn_point_sheltered_valley"
                     self.current_node = globals()[room_name]
-                except KeyError:
-                    print("You can't go that way")
-            else:
-                print("Command not recognized")
-            if command == "s":
-                room_name = "spawn_point_sheltered_valley"
-                self.current_node = globals()[room_name]
-                self.total_gold += 100
-                self.weapon = "Wood Sword"
-                self.damage = 3
-                self.armor = "Copper Armor"
-                self.defence = 3
-                self.health = 10
+                    self.total_gold += 100
+                    self.weapon = "Wood Sword"
+                    self.damage = 3
+                    self.armor = "Copper Armor"
+                    self.defence = 3
+                    self.health = 10
+        self.did_command = False
 
     def die(self):
         print("You died")
@@ -192,21 +204,29 @@ class Person(object):
 
     def fight(self, name, health, attack, exp, gold, did_you_beat_it):
         print("What would you like to do")
-        fighting = input("ATTACK or FLEE")
-        if fighting == "ATTACK" or "attack":
+        fighting = ""
+        while not self.did_attack:
+            fighting = input("ATTACK or FLEE")
+            if fighting in ["ATTACK", "attack", "Attack", "FLEE", "flee", "Flee"]:
+                self.did_attack = True
+        if fighting in ["ATTACK", "attack", "Attack"]:
             while health > 0 and not did_you_beat_it and self.get_health() > 0:
+                self.did_attack = True
                 print("The %s attacked you and you took %s damage" % (name, you.damage_you_take(attack)))
                 self.health -= you.damage_you_take(attack)
                 print("Now you have %s health" % self.get_health())
                 print("You swung your %s at the %s" % (self.weapon, name))
                 print("The %s took %s damage" % (name, self.get_attack()))
                 health -= you.get_attack()
-                print("Now the %s has %s health left" % (name, health))
+                if health >= 0:
+                    print("Now the %s has %s health left" % (name, health))
+                if health < 0:
+                    print("Now the %s has 0 health left" % name)
             if you.health + you.health_from_level > 0:
                 print("You defeated the %s" % name)
                 print("You got %s gold" % gold)
                 self.total_gold += gold
-                print("Now you have %s gold" % gold)
+                print("Now you have %s gold" % self.total_gold)
                 self.exp += exp
                 print("You got %s exp" % exp)
                 print("Now you have %s exp" % self.exp)
@@ -216,6 +236,7 @@ class Person(object):
                 self.die()
         if fighting in ["FLEE", "flee"]:
             self.die()
+        self.did_attack = False
 
 
 class Room(object):
@@ -433,14 +454,46 @@ mountain = Room("Mountain", None, None, None, None, None, "Ahead of you is a lar
 
 # Mountain
 spawn_point_mountain = Room("Spawn Point Mountain", None, None, None, None, None, "You are in Spawn Point Mountain")
+mountain1 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+                 "You start going up the left side of the mountain")
+mountain2 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+                 "You start going up the left side of the mountain")
+mountain3 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+                 "You start going up the left side of the mountain")
+mountain4 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+                 "You start going up the left side of the mountain")
+mountain5 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+                 "You start going up the left side of the mountain")
+mountain6 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+                 "You start going up the left side of the mountain")
+cave = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+            "You start going up the left side of the mountain")
+spawn_point_pit = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+                       "You start going up the left side of the mountain")
+pit1 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+            "You start going up the left side of the mountain")
+pit2 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+            "You start going up the left side of the mountain")
+
 # Lake
 spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You are in Spawn Point Mountain")
+
 # Desert
 spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, None, None, None,
                                 "You are in Spawn Point Mountain")
+
 you.current_node = spawn_point_raven_gorge
 
+first_time = True
+
 while you.playing:
+    if first_time:
+        print("Welcome to Zendikar")
+        print("This game will require skill and a bit of luck")
+        print("Try checking your inventory by typing 'i'")
+        print("Or type 'north' 'south' 'east' or 'west' to begin")
+        print("Have fun")
+        first_time = False
     if you.current_node.name == "Spawn Point Raven Gorge":
         spawn_point_raven_gorge.run_room()
     if you.current_node.name == "Raven Gorge 1":

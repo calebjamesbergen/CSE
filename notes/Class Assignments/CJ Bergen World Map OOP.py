@@ -57,8 +57,8 @@ while player.playing:
         playing = False
     elif command in directions:
         try:
-            room_name = current_node["PATHS"][command]
-            current_node = world_map["Raven Gorge Map"][room_name]
+            room = player.find_room(command)
+            player.move(room)
         except KeyError:
             print("You can't go that way")
     else:

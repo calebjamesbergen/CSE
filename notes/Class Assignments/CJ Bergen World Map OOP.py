@@ -1,11 +1,11 @@
-"""
 class Room(object):
     # This is a constructor
-    def __init__(self, name, north=None, south=None, east=None):
+    def __init__(self, name, north=None, south=None, east=None, west=None):
         self.name = name
         self.north = north
         self.south = south
         self.east = east
+        self.west = west
 
 # These are instances of the rooms (Instantiation)
 
@@ -19,7 +19,52 @@ R19A.north = parking_lot
 # Option 2 Use Strings, but more difficult controller
 R19A = Room("Mr. Wiebe's Room", "parking_lot")
 parking_lot = Room("The Parking Lot", None, "R19A")
-"""
+
+
+class Player(object):
+    def __init__(self, starting_location):
+        self.health = 100
+        self.inventory = []
+        self.current_location = starting_location
+        self.directions = ["north", "south", "east", "west"]
+        self.playing = True
+
+    def move(self, new_location):
+        """ This method moves the player to a new location
+
+        :param new_location: The room object that we move to
+        """
+        self.current_location = new_location
+
+    def find_room(self, direction):
+        """ This method takes a direction, and finds the variable of the room
+
+        :param direction: A string (all lowercase), with a cardinal direction
+        :return: A room object if it exists, None if it does not
+        """
+        room_name = getattr(self.current_location, direction)
+        return globals()[room_name]
+
+
+player = Player(R19A)
+directions = ["north", "south", "east", "west"]
+
+
+while player.playing:
+    print(player.current_location.name)
+    command = input(">")
+    if command.lower() in ["q", "quit", "exit"]:
+        playing = False
+    elif command in directions:
+        try:
+            room_name = current_node["PATHS"][command]
+            current_node = world_map["Raven Gorge Map"][room_name]
+        except KeyError:
+            print("You can't go that way")
+    else:
+        print("Command not recognized")
+
+
 
 heads = 1
 
@@ -195,6 +240,7 @@ class Person(object):
                     self.armor = "Copper Armor"
                     self.defence = 3
                     self.health = 10
+                    self.did_command = True
         self.did_command = False
 
     def die(self):

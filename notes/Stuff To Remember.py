@@ -1,3 +1,16 @@
+"""
+3 types of has a:
+Private instance variables
+Fields
+Attributes
+
+2 types of can:
+Functions
+Methods
+
+"""
+
+
 # Terminal = the display bar that pops up when you run a code
 
 # import os

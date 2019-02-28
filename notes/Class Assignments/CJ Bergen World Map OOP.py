@@ -83,7 +83,7 @@ class Monster(object):
 class Person(object):
     def __init__(self, assigned_room="Spawn Point Raven Gorge"):
         self.alive_raven_gorge = True
-        self.directions = ["north", "south", "east", "west", "", "Skip"]
+        self.directions = ["north", "south", "east", "west", "Skip"]
         self.current_node = assigned_room
         self.playing = True
         self.read_starting_text = False
@@ -210,35 +210,35 @@ class Person(object):
                 print("You have a health potion")
                 print("Would you like to use it")
                 choice = input("YES or NO")
-                if choice == "YES":
+                if choice.upper() == "YES":
                     print("You used a health potion")
                     self.health += self.health_potion_heal
                     print("You restored %s health and now have %s health" % (self.health_potion_heal, self.health))
                     self.health_potions_owned -= 1
-                if choice == "NO":
+                if choice.upper() == "NO":
                     pass
             if self.good_health_potions_owned > 0:
                 print("You have a good health potion")
                 print("Would you like to use it")
                 choice = input("YES or NO")
-                if choice == "YES":
+                if choice.upper() == "YES":
                     print("You used a health potion")
                     self.health += self.good_health_potion_heal
                     print("You restored %s health and now have %s health" % (self.good_health_potion_heal, self.health))
                     self.good_health_potions_owned -= 1
-                if choice == "NO":
+                if choice.upper() == "NO":
                     pass
             if self.great_health_potions_owned > 0:
                 print("You have a great health potion")
                 print("Would you like to use it")
                 choice = input("YES or NO")
-                if choice == "YES":
+                if choice.upper() == "YES":
                     print("You used a great health potion")
                     self.health += self.great_health_potion_heal
                     print("You restored %s health and now have %s health" %
                           (self.great_health_potion_heal, self.health))
                     self.great_health_potions_owned -= 1
-                if choice == "NO":
+                if choice.upper() == "NO":
                     pass
 
     def check_self(self):
@@ -371,8 +371,7 @@ class Room(object):
                     you.total_gold -= self.shop_item1_cost
                     print("Now you have %s gold left" % you.total_gold)
                     if self.shop_item1 in you.health_potions_list:
-                        you.health += you.is_it_a_health_potion(self.shop_item1)
-                        print("Now you have %i health" % (you.health + you.health_from_level))
+                        you.is_it_a_health_potion(self.shop_item1)
 
                     if self.shop_item1 in you.weapons_list:
                         you.is_it_a_weapon(self.shop_item1)
@@ -385,8 +384,7 @@ class Room(object):
                     you.total_gold -= self.shop_item2_cost
                     print("Now you have %s gold left" % you.total_gold)
                     if self.shop_item2 in you.health_potions_list:
-                        you.health += you.is_it_a_health_potion(self.shop_item2)
-                        print("Now you have %i health" % (you.health + you.health_from_level))
+                        you.is_it_a_health_potion(self.shop_item1)
 
                     if self.shop_item2 in you.weapons_list:
                         you.is_it_a_weapon(self.shop_item2)
@@ -399,8 +397,7 @@ class Room(object):
                     you.total_gold -= self.shop_item3_cost
                     print("Now you have %s gold left" % you.total_gold)
                     if self.shop_item3 in you.health_potions_list:
-                        you.health += you.is_it_a_health_potion(self.shop_item3)
-                        print("Now you have %i health" % (you.health + you.health_from_level))
+                        you.is_it_a_health_potion(self.shop_item1)
 
                     if self.shop_item3 in you.weapons_list:
                         you.is_it_a_weapon(self.shop_item3)
@@ -413,8 +410,7 @@ class Room(object):
                     you.total_gold -= self.shop_item4_cost
                     print("Now you have %s gold left" % you.total_gold)
                     if self.shop_item4 in you.health_potions_list:
-                        you.health += you.is_it_a_health_potion(self.shop_item4)
-                        print("Now you have %i health" % (you.health + you.health_from_level))
+                        you.is_it_a_health_potion(self.shop_item1)
 
                     if self.shop_item4 in you.weapons_list:
                         you.is_it_a_weapon(self.shop_item4)

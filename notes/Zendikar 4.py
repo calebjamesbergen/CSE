@@ -36,7 +36,6 @@ class Potion(Item):
             you.health_potions += 1
 
 
-
 stick = Weapon("Stick", 1, 0)
 key = Key("Bronze Key", None)
 

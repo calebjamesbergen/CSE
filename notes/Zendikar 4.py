@@ -21,6 +21,16 @@ class Key(Item):
         super(Key, self).__init__(name, cost)
 
 
+class Tools(Item):
+    def __init__(self, name, cost):
+        super(Tools, self).__init__(name, cost)
+
+
+class Vehicle(Item):
+    def __init__(self, name, cost):
+        super(Vehicle, self).__init__(name, cost)
+
+
 class Potion(Item):
     def __init__(self, name, cost):
         super(Potion, self).__init__(name, cost)
@@ -37,7 +47,30 @@ class Potion(Item):
 
 
 stick = Weapon("Stick", 1, 0)
-key = Key("Bronze Key", None)
+wood_sword = Weapon("Wood Sword", 3, 5)
+stone_sword = Weapon("Stone Sword", 5, 10)
+ice_sword = Weapon("Ice Sword", 15, 20)
+cave_sword = Weapon("Cave Sword", 15, 20)
+diamond_sword = Weapon("Diamond Sword", 15, 20)
+enchanted_sword = Weapon("Enchanted Sword", 25, 50)
+
+leather_armor = Armor("Leather Armor", 1, 0)
+copper_armor = Armor("Copper Armor", 3, 5)
+iron_armor = Armor("Iron Armor", 10, 10)
+diamond_armor = Armor("Diamond Armor", 15, 20)
+goron_tunic = Armor("Goron Tunic", None, 25)
+enchanted_armor = Armor("Enchanted Armor", 20, 40)
+
+
+bronze_key = Key("Bronze Key", None)
+copper_key = Key("Copper Key", None)
+silver_key = Key("Silver Key", None)
+gold_key = Key("Gold Key", None)
+
+machete = Tools("Machete", None)
+banana = Tools("Banana", None)
+
+boat = Vehicle("Boat", 25)
 
 heads = 1
 
@@ -73,7 +106,7 @@ class Person(object):
         self.exp_to_level_up = 20
         self.shop = "YES"
         self.in_shop = True
-        self.key_items = []
+        self.inventory = []
         self.room_name = ""
         self.alive_sheltered_valley = True
         self.did_you_beat_sheltered_valley = False
@@ -195,6 +228,18 @@ class Person(object):
     def damage_you_take(self, monster_attack):
         return monster_attack - self.defence
 
+    def pick_up_item(self, item_name):
+        print("There is a %s" % item_name.name)
+        print("Would you like to pick it up?")
+        choice = input("YES or NO")
+
+        if choice.upper() == "YES":
+            self.inventory.append(item_name)
+            print("You picked up the %s" % item_name.name)
+
+        if choice.upper() == "NO":
+            print("You didn't pick up the %s" % item_name.name)
+
     def level_up(self):
         if self.exp >= self.exp_to_level_up:
             self.exp -= 20
@@ -296,7 +341,8 @@ class Room(object):
     def __init__(self, name, north, south, east, west, surprise, room_text, surprise_name="", instant_death=False,
                  monster_in_it=False, monster_name="", gold_in_it=False, how_much_gold=0, shop=False, shop_item1=None,
                  shop_item2=None, shop_item3=None, shop_item4=None, shop_item1_cost=None, shop_item2_cost=None,
-                 shop_item3_cost=None, shop_item4_cost=None, stay_in_shop="YES", next_place=None):
+                 shop_item3_cost=None, shop_item4_cost=None, stay_in_shop="YES", next_place=None, item_in_it=False,
+                 item_name=None):
         self.monsters = monster_in_it
         self.north = north
         self.name = name
@@ -321,6 +367,8 @@ class Room(object):
         self.shop_item4_cost = shop_item4_cost
         self.stay_in_shop = stay_in_shop
         self.next_place = next_place
+        self.item_in_it = self.item_in_it
+        self.item_name = item_name
 
     def run_shop(self):
         if self.shop:
@@ -397,29 +445,17 @@ class Room(object):
             if leave.upper() == "NO":
                 pass
 
-    def decision_room(self, name=None, health=None, attack=None, gold=None, exp=None, did_you_beat_it=None):
+    def decision_room(self):
         print(self.name)
         if self.room_text:
             print(self.room_text)
-        if self.gold_in_it:
-            print("You found %s gold" % self.how_much_gold)
-            you.total_gold += self.how_much_gold
-            print("Now you have %s gold" % you.total_gold)
-        if self.monsters:
-            print("A/an %s appeared" % name)
-            you.fight(name, health, attack, gold, exp, did_you_beat_it)
-        if self.instant_death:
-            you.playing = False
-            print("You died")
-            print("Try again")
-        if self.shop:
-            print("There is a shop here")
-            self.run_shop()
 
     def run_room(self, name=None, health=None, attack=None, gold=None, exp=None, did_you_beat_it=None):
         print(self.name)
         if self.room_text:
             print(self.room_text)
+        if self.item_in_it:
+            you.pick_up_item(self.item_name)
         if self.gold_in_it:
             print("You found %s gold" % self.how_much_gold)
             you.total_gold += self.how_much_gold
@@ -428,9 +464,7 @@ class Room(object):
             print("A/an %s appeared" % name)
             you.fight(name, health, attack, gold, exp, did_you_beat_it)
         if self.instant_death:
-            you.playing = False
-            print("You died")
-            print("Try again")
+            you.die()
         if self.shop:
             print("There is a shop here")
             self.run_shop()
@@ -439,6 +473,8 @@ class Room(object):
 
 
 you = Person()
+
+you.pick_up_item(bronze_key)
 
 # Monsters
 eldrazi_scout = Monster("Eldrazi Scout", 2, 1, 5, 5, False)

@@ -1,3 +1,6 @@
+import random
+
+
 class Item(object):
     def __init__(self, name, cost):
         self.cost = cost
@@ -10,9 +13,46 @@ class Weapon(Item):
         self.damage = damage
 
 
+class Stick(Weapon):
+    def __init__(self, name, damage, cost):
+        super(Stick, self).__init__(name, damage, cost)
+
+
+class Sword(Weapon):
+    def __init__(self, name, damage, cost):
+        super(Sword, self).__init__(name, damage, cost)
+
+
+class GreatSword(Weapon):
+    def __init__(self, name, damage, cost, crit_rate1, crit_rate2):
+        super(GreatSword, self).__init__(name, damage, cost)
+        self.crit_rate1 = crit_rate1
+        self.crit_rate2 = crit_rate2
+
+    def crit_chance(self):
+        critical_chance = random.randint(self.crit_rate1, self.crit_rate2)
+        if critical_chance == self.crit_rate2:
+            print("Critical hit")
+            return "you.damage" * 2
+        else:
+            return "you.damage"
+
+
 class Armor(Item):
     def __init__(self, name, defence, cost):
         super(Armor, self).__init__(name, cost)
+        self.defence = defence
+
+
+class GreatArmor(Item):
+    def __init__(self, name, defence, cost):
+        super(GreatArmor, self).__init__(name, cost)
+        self.defence = defence
+
+
+class Clothes(Item):
+    def __init__(self, name, defence, cost):
+        super(Clothes, self).__init__(name, cost)
         self.defence = defence
 
 
@@ -46,21 +86,24 @@ class Potion(Item):
             you.health_potions += 1
 
 
-stick = Weapon("Stick", 1, 0)
-wood_sword = Weapon("Wood Sword", 3, 5)
-stone_sword = Weapon("Stone Sword", 5, 10)
-ice_sword = Weapon("Ice Sword", 15, 20)
-cave_sword = Weapon("Cave Sword", 15, 20)
-diamond_sword = Weapon("Diamond Sword", 15, 20)
-enchanted_sword = Weapon("Enchanted Sword", 25, 50)
+stick = Stick("Stick", 1, 0)
+
+wood_sword = Sword("Wood Sword", 3, 5)
+stone_sword = Sword("Stone Sword", 5, 10)
+ice_sword = Sword("Ice Sword", 15, 20)
+cave_sword = Sword("Cave Sword", 15, 20)
+
+diamond_sword = GreatSword("Diamond Sword", 15, 20, 1, 5)
+enchanted_sword = GreatSword("Enchanted Sword", 25, 50, 1, 3)
 
 leather_armor = Armor("Leather Armor", 1, 0)
 copper_armor = Armor("Copper Armor", 3, 5)
 iron_armor = Armor("Iron Armor", 10, 10)
-diamond_armor = Armor("Diamond Armor", 15, 20)
-goron_tunic = Armor("Goron Tunic", None, 25)
-enchanted_armor = Armor("Enchanted Armor", 20, 40)
 
+diamond_armor = GreatArmor("Diamond Armor", 15, 20)
+enchanted_armor = GreatArmor("Enchanted Armor", 20, 40)
+
+goron_tunic = Clothes("Goron Tunic", None, 25)
 
 bronze_key = Key("Bronze Key", None)
 copper_key = Key("Copper Key", None)
@@ -71,6 +114,10 @@ machete = Tools("Machete", None)
 banana = Tools("Banana", None)
 
 boat = Vehicle("Boat", 25)
+
+health_potion = Potion("Health Potion", 5)
+good_health_potion = Potion("Good Health Potion", 10)
+great_health_potion = Potion("Great Health Potion", 15)
 
 heads = 1
 
@@ -367,7 +414,7 @@ class Room(object):
         self.shop_item4_cost = shop_item4_cost
         self.stay_in_shop = stay_in_shop
         self.next_place = next_place
-        self.item_in_it = self.item_in_it
+        self.item_in_it = item_in_it
         self.item_name = item_name
 
     def run_shop(self):
@@ -473,8 +520,6 @@ class Room(object):
 
 
 you = Person()
-
-you.pick_up_item(bronze_key)
 
 # Monsters
 eldrazi_scout = Monster("Eldrazi Scout", 2, 1, 5, 5, False)

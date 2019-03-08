@@ -3,13 +3,14 @@ import random
 
 class Item(object):
     def __init__(self, name, cost):
-        self.cost = cost
         self.name = name
+        self.cost = cost
 
 
 class Weapon(Item):
     def __init__(self, name, damage, cost):
         super(Weapon, self).__init__(name, cost)
+        self.cost = cost
         self.damage = damage
 
 
@@ -42,38 +43,45 @@ class Armor(Item):
     def __init__(self, name, defence, cost):
         super(Armor, self).__init__(name, cost)
         self.defence = defence
+        self.cost = cost
 
 
 class GreatArmor(Item):
     def __init__(self, name, defence, cost):
         super(GreatArmor, self).__init__(name, cost)
         self.defence = defence
+        self.cost = cost
 
 
 class Clothes(Item):
     def __init__(self, name, defence, cost):
         super(Clothes, self).__init__(name, cost)
         self.defence = defence
+        self.cost = cost
 
 
 class Key(Item):
     def __init__(self, name, cost):
         super(Key, self).__init__(name, cost)
+        self.cost = cost
 
 
 class Tools(Item):
     def __init__(self, name, cost):
         super(Tools, self).__init__(name, cost)
+        self.cost = cost
 
 
 class Vehicle(Item):
     def __init__(self, name, cost):
         super(Vehicle, self).__init__(name, cost)
+        self.cost = cost
 
 
 class Potion(Item):
     def __init__(self, name, cost):
         super(Potion, self).__init__(name, cost)
+        self.cost = cost
 
     def get_health_potion(self, name):
         if self.cost == self.cost:
@@ -86,38 +94,78 @@ class Potion(Item):
             you.health_potions += 1
 
 
-stick = Stick("Stick", 1, 0)
+class Trash(Item):
+    def __init__(self, name, cost):
+        super(Trash, self).__init__(name, cost)
 
-wood_sword = Sword("Wood Sword", 3, 5)
-stone_sword = Sword("Stone Sword", 5, 10)
-ice_sword = Sword("Ice Sword", 15, 20)
-cave_sword = Sword("Cave Sword", 15, 20)
 
-diamond_sword = GreatSword("Diamond Sword", 15, 20, 1, 5)
-enchanted_sword = GreatSword("Enchanted Sword", 25, 50, 1, 3)
+class BananaPeel(Trash):
+    def __init__(self, name, cost):
+        super(BananaPeel, self).__init__(name, cost)
 
-leather_armor = Armor("Leather Armor", 1, 0)
-copper_armor = Armor("Copper Armor", 3, 5)
-iron_armor = Armor("Iron Armor", 10, 10)
 
-diamond_armor = GreatArmor("Diamond Armor", 15, 20)
-enchanted_armor = GreatArmor("Enchanted Armor", 20, 40)
+class BrokenBone(Trash):
+    def __init__(self, name, cost):
+        super(BrokenBone, self).__init__(name, cost)
 
-goron_tunic = Clothes("Goron Tunic", None, 25)
 
-bronze_key = Key("Bronze Key", None)
-copper_key = Key("Copper Key", None)
-silver_key = Key("Silver Key", None)
-gold_key = Key("Gold Key", None)
+class Fang(Trash):
+    def __init__(self, name, cost):
+        super(Fang, self).__init__(name, cost)
 
-machete = Tools("Machete", None)
-banana = Tools("Banana", None)
 
-boat = Vehicle("Boat", 25)
+class Intestines(Trash):
+    def __init__(self, name, cost):
+        super(Intestines, self).__init__(name, cost)
 
-health_potion = Potion("Health Potion", 5)
-good_health_potion = Potion("Good Health Potion", 10)
-great_health_potion = Potion("Great Health Potion", 15)
+
+class RottingFlesh(Trash):
+    def __init__(self, name, cost):
+        super(RottingFlesh, self).__init__(name, cost)
+
+
+stick = Stick("Stick ", 1, 0)
+
+wood_sword = Sword("Wood Sword ", 3, 5)
+stone_sword = Sword("Stone Sword ", 5, 10)
+ice_sword = Sword("Ice Sword ", 15, 20)
+cave_sword = Sword("Cave Sword ", 15, 20)
+
+diamond_sword = GreatSword("Diamond Sword ", 15, 20, 1, 5)
+enchanted_sword = GreatSword("Enchanted Sword ", 25, 50, 1, 3)
+
+leather_armor = Armor("Leather Armor ", 1, 0)
+copper_armor = Armor("Copper Armor ", 3, 5)
+iron_armor = Armor("Iron Armor ", 10, 10)
+
+diamond_armor = GreatArmor("Diamond Armor ", 15, 20)
+enchanted_armor = GreatArmor("Enchanted Armor ", 20, 40)
+
+goron_tunic = Clothes("Goron Tunic ", None, 25)
+
+bronze_key = Key("Bronze Key ", None)
+copper_key = Key("Copper Key ", None)
+silver_key = Key("Silver Key ", None)
+gold_key = Key("Gold Key ", None)
+
+machete = Tools("Machete ", None)
+banana = Tools("Banana ", None)
+
+boat = Vehicle("Boat ", 25)
+
+health_potion = Potion("Health Potion ", 5)
+good_health_potion = Potion("Good Health Potion ", 10)
+great_health_potion = Potion("Great Health Potion ", 15)
+
+banana_peel = BananaPeel("Banana peel ", None)
+
+broken_bone = BrokenBone("Broken bone ", None)
+
+fang = Fang("Fang ", None)
+
+intestines = Intestines("Intestines ", None)
+
+rotting_flesh = RottingFlesh("Rotting flesh ", None)
 
 heads = 1
 
@@ -140,10 +188,10 @@ class Person(object):
         self.playing = True
         self.read_starting_text = False
         self.did_you_beat_raven_gorge = False
-        self.weapon = "Stick"
+        self.weapon = stick
         self.damage = 1
         self.damage_from_level = 1
-        self.armor = "Leather armor"
+        self.armor = leather_armor
         self.defence = 1
         self.total_gold = 0
         self.health = 5
@@ -180,12 +228,12 @@ class Person(object):
         self.did_command = False
         self.did_attack = False
 
-    def is_it_a_health_potion(self, health_potion):
-        if health_potion == self.health_potions_list[0]:
+    def is_it_a_health_potion(self, health_potion1):
+        if health_potion1 == self.health_potions_list[0]:
             self.health_potions += 1
-        if health_potion == self.health_potions_list[1]:
+        if health_potion1 == self.health_potions_list[1]:
             self.good_health_potions += 1
-        if health_potion == self.health_potions_list[2]:
+        if health_potion1 == self.health_potions_list[2]:
             self.great_health_potions += 1
 
     def using_health_potion(self):
@@ -301,15 +349,17 @@ class Person(object):
             print("Now you are level %s" % self.level)
 
     def check_self(self):
-        print("You have this weapon: %s" % self.weapon)
+        self.inventory += self.weapon.name
+        self.inventory += self.armor.name
         print("You deal %s damage" % self.damage)
-        print("You have this armor: %s" % self.armor)
+        print("You have this armor: %s" % self.armor.name)
         print("You have %s defence" % self.defence)
         print("You have %s health" % self.health)
         print("You have %s gold" % self.total_gold)
         print("You are level %s" % self.level)
         print("You are %s exp away from leveling up" % (self.exp_to_level_up - self.exp))
-        print("Your best weapon is a/an %s" % self.weapon)
+        print("Your best weapon is a/an %s" % self.weapon.name)
+        print("This is in your inventory: %s" % "".join(self.inventory))
         self.using_health_potion()
         self.using_health_potion()
         self.using_health_potion()
@@ -386,10 +436,9 @@ class Person(object):
 
 class Room(object):
     def __init__(self, name, north, south, east, west, surprise, room_text, surprise_name="", instant_death=False,
-                 monster_in_it=False, monster_name="", gold_in_it=False, how_much_gold=0, shop=False, shop_item1=None,
-                 shop_item2=None, shop_item3=None, shop_item4=None, shop_item1_cost=None, shop_item2_cost=None,
-                 shop_item3_cost=None, shop_item4_cost=None, stay_in_shop="YES", next_place=None, item_in_it=False,
-                 item_name=None):
+                 monster_in_it=False, monster_name="", gold_in_it=False, how_much_gold=0, shop=False,
+                 shop_item1=None, shop_item2=None, shop_item3=None, shop_item4=None, stay_in_shop="YES",
+                 item_in_it=False, item_name=None, next_place=None, ):
         self.monsters = monster_in_it
         self.north = north
         self.name = name
@@ -408,14 +457,45 @@ class Room(object):
         self.shop_item2 = shop_item2
         self.shop_item3 = shop_item3
         self.shop_item4 = shop_item4
-        self.shop_item1_cost = shop_item1_cost
-        self.shop_item2_cost = shop_item2_cost
-        self.shop_item3_cost = shop_item3_cost
-        self.shop_item4_cost = shop_item4_cost
+        self.shop_item1_cost = shop_item1.cost
+        self.shop_item2_cost = shop_item2.cost
+        self.shop_item3_cost = shop_item3.cost
+        self.shop_item4_cost = shop_item4.cost
         self.stay_in_shop = stay_in_shop
         self.next_place = next_place
         self.item_in_it = item_in_it
         self.item_name = item_name
+        self.did_it = False
+
+    def print_items(self):
+        try:
+            if not self.did_it:
+                print("%s: %s %s: %s %s: %s %s: %s" % (self.shop_item1, self.shop_item2, self.shop_item3, self.shop_item4,
+                                                      self.shop_item1.cost, self.shop_item2.cost, self.shop_item3.cost, self.shop_item4.cost))
+                self.did_it = True
+        except AttributeError:
+            pass
+        try:
+            if not self.did_it:
+                print("%s: %s %s: %s %s: %s %s: %s" % (self.shop_item1, self.shop_item2, self.shop_item3, self.shop_item4,
+                                                      self.shop_item1.cost, self.shop_item2.cost, self.shop_item3.cost, self.shop_item4.cost))
+                self.did_it = True
+        except AttributeError:
+            pass
+        try:
+            if not self.did_it:
+                print("%s: %s %s: %s %s: %s %s: %s" % (self.shop_item1, self.shop_item2, self.shop_item3, self.shop_item4,
+                                                      self.shop_item1.cost, self.shop_item2.cost, self.shop_item3.cost, self.shop_item4.cost))
+                self.did_it = True
+        except AttributeError:
+            pass
+        try:
+            if not self.did_it:
+                print("%s: %s %s: %s %s: %s %s: %s" % (self.shop_item1, self.shop_item2, self.shop_item3, self.shop_item4,
+                                                      self.shop_item1.cost, self.shop_item2.cost, self.shop_item3.cost, self.shop_item4.cost))
+                self.did_it = True
+        except AttributeError:
+            pass
 
     def run_shop(self):
         if self.shop:
@@ -546,7 +626,7 @@ raven_gorge3 = Room("Raven Gorge 3", "raven_gorge4", "raven_gorge2", "raven_gorg
 raven_gorge3_right = Room("Raven Gorge 3 Right", None, None, None, "raven_gorge3", True,
                           "An eldrazi devastator appeared and ripped you apart", "Eldrazi Devastator", True)
 raven_gorge4 = Room("Raven Gorge 4", None, "raven_gorge3", None, None, None, None, "", False, False, "", False, 0,
-                    True, "Wood Sword", "Health Potion", "Copper Armor", None, 5, 5, 5, None, "YES",
+                    True, wood_sword, health_potion, copper_armor, None, 5, 5, 5, None, "YES",
                     "spawn_point_sheltered_valley")
 # Sheltered Valley
 spawn_point_sheltered_valley = Room("Spawn Point Sheltered Valley", None, None, "sheltered_valley4",
@@ -579,7 +659,7 @@ lake = Room("Lake", None, None, None, None, None,
             False, "", False, 0, True, "Stone Sword", "Health Potion", None, None, 10, 5, None, None, "YES",
             "spawn_point_lake")
 mountain = Room("Mountain", None, None, None, None, None, "Ahead of you is a large mountain", "", False,
-                False, "", False, 0, True, "Stone Sword", "Health Potion", None, None, 10, 5, None, None, "YES",
+                False, "", False, 0, True, stone_sword, health_potion, None, None, "YES", False, None,
                 "spawn_point_mountain")
 
 # Mountain

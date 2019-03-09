@@ -124,6 +124,11 @@ class RottingFlesh(Trash):
         super(RottingFlesh, self).__init__(name, cost)
 
 
+class Filler(Item):
+    def __init__(self, name, cost):
+        super(Filler, self).__init__(name, cost)
+
+
 stick = Stick("Stick ", 1, 0)
 
 wood_sword = Sword("Wood Sword ", 3, 5)
@@ -143,13 +148,13 @@ enchanted_armor = GreatArmor("Enchanted Armor ", 20, 40)
 
 goron_tunic = Clothes("Goron Tunic ", None, 25)
 
-bronze_key = Key("Bronze Key ", None)
-copper_key = Key("Copper Key ", None)
-silver_key = Key("Silver Key ", None)
-gold_key = Key("Gold Key ", None)
+bronze_key = Key("Bronze Key ", 0)
+copper_key = Key("Copper Key ", 0)
+silver_key = Key("Silver Key ", 0)
+gold_key = Key("Gold Key ", 0)
 
-machete = Tools("Machete ", None)
-banana = Tools("Banana ", None)
+machete = Tools("Machete ", 0)
+banana = Tools("Banana ", 0)
 
 boat = Vehicle("Boat ", 25)
 
@@ -157,15 +162,17 @@ health_potion = Potion("Health Potion ", 5)
 good_health_potion = Potion("Good Health Potion ", 10)
 great_health_potion = Potion("Great Health Potion ", 15)
 
-banana_peel = BananaPeel("Banana peel ", None)
+banana_peel = BananaPeel("Banana peel ", 0)
 
-broken_bone = BrokenBone("Broken bone ", None)
+broken_bone = BrokenBone("Broken bone ", 0)
 
-fang = Fang("Fang ", None)
+fang = Fang("Fang ", 0)
 
-intestines = Intestines("Intestines ", None)
+intestines = Intestines("Intestines ", 0)
 
-rotting_flesh = RottingFlesh("Rotting flesh ", None)
+rotting_flesh = RottingFlesh("Rotting flesh ", 0)
+
+filler = Filler("", 0)
 
 heads = 1
 
@@ -466,36 +473,7 @@ class Room(object):
         self.item_in_it = item_in_it
         self.item_name = item_name
         self.did_it = False
-
-    def print_items(self):
-        try:
-            if not self.did_it:
-                print("%s: %s %s: %s %s: %s %s: %s" % (self.shop_item1, self.shop_item2, self.shop_item3, self.shop_item4,
-                                                      self.shop_item1.cost, self.shop_item2.cost, self.shop_item3.cost, self.shop_item4.cost))
-                self.did_it = True
-        except AttributeError:
-            pass
-        try:
-            if not self.did_it:
-                print("%s: %s %s: %s %s: %s %s: %s" % (self.shop_item1, self.shop_item2, self.shop_item3, self.shop_item4,
-                                                      self.shop_item1.cost, self.shop_item2.cost, self.shop_item3.cost, self.shop_item4.cost))
-                self.did_it = True
-        except AttributeError:
-            pass
-        try:
-            if not self.did_it:
-                print("%s: %s %s: %s %s: %s %s: %s" % (self.shop_item1, self.shop_item2, self.shop_item3, self.shop_item4,
-                                                      self.shop_item1.cost, self.shop_item2.cost, self.shop_item3.cost, self.shop_item4.cost))
-                self.did_it = True
-        except AttributeError:
-            pass
-        try:
-            if not self.did_it:
-                print("%s: %s %s: %s %s: %s %s: %s" % (self.shop_item1, self.shop_item2, self.shop_item3, self.shop_item4,
-                                                      self.shop_item1.cost, self.shop_item2.cost, self.shop_item3.cost, self.shop_item4.cost))
-                self.did_it = True
-        except AttributeError:
-            pass
+        self.choice = ""
 
     def run_shop(self):
         if self.shop:
@@ -504,12 +482,12 @@ class Room(object):
             while you.total_gold > 0 and self.stay_in_shop.upper() == "YES" and choice.upper() == "YES":
                 print("You entered the shop")
                 print("Here is what they offer")
-                print("%s: %s, %s: %s, %s: %s, %s: %s" % (self.shop_item1, self.shop_item1_cost, self.shop_item2,
-                                                          self.shop_item2_cost, self.shop_item3, self.shop_item3_cost,
-                                                          self.shop_item4, self.shop_item4_cost))
-                what_you_buy = input("%s or %s or %s or %s" % (self.shop_item1, self.shop_item2, self.shop_item3,
-                                                               self.shop_item4))
-                if what_you_buy == self.shop_item1 and you.total_gold >= self.shop_item1_cost:
+                print("%s: %s %s: %s %s: %s %s: %s" % (self.shop_item1, self.shop_item2, self.shop_item3,
+                                                       self.shop_item4, self.shop_item1.cost, self.shop_item2.cost,
+                                                       self.shop_item3.cost, self.shop_item4.cost))
+                self.choice = input("%s or %s or %s or %s" % (self.shop_item1.cost, self.shop_item2.cost,
+                                                              self.shop_item3.cost, self.shop_item4.cost))
+                if self.choice == self.shop_item1 and you.total_gold >= self.shop_item1.cost:
                     print("You bought a/an %s" % self.shop_item1)
                     you.total_gold -= self.shop_item1_cost
                     print("Now you have %s gold left" % you.total_gold)
@@ -522,7 +500,7 @@ class Room(object):
                     if self.shop_item1 in you.armor_list:
                         you.is_it_armor(self.shop_item1)
 
-                if what_you_buy == self.shop_item2 and you.total_gold >= self.shop_item2_cost:
+                if self.choice == self.shop_item2 and you.total_gold >= self.shop_item2.cost:
                     print("You bought a/an %s" % self.shop_item2)
                     you.total_gold -= self.shop_item2_cost
                     print("Now you have %s gold left" % you.total_gold)
@@ -535,7 +513,7 @@ class Room(object):
                     if self.shop_item2 in you.armor_list:
                         you.is_it_armor(self.shop_item2)
 
-                if what_you_buy == self.shop_item3 and you.total_gold >= self.shop_item3_cost:
+                if self.choice == self.shop_item3 and you.total_gold >= self.shop_item3.cost:
                     print("You bought a/an %s" % self.shop_item3)
                     you.total_gold -= self.shop_item3_cost
                     print("Now you have %s gold left" % you.total_gold)
@@ -548,7 +526,7 @@ class Room(object):
                     if self.shop_item3 in you.armor_list:
                         you.is_it_armor(self.shop_item3)
 
-                if what_you_buy == self.shop_item4 and you.total_gold >= self.shop_item4_cost:
+                if self.choice == self.shop_item4 and you.total_gold >= self.shop_item4.cost:
                     print("You bought a/an %s" % self.shop_item4)
                     you.total_gold -= self.shop_item4_cost
                     print("Now you have %s gold left" % you.total_gold)
@@ -611,7 +589,7 @@ hydra = Monster("Hydra", 20, 1 * heads, 15, 20, False)
 fire_elemental = Monster("Fire Elemental", 20, 5, 20, 20, False)
 volcano_hellion = Monster("Volcano Hellion", 15, 10, 15, 10, False)
 
-# Rooms
+# Room
 # Raven Gorge
 spawn_point_raven_gorge = Room("Spawn Point Raven Gorge", "raven_gorge1", None,
                                None, None, None, None)
@@ -626,7 +604,7 @@ raven_gorge3 = Room("Raven Gorge 3", "raven_gorge4", "raven_gorge2", "raven_gorg
 raven_gorge3_right = Room("Raven Gorge 3 Right", None, None, None, "raven_gorge3", True,
                           "An eldrazi devastator appeared and ripped you apart", "Eldrazi Devastator", True)
 raven_gorge4 = Room("Raven Gorge 4", None, "raven_gorge3", None, None, None, None, "", False, False, "", False, 0,
-                    True, wood_sword, health_potion, copper_armor, None, 5, 5, 5, None, "YES",
+                    True, wood_sword, health_potion, copper_armor, filler,  "YES", False, None,
                     "spawn_point_sheltered_valley")
 # Sheltered Valley
 spawn_point_sheltered_valley = Room("Spawn Point Sheltered Valley", None, None, "sheltered_valley4",

@@ -52,37 +52,6 @@ class GreatArmor(Item):
         self.defence = defence
         self.cost = cost
 
-
-class Clothes(Item):
-    def __init__(self, name, defence, cost):
-        super(Clothes, self).__init__(name, cost)
-        self.defence = defence
-        self.cost = cost
-
-
-class Key(Item):
-    def __init__(self, name, cost):
-        super(Key, self).__init__(name, cost)
-        self.cost = cost
-
-
-class Tools(Item):
-    def __init__(self, name, cost):
-        super(Tools, self).__init__(name, cost)
-        self.cost = cost
-
-
-class Vehicle(Item):
-    def __init__(self, name, cost):
-        super(Vehicle, self).__init__(name, cost)
-        self.cost = cost
-
-
-class Potion(Item):
-    def __init__(self, name, cost):
-        super(Potion, self).__init__(name, cost)
-        self.cost = cost
-
     def get_health_potion(self, name):
         if self.cost == self.cost:
             pass
@@ -94,7 +63,44 @@ class Potion(Item):
             you.health_potions += 1
 
 
-class Trash(Item):
+class AdditionalItem(Item):
+    def __init__(self, name, cost):
+        super(AdditionalItem, self).__init__(name, cost)
+        self.name = name
+        self.cost = cost
+
+
+class Clothes(AdditionalItem):
+    def __init__(self, name, cost):
+        super(Clothes, self).__init__(name, cost)
+        self.cost = cost
+
+
+class Key(AdditionalItem):
+    def __init__(self, name, cost):
+        super(Key, self).__init__(name, cost)
+        self.cost = cost
+
+
+class Tools(AdditionalItem):
+    def __init__(self, name, cost):
+        super(Tools, self).__init__(name, cost)
+        self.cost = cost
+
+
+class Vehicle(AdditionalItem):
+    def __init__(self, name, cost):
+        super(Vehicle, self).__init__(name, cost)
+        self.cost = cost
+
+
+class Potion(AdditionalItem):
+    def __init__(self, name, cost):
+        super(Potion, self).__init__(name, cost)
+        self.cost = cost
+
+
+class Trash(AdditionalItem):
     def __init__(self, name, cost):
         super(Trash, self).__init__(name, cost)
 
@@ -146,7 +152,7 @@ iron_armor = Armor("Iron Armor ", 10, 10)
 diamond_armor = GreatArmor("Diamond Armor ", 15, 20)
 enchanted_armor = GreatArmor("Enchanted Armor ", 20, 40)
 
-goron_tunic = Clothes("Goron Tunic ", None, 25)
+goron_tunic = Clothes("Goron Tunic ", None)
 
 bronze_key = Key("Bronze Key ", 0)
 copper_key = Key("Copper Key ", 0)
@@ -444,8 +450,8 @@ class Person(object):
 class Room(object):
     def __init__(self, name, north, south, east, west, surprise, room_text, surprise_name="", instant_death=False,
                  monster_in_it=False, monster_name="", gold_in_it=False, how_much_gold=0, shop=False,
-                 shop_item1=None, shop_item2=None, shop_item3=None, shop_item4=None, stay_in_shop="YES",
-                 item_in_it=False, item_name=None, next_place=None, ):
+                 shop_item1=Weapon, shop_item2=Armor, shop_item3=Potion, shop_item4=AdditionalItem,
+                 stay_in_shop="YES", item_in_it=False, item_name=None, next_place=None, ):
         self.monsters = monster_in_it
         self.north = north
         self.name = name
@@ -630,7 +636,7 @@ sheltered_valley8 = Room("Sheltered Valley 8", "sheltered_valley7", "great_deser
                          None, "Night starts to fall and it gets very dark")
 great_desert = Room("Great Desert", None, None, None, None, None,
                     "You see a sign and it says \n You are in the great desert \n You are going to die", "", False,
-                    False, "", False, 0, True, "Stone Sword", "Health Potion", None, None, 10, 5, None, None, "YES",
+                    False, "", False, 0, True, stone_sword, health_potion, filler, filler, "YES",
                     "spawn_point_great_desert")
 lake = Room("Lake", None, None, None, None, None,
             "The trees open and in front of you is a vast lake", "", False,

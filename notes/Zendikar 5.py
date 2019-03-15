@@ -130,6 +130,13 @@ class RottingFlesh(Trash):
         super(RottingFlesh, self).__init__(name, cost)
 
 
+class Filler(Item):
+    def __init__(self, name, cost):
+        super(Filler, self).__init__(name, cost)
+        self.name = name
+        self.cost = cost
+
+
 stick = Stick("Stick ", 1, 0)
 
 wood_sword = Sword("Wood Sword ", 3, 5)
@@ -143,7 +150,7 @@ enchanted_sword = GreatSword("Enchanted Sword ", 25, 50, 1, 3)
 leather_armor = Armor("Leather Armor ", 1, 0)
 copper_armor = Armor("Copper Armor ", 3, 5)
 iron_armor = Armor("Iron Armor ", 10, 10)
-monster_armor = Armor("Monster Armor", 2, None)
+monster_armor = Armor("Monster Armor", 1, None)
 
 diamond_armor = GreatArmor("Diamond Armor ", 15, 20)
 enchanted_armor = GreatArmor("Enchanted Armor ", 20, 40)
@@ -174,6 +181,10 @@ intestines = Intestines("Intestines ", 0)
 
 rotting_flesh = RottingFlesh("Rotting flesh ", 0)
 
+filler = Filler("", 0)
+
+print(rotting_flesh.cost)
+
 heads = 1
 
 
@@ -203,7 +214,7 @@ class Monster(object):
 
 
 class Person(object):
-    def __init__(self, name, health, weapon, armor, attack, assigned_room="Spawn Point Raven Gorge"):
+    def __init__(self, name, health, weapon, armor, assigned_room="Spawn Point Raven Gorge"):
         self.name = name
         self.alive_raven_gorge = True
         self.directions = ["north", "south", "east", "west", "", "Skip"]
@@ -212,13 +223,11 @@ class Person(object):
         self.read_starting_text = False
         self.did_you_beat_raven_gorge = False
         self.weapon = weapon
-        self.attack = attack
-        self.damage_from_level = 1
+        self.attack_amt = weapon.damage
         self.armor = armor
         self.defence = 1
         self.total_gold = 0
         self.health = health
-        self.health_from_level = 1
         self.level = 1
         self.exp = 15
         self.exp_to_level_up = 20
@@ -234,8 +243,6 @@ class Person(object):
         self.did_you_get_to_the_mountain = False
         self.did_you_get_to_the_lake = False
         self.shop3 = "YES"
-        self.total_health = self.health + self.health_from_level
-        self.total_damage = self.attack + self.damage_from_level
         self.defence = 1
         self.health_potions_list = ["Health Potion", "Good Health Potion", "Great Health Potion"]
         self.weapons_list = ["Wood Sword", "Stone Sword", "Ice Sword", "Cave Sword", "Diamond Sword", "Enchanted Sword"]
@@ -252,30 +259,33 @@ class Person(object):
         self.did_attack = False
 
     def take_damage(self, damage):
-        if damage < self.armor.defence:
+        if damage <= self.armor.defence:
             print("No damage is done because of some FABULOUS armor!")
         else:
             self.health -= damage - self.armor.defence
-            if self.health < 0:
+            if self.health <= 0:
                 self.health = 0
                 print("%s has fallen" % self.name)
         print("%s has %d health left" % (self.name, self.health))
 
     def attack(self, target):
+        print(self)
+        print(target)
         print("%s attacks %s for %d damage" % (self.name, target.name, self.weapon.damage))
-        target.take_damage(self.weapon.damage)
+        target.take_damage(self.attack_amt)
 
     def fight(self, target):
         print("A %s appeared \nWould you like to attack it?" % target.name)
-        choice = input("YES or NO")
-        if choice.upper() == "YES":
-            target.attack(you)
-            you.attack(target)
-        if choice.lower() == "NO":
-            pass
+        while target.health > 0 and self.health > 0:
+            choice = input("YES or NO")
+            if choice.upper() == "YES":
+                target.attack(self)
+                self.attack(target)
+            if choice.lower() == "NO":
+                pass
 
-        if self.health == self.health:
-            pass
+            if self.health == self.health:
+                pass
 
     def is_it_a_health_potion(self, health_potion1):
         if health_potion1 == self.health_potions_list[0]:
@@ -322,24 +332,24 @@ class Person(object):
 
     def is_it_a_weapon(self, weapon):
         if weapon == self.weapons_list[0]:
-            self.attack = self.weapons_damage[0]
+            self.attack_amt = self.weapons_damage[0]
             self.weapon = self.weapons_list[0]
         if weapon == self.weapons_list[1]:
-            self.attack = self.weapons_damage[1]
+            self.attack_amt = self.weapons_damage[1]
             self.weapon = self.weapons_list[1]
         if weapon == self.weapons_list[2]:
-            self.attack = self.weapons_damage[2]
+            self.attack_amt = self.weapons_damage[2]
             self.weapon = self.weapons_list[2]
         if weapon == self.weapons_list[3]:
-            self.attack = self.weapons_damage[3]
+            self.attack_amt = self.weapons_damage[3]
             self.weapon = self.weapons_list[3]
         if weapon == self.weapons_list[4]:
-            self.attack = self.weapons_damage[4]
+            self.attack_amt = self.weapons_damage[4]
             self.weapon = self.weapons_list[4]
         if weapon == self.weapons_list[5]:
-            self.attack = self.weapons_damage[5]
+            self.attack_amt = self.weapons_damage[5]
             self.weapon = self.weapons_list[5]
-        print("Now you deal %s damage" % self.combine_attack())
+        print("Now you deal %s damage" % self.attack_amt)
 
     def is_it_armor(self, armor):
         if armor == self.armor_list[0]:
@@ -355,19 +365,6 @@ class Person(object):
             self.armor = self.armor_list[3]
             self.defence = self.armor_defence[3]
         print("Now you have %s defence" % self.defence)
-
-    def combine_health(self):
-        self.total_health = self.health + self.health_from_level
-        print("You have %s total health" % self.total_health)
-
-    def combine_attack(self):
-        self.total_damage = self.attack + self.damage_from_level
-
-    def get_attack(self):
-        return self.attack + self.damage_from_level
-
-    def get_health(self):
-        return self.health + self.health_from_level
 
     def pick_up_item(self, item_name):
         print("There is a %s" % item_name.name)
@@ -389,15 +386,15 @@ class Person(object):
             self.total_gold += 5
             print("Now you have %s gold" % self.total_gold)
             print("Your health and attack increased by one")
-            self.damage_from_level += 1
-            self.health_from_level += 1
+            self.attack_amt += 1
+            self.health += 1
             self.level += 1
             print("Now you are level %s" % self.level)
 
     def check_self(self):
         self.inventory += self.weapon.name
         self.inventory += self.armor.name
-        print("You deal %s damage" % self.attack)
+        print("You deal %s damage" % self.attack_amt)
         print("You have this armor: %s" % self.armor.name)
         print("You have %s defence" % self.defence)
         print("You have %s health" % self.health)
@@ -432,7 +429,7 @@ class Person(object):
                     self.current_node = globals()[room_name]
                     self.total_gold += 100
                     self.weapon = "Wood Sword"
-                    self.attack = 3
+                    self.attack_amt = 3
                     self.armor = "Copper Armor"
                     self.defence = 3
                     self.health = 10
@@ -449,22 +446,20 @@ choice1 = input("What would you like your name to be?")
 you = Person(choice1, 5, stick, leather_armor, stick.damage)
 
 # Monsters
-eldrazi_scout = Monster("Eldrazi Scout", 2, 1, 5, 5, monster_armor, Sword("Claw", 1, None))
+eldrazi_scout = Monster("Eldrazi Scout", 1, 1, 5, 5, monster_armor, Sword("Claw", 1, None))
 eldrazi_scion = Monster("Eldrazi Scion", 3, 2, 5, 5, monster_armor, Sword("Claw", 1, None))
-crab = Monster("Crab", 5, 3, 5, 5, monster_armor, Sword("Claw", 1, None))
-krayt_dragon = Monster("Krayt Dragon", 10, 5, 10, 10, monster_armor, Sword("Claw", 1, None))
-sidewinder_naga = Monster("Sidewinder Naga", 5, 4, 10, 5, monster_armor, Sword("Claw", 1, None))
-hydra = Monster("Hydra", 20, 1 * heads, 15, 20, monster_armor, Sword("Claw", 1, None))
-fire_elemental = Monster("Fire Elemental", 20, 5, 20, 20, monster_armor, Sword("Claw", 1, None))
-volcano_hellion = Monster("Volcano Hellion", 15, 10, 15, 10, monster_armor, Sword("Claw", 1, None))
+crab = Monster("Crab", 5, 3, 5, 5, Armor("Monster Armor", 2, None), Sword("Claw", 1, None))
+krayt_dragon = Monster("Krayt Dragon", 10, 5, 10, 10, Armor("Monster Armor", 3, None), Sword("Claw", 1, None))
+sidewinder_naga = Monster("Sidewinder Naga", 5, 4, 10, 5, Armor("Monster Armor", 3, None), Sword("Claw", 1, None))
+hydra = Monster("Hydra", 20, 1 * heads, 15, 20, Armor("Monster Armor", 4, None), Sword("Claw", 1, None))
+fire_elemental = Monster("Fire Elemental", 20, 5, 20, 20, Armor("Monster Armor", 5, None), Sword("Claw", 1, None))
+volcano_hellion = Monster("Volcano Hellion", 15, 10, 15, 10, Armor("Monster Armor", 5, None), Sword("Claw", 1, None))
 
-you.fight(eldrazi_scout)
 
-"""
 class Room(object):
     def __init__(self, name, north, south, east, west, surprise, room_text, surprise_name="", instant_death=False,
                  monster_in_it=False, monster_name="", gold_in_it=False, how_much_gold=0, shop=False,
-                 shop_item1=Weapon, shop_item2=Armor, shop_item3=Potion, shop_item4=AdditionalItem,
+                 shop_item1=filler, shop_item2=None, shop_item3=None, shop_item4=None,
                  stay_in_shop="YES", item_in_it=False, item_name=None, next_place=None, ):
         self.monsters = monster_in_it
         self.north = north
@@ -575,7 +570,7 @@ class Room(object):
         if self.room_text:
             print(self.room_text)
 
-    def run_room(self, name=None, health=None, attack=None, gold=None, exp=None, did_you_beat_it=None):
+    def run_room(self, target=None):
         print(self.name)
         if self.room_text:
             print(self.room_text)
@@ -586,8 +581,8 @@ class Room(object):
             you.total_gold += self.how_much_gold
             print("Now you have %s gold" % you.total_gold)
         if self.monsters:
-            print("A/an %s appeared" % name)
-            you.fight(name, health, attack, gold, exp, did_you_beat_it)
+            print("A/an %s appeared" % target.name)
+            you.attack(target)
         if self.instant_death:
             you.die()
         if self.shop:
@@ -595,9 +590,9 @@ class Room(object):
             self.run_shop()
         if you.playing:
             you.command()
-            
-            
-# Room
+
+
+# Rooms
 # Raven Gorge
 spawn_point_raven_gorge = Room("Spawn Point Raven Gorge", "raven_gorge1", None,
                                None, None, None, None)
@@ -717,4 +712,3 @@ while you.playing:
         lake.run_room()
     if you.current_node.name == "Mountain":
         mountain.run_room()
-"""

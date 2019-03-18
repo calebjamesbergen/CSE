@@ -1,4 +1,3 @@
-import Special_Random
 # 3 different relationships
 # is a relationship # a tesla is a car
 # has a relationship # a car has a engine

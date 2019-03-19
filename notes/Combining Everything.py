@@ -137,51 +137,51 @@ class Filler(Item):
         self.cost = cost
 
 
-stick = Stick("Stick ", 1, 0)
+stick = Stick("Stick", 1, 0)
 
-wood_sword = Sword("Wood Sword ", 3, 5)
-stone_sword = Sword("Stone Sword ", 5, 10)
-ice_sword = Sword("Ice Sword ", 15, 20)
-cave_sword = Sword("Cave Sword ", 15, 20)
+wood_sword = Sword("Wood Sword", 3, 5)
+stone_sword = Sword("Stone Sword", 5, 10)
+ice_sword = Sword("Ice Sword", 15, 20)
+cave_sword = Sword("Cave Sword", 15, 20)
 
-diamond_sword = GreatSword("Diamond Sword ", 15, 20, 1, 5)
-enchanted_sword = GreatSword("Enchanted Sword ", 25, 50, 1, 3)
+diamond_sword = GreatSword("Diamond Sword", 15, 20, 1, 5)
+enchanted_sword = GreatSword("Enchanted Sword", 25, 50, 1, 3)
 
-leather_armor = Armor("Leather Armor ", 1, 0)
-copper_armor = Armor("Copper Armor ", 3, 5)
-iron_armor = Armor("Iron Armor ", 10, 10)
+leather_armor = Armor("Leather Armor", 1, 0)
+copper_armor = Armor("Copper Armor", 3, 5)
+iron_armor = Armor("Iron Armor", 10, 10)
 monster_armor = Armor("Monster Armor", 1, None)
 
-diamond_armor = GreatArmor("Diamond Armor ", 15, 20)
-enchanted_armor = GreatArmor("Enchanted Armor ", 20, 40)
+diamond_armor = GreatArmor("Diamond Armor", 15, 20)
+enchanted_armor = GreatArmor("Enchanted Armor", 20, 40)
 
 goron_tunic = Clothes("Goron Tunic ", None)
 
-bronze_key = Key("Bronze Key ", 0)
-copper_key = Key("Copper Key ", 0)
-silver_key = Key("Silver Key ", 0)
-gold_key = Key("Gold Key ", 0)
+bronze_key = Key("Bronze Key", 0)
+copper_key = Key("Copper Key", 0)
+silver_key = Key("Silver Key", 0)
+gold_key = Key("Gold Key", 0)
 
-machete = Tools("Machete ", 0)
-banana = Tools("Banana ", 0)
+machete = Tools("Machete", 0)
+banana = Tools("Banana", 0)
 
-boat = Vehicle("Boat ", 25)
+boat = Vehicle("Boat", 25)
 
-health_potion = Potion("Health Potion ", 5)
-good_health_potion = Potion("Good Health Potion ", 10)
-great_health_potion = Potion("Great Health Potion ", 15)
+health_potion = Potion("Health Potion", 5)
+good_health_potion = Potion("Good Health Potion", 10)
+great_health_potion = Potion("Great Health Potion", 15)
 
-banana_peel = BananaPeel("Banana peel ", 0)
+banana_peel = BananaPeel("Banana peel", 0)
 
-broken_bone = BrokenBone("Broken bone ", 0)
+broken_bone = BrokenBone("Broken bone", 0)
 
-fang = Fang("Fang ", 0)
+fang = Fang("Fang", 0)
 
-intestines = Intestines("Intestines ", 0)
+intestines = Intestines("Intestines", 0)
 
-rotting_flesh = RottingFlesh("Rotting flesh ", 0)
+rotting_flesh = RottingFlesh("Rotting flesh", 0)
 
-filler = Filler("", 0)
+filler = Filler("Sold out", 0)
 
 heads = 1
 
@@ -251,8 +251,8 @@ class Person(object):
         self.good_health_potion_heal = 5
         self.great_health_potion_heal = 10
         self.health_potions = 1
-        self.good_health_potions = 1
-        self.great_health_potions = 1
+        self.good_health_potions = 0
+        self.great_health_potions = 0
         self.did_command = False
         self.did_attack = False
 
@@ -372,17 +372,17 @@ class Person(object):
             self.defence = self.armor_defence[3]
             print("Now you have %s defence" % self.defence)
 
-    def pick_up_item(self, item_name):
-        print("There is a %s" % item_name.name)
+    def pick_up_item(self, item):
+        print("There is a %s" % item.name)
         print("Would you like to pick it up?")
         choice = input("YES or NO")
 
         if choice.upper() == "YES":
-            self.inventory.append(item_name)
-            print("You picked up the %s" % item_name.name)
+            self.inventory.append(item.name)
+            print("You picked up the %s" % item.name)
 
         if choice.upper() == "NO":
-            print("You didn't pick up the %s" % item_name.name)
+            print("You didn't pick up the %s" % item.name)
 
     def level_up(self):
         if self.exp >= self.exp_to_level_up:
@@ -398,8 +398,6 @@ class Person(object):
             print("Now you are level %s" % self.level)
 
     def check_self(self):
-        self.inventory += self.weapon.name
-        self.inventory += self.armor.name
         print("You deal %s damage" % self.attack_amt)
         print("You have this armor: %s" % self.armor.name)
         print("You have %s defence" % self.defence)
@@ -408,9 +406,7 @@ class Person(object):
         print("You are level %s" % self.level)
         print("You are %s exp away from leveling up" % (self.exp_to_level_up - self.exp))
         print("Your best weapon is a/an %s" % self.weapon.name)
-        print("This is in your inventory: %s" % "".join(self.inventory))
-        self.using_health_potion()
-        self.using_health_potion()
+        print("This is in your inventory: %s" % ", ".join(self.inventory))
         self.using_health_potion()
 
     def command(self):
@@ -449,7 +445,7 @@ class Person(object):
 
 choice1 = input("What would you like your name to be?")
 
-you = Person(choice1, 5, stick, leather_armor, stick.damage)
+you = Person(choice1, 5, stick, leather_armor)
 
 # Monsters
 eldrazi_scout = Monster("Eldrazi Scout", 1, 1, 5, 5, monster_armor, Sword("Claw", 1, None))
@@ -466,10 +462,10 @@ class Room(object):
     def __init__(self, name, north, south, east, west, surprise, room_text, surprise_name="", instant_death=False,
                  monster_in_it=False, monster_name="", gold_in_it=False, how_much_gold=0, shop=False,
                  shop_item1=None, shop_item2=None, shop_item3=None, shop_item4=None,
-                 stay_in_shop="YES", item_in_it=False, item_name=None, next_place=None, ):
+                 stay_in_shop="YES", item_in_it=False, item=None, next_place=None, ):
         self.monsters = monster_in_it
-        self.north = north
         self.name = name
+        self.north = north
         self.south = south
         self.east = east
         self.west = west
@@ -504,9 +500,10 @@ class Room(object):
         self.stay_in_shop = stay_in_shop
         self.next_place = next_place
         self.item_in_it = item_in_it
-        self.item_name = item_name
+        self.item = item
         self.did_it = False
         self.choice = ""
+        self.enter_shop = ""
 
     def printing_stuff_for_shop(self):
         did_it = False
@@ -528,6 +525,8 @@ class Room(object):
         if self.shop_item1.name is not None and not did_it:
             print("%s: %s" % (self.shop_item1.name, self.shop_item1.cost))
             did_it = True
+            if did_it == did_it:
+                pass
 
     def choosing_what_to_buy(self):
         print("What would you like to buy")
@@ -546,8 +545,11 @@ class Room(object):
         if self.shop_item1.name is not None and not did_it:
             self.choice = input("%s" % self.shop_item1.name)
             did_it = True
+            if did_it == did_it:
+                pass
 
     def buying_stuff(self):
+        self.choosing_what_to_buy()
         if self.choice == self.shop_item1.name and you.total_gold > self.shop_item1.cost:
             print("You bought a/an %s" % self.shop_item1.name)
             you.total_gold -= self.shop_item1.cost
@@ -559,7 +561,7 @@ class Room(object):
                 you.is_it_a_health_potion(self.shop_item1)
             else:
                 you.inventory.append(self.shop_item1)
-            print("Now you have %s gold left")
+            print("Now you have %s gold left" % you.total_gold)
 
         if self.choice == self.shop_item2.name and you.total_gold > self.shop_item2.cost:
             print("You bought a/an %s" % self.shop_item2.name)
@@ -572,7 +574,7 @@ class Room(object):
                 you.is_it_a_health_potion(self.shop_item2)
             else:
                 you.inventory.append(self.shop_item2)
-            print("Now you have %s gold left")
+            print("Now you have %s gold left" % you.total_gold)
 
         if self.choice == self.shop_item3.name and you.total_gold > self.shop_item3.cost:
             print("You bought a/an %s" % self.shop_item3.name)
@@ -585,7 +587,7 @@ class Room(object):
                 you.is_it_a_health_potion(self.shop_item3)
             else:
                 you.inventory.append(self.shop_item3)
-            print("Now you have %s gold left")
+            print("Now you have %s gold left" % you.total_gold)
 
         if self.choice == self.shop_item4.name and you.total_gold > self.shop_item4.cost:
             print("You bought a/an %s" % self.shop_item4.name)
@@ -598,18 +600,19 @@ class Room(object):
                 you.is_it_a_health_potion(self.shop_item4)
             else:
                 you.inventory.append(self.shop_item4)
-            print("Now you have %s gold left")
+            print("Now you have %s gold left" % you.total_gold)
 
     def run_shop(self):
-        print("There is a shop here")
         print("Would you like to enter it")
-        self.stay_in_shop = input("YES or NO")
-        if self.stay_in_shop.upper() == "YES":
-            print("You entered the shop")
-            print("Here is what they offer")
-            self.printing_stuff_for_shop()
-            self.choosing_what_to_buy()
-            self.buying_stuff()
+        self.enter_shop = input("YES or NO")
+        while self.enter_shop.upper() == "YES" and self.stay_in_shop.upper() == "YES":
+            if self.stay_in_shop.upper() == "YES":
+                print("You entered the shop")
+                print("Here is what they offer")
+                self.printing_stuff_for_shop()
+                self.buying_stuff()
+                print("Would you like to stay in the shop?")
+                self.stay_in_shop = input("YES or NO")
 
         if self.stay_in_shop.upper() == "NO":
             print("You did not enter the shop")
@@ -624,7 +627,7 @@ class Room(object):
         if self.room_text:
             print(self.room_text)
         if self.item_in_it:
-            you.pick_up_item(self.item_name)
+            you.pick_up_item(self.item)
         if self.gold_in_it:
             print("You found %s gold" % self.how_much_gold)
             you.total_gold += self.how_much_gold
@@ -641,12 +644,6 @@ class Room(object):
             you.command()
 
 
-test = Room("", None, None, None, None, None, None, "", False, False, "", False, 0, True, stone_sword, leather_armor,
-            health_potion, boat)
-print(test.shop_item1.name)
-test.run_shop()
-
-"""
 # Rooms
 # Raven Gorge
 spawn_point_raven_gorge = Room("Spawn Point Raven Gorge", "raven_gorge1", None,
@@ -662,7 +659,7 @@ raven_gorge3 = Room("Raven Gorge 3", "raven_gorge4", "raven_gorge2", "raven_gorg
 raven_gorge3_right = Room("Raven Gorge 3 Right", None, None, None, "raven_gorge3", True,
                           "An eldrazi devastator appeared and ripped you apart", "Eldrazi Devastator", True)
 raven_gorge4 = Room("Raven Gorge 4", None, "raven_gorge3", None, None, None, None, "", False, False, "", False, 0,
-                    True, wood_sword, health_potion, copper_armor, None,  "YES", False, None,
+                    True, wood_sword, health_potion, copper_armor, filler, "YES", False, None,
                     "spawn_point_sheltered_valley")
 # Sheltered Valley
 spawn_point_sheltered_valley = Room("Spawn Point Sheltered Valley", None, None, "sheltered_valley4",
@@ -688,14 +685,13 @@ sheltered_valley8 = Room("Sheltered Valley 8", "sheltered_valley7", "great_deser
                          None, "Night starts to fall and it gets very dark")
 great_desert = Room("Great Desert", None, None, None, None, None,
                     "You see a sign and it says \n You are in the great desert \n You are going to die", "", False,
-                    False, "", False, 0, True, stone_sword, health_potion, None, None, "YES",
-                    "spawn_point_great_desert")
-lake = Room("Lake", None, None, None, None, None,
-            "The trees open and in front of you is a vast lake", "", False,
-            False, "", False, 0, True, "Stone Sword", "Health Potion", None, None, 10, 5, None, None, "YES",
+                    False, "", False, 0, True, stone_sword, health_potion, filler, filler, "YES",
+                    False, None, "spawn_point_great_desert")
+lake = Room("Lake", None, None, None, None, None, "The trees open and in front of you is a vast lake", "", False,
+            False, "", False, 0, True, stone_sword, health_potion, filler, filler, "YES", False, None,
             "spawn_point_lake")
 mountain = Room("Mountain", None, None, None, None, None, "Ahead of you is a large mountain", "", False,
-                False, "", False, 0, True, stone_sword, health_potion, None, None, "YES", False, None,
+                False, "", False, 0, True, stone_sword, health_potion, filler, filler, "YES", False, None,
                 "spawn_point_mountain")
 
 # Mountain
@@ -730,6 +726,8 @@ while you.playing:
     if you.current_node.name == "Raven Gorge 3 Right":
         raven_gorge3_right.run_room()
     if you.current_node.name == "Raven Gorge 4":
+        print("Since this is your first time in a shop I will give you a hint")
+        print("Buying an item multiple times, other than a health potion, gives you nothing extra or helpful")
         raven_gorge4.run_room()
     if you.current_node.name == "Spawn Point Sheltered Valley":
         spawn_point_sheltered_valley.run_room()
@@ -765,4 +763,3 @@ while you.playing:
         lake.run_room()
     if you.current_node.name == "Mountain":
         mountain.run_room()
-"""

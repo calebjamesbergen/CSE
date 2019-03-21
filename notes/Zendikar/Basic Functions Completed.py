@@ -137,6 +137,10 @@ class Filler(Item):
         self.cost = cost
 
 
+class Boss(object):
+    
+
+
 stick = Stick("Stick", 1, 0)
 
 wood_sword = Sword("Wood Sword", 3, 5)
@@ -255,6 +259,23 @@ class Person(object):
         self.great_health_potions = 0
         self.did_command = False
         self.did_attack = False
+        self.burning = False
+        self.turns_to_burn_to_death = 3
+
+    def burn_to_death(self):
+        if goron_tunic.name in self.inventory:
+            self.burning = False
+            print("Because you have the goron tunic you do not get hurt by the heat")
+        if self.turns_to_burn_to_death == 3 and self.burning:
+            print("You are starting to get hot")
+        if self.turns_to_burn_to_death == 2 and self.burning:
+            print("You are starting to get very hot")
+        if self.turns_to_burn_to_death == 1 and self.burning:
+            print("You are so hot steam can be seen coming off your body")
+        if self.turns_to_burn_to_death == 0 and self.burning:
+            print("You died due to extreme heat")
+            self.die()
+        self.turns_to_burn_to_death -= 1
 
     def take_damage(self, damage):
         if damage <= self.armor.defence:
@@ -274,12 +295,22 @@ class Person(object):
         while target.health > 0 and self.health > 0:
             print("A %s appeared \nWould you like to attack it?" % target.name)
             choice = input("YES or NO")
+            if choice.lower() == "i":
+                self.check_self()
             if choice.upper() == "YES":
                 target.attack(self)
                 self.attack(target)
-            print("You defeated the %s" % target.name)
             if choice.upper() == "NO":
-                pass
+                print("The %s killed you" % target.name)
+                self.die()
+        if self.health > 0 and self.playing:
+            print("You defeated the %s" % target.name)
+            print("You got %s gold" % target.monster_gold)
+            self.total_gold += target.monster_gold
+            print("Now you have %s gold" % target.monster_gold)
+            print("You got %s exp" % target.exp)
+            self.exp += target.exp
+            self.level_up()
 
             if self.health == self.health:
                 pass
@@ -414,6 +445,8 @@ class Person(object):
                 command = input(">")
                 if command.lower() in ["q", "quit", "exit"]:
                     self.playing = False
+                elif self.burning:
+                    self.burn_to_death()
                 elif command.lower() == "i":
                     self.check_self()
                 elif command == "":
@@ -442,6 +475,7 @@ class Person(object):
         print("You died")
         print("Try again")
         self.playing = False
+        self.health = 0
 
 
 choice1 = input("What would you like your name to be?")
@@ -449,8 +483,8 @@ choice1 = input("What would you like your name to be?")
 you = Person(choice1, 5, stick, leather_armor)
 
 # Monsters
-eldrazi_scout = Monster("Eldrazi Scout", 1, 1, 5, 5, monster_armor, Sword("Claw", 1, None))
-eldrazi_scion = Monster("Eldrazi Scion", 3, 2, 5, 5, monster_armor, Sword("Claw", 1, None))
+eldrazi_scout = Monster("Eldrazi Scout", 1, 1, 5, 5, Armor("Monster Armor", 0, 0), Sword("Claw", 1, None))
+eldrazi_scion = Monster("Eldrazi Scion", 3, 2, 5, 5, Armor("Monster Armor", 0, 0), Sword("Claw", 1, None))
 crab = Monster("Crab", 5, 3, 5, 5, Armor("Monster Armor", 2, None), Sword("Pincer", 1, None))
 krayt_dragon = Monster("Krayt Dragon", 10, 5, 10, 10, Armor("Monster Armor", 3, None), Sword("Claw", 1, None))
 sidewinder_naga = Monster("Sidewinder Naga", 5, 4, 10, 5, Armor("Monster Armor", 3, None), Sword("Dagger", 1, None))
@@ -474,6 +508,7 @@ class Room(object):
         self.room_text = room_text
         self.surprise_name = surprise_name
         self.instant_death = instant_death
+        self.monster_in_it = monster_in_it
         self.gold_in_it = gold_in_it
         self.how_much_gold = how_much_gold
         self.monster_name = monster_name
@@ -633,11 +668,10 @@ class Room(object):
             print("You found %s gold" % self.how_much_gold)
             you.total_gold += self.how_much_gold
             print("Now you have %s gold" % you.total_gold)
-        if self.monsters:
-            print("A/an %s appeared" % target.name)
-            you.fight(target)
         if self.instant_death:
             you.die()
+        if self.monster_in_it:
+            you.fight(target)
         if self.shop:
             print("There is a shop here")
             self.run_shop()

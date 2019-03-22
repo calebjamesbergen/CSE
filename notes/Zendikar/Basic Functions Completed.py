@@ -138,7 +138,25 @@ class Filler(Item):
 
 
 class Boss(object):
-    
+    def __init__(self, weapon, armor, health, crit_rate1, crit_rate2, crit_chance, crit_hit, did_you_beat_it):
+        self.weapon = weapon
+        self.damage = weapon.damage
+        self.armor = armor
+        self.defence = armor.defence
+        self.health = health
+        self.crit_rate1 = crit_rate1
+        self.crit_rate2 = crit_rate2
+        self.crit_hit = crit_hit
+        self.crit_chance = crit_chance
+        self.damage_dealing = 0
+        self.did_you_beat_it = did_you_beat_it
+
+    def attack_damage(self):
+        self.damage_dealing = self.damage
+        self.crit_chance = random.randint(self.crit_rate1, self.crit_rate2)
+        if self.crit_chance == self.crit_hit:
+            self.damage_dealing *= 2
+        return self.damage_dealing
 
 
 stick = Stick("Stick", 1, 0)

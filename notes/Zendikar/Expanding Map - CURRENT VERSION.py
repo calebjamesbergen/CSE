@@ -139,7 +139,9 @@ class Filler(Item):
 
 
 class Boss(object):
-    def __init__(self, weapon, armor, health, crit_rate1, crit_rate2, crit_chance, crit_hit, did_you_beat_it):
+    def __init__(self, name, weapon, armor, health, crit_rate1, crit_rate2, crit_chance, crit_hit, did_you_beat_it,
+                 on_fire=False):
+        self.name = name
         self.weapon = weapon
         self.damage = weapon.damage
         self.armor = armor
@@ -151,6 +153,14 @@ class Boss(object):
         self.crit_chance = crit_chance
         self.damage_dealing = 0
         self.did_you_beat_it = did_you_beat_it
+        self.on_fire = on_fire
+
+    def burning(self):
+        if self.on_fire and self.health > 0:
+            print("%s has been burned" % self.name)
+            self.health -= 5
+            print("%s has taken 5 damage \nNow %s has %s health" % (self.name, self.name, self.health))
+            self.die()
 
     def attack_damage(self):
         self.damage_dealing = self.damage
@@ -159,6 +169,13 @@ class Boss(object):
             self.damage_dealing *= 2
         return self.damage_dealing
 
+    def die(self):
+        if self.health <= 0:
+            print("%s has died" % self.name)
+            self.did_you_beat_it = True
+
+
+boss = Boss("Boss", Sword("Sword", 50, 0, False), Armor("Armor", 50, 0, False), 200, 1, 4, 4, False, False, True)
 
 stick = Stick("Stick", 1, 0)
 

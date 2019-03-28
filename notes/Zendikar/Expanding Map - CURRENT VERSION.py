@@ -159,7 +159,11 @@ class Boss(object):
         if self.on_fire and self.health > 0:
             print("%s has been burned" % self.name)
             self.health -= 5
-            print("%s has taken 5 damage \nNow %s has %s health" % (self.name, self.name, self.health))
+            if self.health > 0:
+                print("%s has taken 5 damage \nNow %s has %s health" % (self.name, self.name, self.health))
+            else:
+                self.health = 0
+                print("%s has taken 5 damage \nNow %s has %s health" % (self.name, self.name, self.health))
             self.die()
 
     def attack_damage(self):
@@ -227,7 +231,7 @@ heads = 1
 
 
 class Monster(object):
-    def __init__(self, name, health, attack, exp, gold, armor, weapon):
+    def __init__(self, name, health, attack, exp, gold, armor, weapon, on_fire=False):
         self.name = name
         self.armor = armor
         self.health = health
@@ -235,15 +239,27 @@ class Monster(object):
         self.exp = exp
         self.monster_gold = gold
         self.weapon = weapon
+        self.on_fire = on_fire
+
+    def burning(self):
+        if self.on_fire and self.health > 0:
+            print("%s has been burned" % self.name)
+            self.health -= 5
+            if self.health > 0:
+                print("%s has taken 5 damage \nNow %s has %s health" % (self.name, self.name, self.health))
+            else:
+                self.health = 0
+                print("%s has taken 5 damage \nNow %s has %s health" % (self.name, self.name, self.health))
 
     def take_damage(self, damage):
         if damage < self.armor.defence:
             print("No damage is done because of some FABULOUS armor!")
         else:
             self.health -= damage - self.armor.defence
-            if self.health < 0:
-                self.health = 0
-                print("%s has fallen" % self.name)
+        self.burning()
+        if self.health < 0:
+            self.health = 0
+            print("%s has fallen" % self.name)
         print("%s has %d health left" % (self.name, self.health))
 
     def attack(self, target):
@@ -267,8 +283,8 @@ class Person(object):
         self.total_gold = 0
         self.health = health
         self.level = 1
-        self.exp = 15
-        self.exp_to_level_up = 20
+        self.exp = 25
+        self.exp_to_level_up = 30
         self.shop = "YES"
         self.in_shop = True
         self.inventory = []
@@ -297,6 +313,7 @@ class Person(object):
         self.did_attack = False
         self.burning = False
         self.turns_to_burn_to_death = 3
+        self.wanting_to_fight = True
 
     def burn_to_death(self):
         if goron_tunic.name in self.inventory:
@@ -324,11 +341,11 @@ class Person(object):
         print("%s has %d health left" % (self.name, self.health))
 
     def attack(self, target):
-        print("%s attacks %s for %d damage" % (self.name, target.name, self.attack_amt))
+        print("%s attacks %s for %d damage" % (self.name, target.name, self.attack_amt-target.armor.defence))
         target.take_damage(self.attack_amt)
 
     def fight(self, target):
-        while target.health > 0 and self.health > 0:
+        while target.health > 0 and self.health > 0 and self.wanting_to_fight:
             print("A %s appeared \nWould you like to attack it?" % target.name)
             choice = input("YES or NO")
             if choice.lower() == "i":
@@ -336,17 +353,17 @@ class Person(object):
             if choice.upper() == "YES":
                 target.attack(self)
                 self.attack(target)
+                if self.health > 0 and self.playing:
+                    if target.health <= 0:
+                        print("You defeated the %s" % target.name)
+                        print("You got %s gold" % target.monster_gold)
+                        self.total_gold += target.monster_gold
+                        print("Now you have %s gold" % target.monster_gold)
+                        print("You got %s exp" % target.exp)
+                        self.exp += target.exp
+                        self.level_up()
             if choice.upper() == "NO":
-                print("The %s killed you" % target.name)
-                self.die()
-        if self.health > 0 and self.playing:
-            print("You defeated the %s" % target.name)
-            print("You got %s gold" % target.monster_gold)
-            self.total_gold += target.monster_gold
-            print("Now you have %s gold" % target.monster_gold)
-            print("You got %s exp" % target.exp)
-            self.exp += target.exp
-            self.level_up()
+                self.wanting_to_fight = False
 
             if self.health == self.health:
                 pass
@@ -533,6 +550,13 @@ sidewinder_naga = Monster("Sidewinder Naga", 5, 4, 10, 5, Armor("Monster Armor",
 hydra = Monster("Hydra", 20, 1 * heads, 15, 20, Armor("Monster Armor", 4, None), Sword("Claw", 1, None))
 fire_elemental = Monster("Fire Elemental", 20, 5, 20, 20, Armor("Monster Armor", 5, None), Sword("Flames", 1, None))
 volcano_hellion = Monster("Volcano Hellion", 15, 10, 15, 10, Armor("Monster Armor", 5, None), Sword("Flames", 1, None))
+
+lylek = Monster("Lylek", 15, 20, 20, 15, Armor("Skin", 15, 0), Weapon("Leg", 20, 0))
+godzilla = Monster("Godzilla", 50, 20, 40, 30, Armor("Skin", 15, 0), Weapon("Fire breath", 20, 0))
+volcanic_dragon = Monster("Volcanic Dragon", 15, 15, 15, 15, Armor("Scales", 15, 0), Weapon("Fire breath", 15, 0))
+bellowing_tanglewurm = Monster("Bellowing Tanglewurm", 30, 15, 20, 20, Armor("Skin", 20, 0), Weapon("Mouth", 15, 0))
+grunn = Monster("Grunn", 60, 10, 40, 40, Armor("Grass Armor", 15, 0), Weapon("Fist", 10, 0))
+baloth = Monster("Baloth", 20, 20, 20, 20, Armor("Skin", 20, 0), Weapon("Mouth", 20, 0))
 
 
 class Room(object):

@@ -798,13 +798,37 @@ mountain = Room("Mountain", None, None, None, None, None, "Ahead of you is a lar
                 "spawn_point_mountain")
 
 # Mountain
-spawn_point_mountain = Room("Spawn Point Mountain", None, None, None, None, None, "You are in Spawn Point Mountain")
+spawn_point_mountain = Room("Spawn Point Mountain", None, None, "mountain6", "mountain1", None,
+                            "You are in Spawn Point Mountain")
+mountain1 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
+                 "You start climbing the right side of the mountain")
+mountain2 = Room("Mountain 2", "mountain5", "mountain3", None, None, None,
+                 "You start to get short of breath due to the altitude")
+mountain3 = Room("Mountain 3", "mountain2", "mountain4", None, None, None, "You see a giant crab south of you")
+mountain4 = Room("Mountain 4", "mountain3", None, "mountain_boss", None, None, None)
+mountain5 = Room("Mountain 5", None, "mountain2", None, None, None, None)
+mountain6 = Room("Mountain 6", None, None, None, None, None, None)
+spawn_point_pit = Room("Spawn Point Pit", None, None, "pit2", "pit1", None,
+                       "You see torches leading to the east and west")
+pit1 = Room("Pit 1", None, None, None, None, None, None)
+pit2 = Room("Pit 2", None, None, None, None, None, None)
+mountain_boss = Room("Mountain Boss", None, None, "mountain_shop", "mountain4", None,
+                     "Well, time for a boss fight I guess")
+mountain_shop = Room("Mountain Shop", None, None, None, "mountain_boss", None, None, False, None, "", False, False,
+                     "", False, 0, True, iron_armor, good_health_potion, None, None, "YES")
+
+# Cave
+spawn_point_cave = Room("Spawn Point Cave", None, None, None, None, None, "You are now in the cave")
+
 # Lake
 spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You are in Spawn Point Mountain")
+
 # Desert
 spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, None, None, None,
                                 "You are in Spawn Point Mountain")
-you.current_node = spawn_point_raven_gorge
+
+you.current_node = spawn_point_mountain
+you.attack_amt = 100
 
 first_time = True
 
@@ -866,3 +890,43 @@ while you.playing:
         lake.run_room()
     if you.current_node.name == "Mountain":
         mountain.run_room()
+    if you.current_node.name == "Spawn Point Mountain":
+        spawn_point_mountain.run_room()
+    if you.current_node.name == "Mountain 1":
+        mountain1.run_room()
+    if you.current_node.name == "Mountain 2":
+        mountain2.run_room()
+    if you.current_node.name == "Mountain 3":
+        mountain3.run_room()
+    if you.current_node.name == "Mountain 4":
+        mountain4.decision_room()
+        you.fight(crab)
+    if you.current_node.name == "Mountain 5":
+        mountain5.decision_room()
+        print("You start to get very dizzy and you fall off the edge of the mountain")
+        you.die()
+    if you.current_node.name == "Mountain 6":
+        mountain6.decision_room()
+        fall_off_cliff = random.randint(1, 4)
+        print(fall_off_cliff)
+        if fall_off_cliff == 1:
+            print("You tripped over a rock which caused a chunk of rock to move away revealing a fall down to a pit")
+            print("You also fell down and miraculously didn't die")
+            you.current_node = spawn_point_pit
+        else:
+            print("You tripped over a rock and fell off the mountain")
+            you.die()
+    if you.current_node.name == "Spawn Point Pit":
+        spawn_point_pit.run_room()
+    if you.current_node.name == "Pit 1":
+        pit1.decision_room()
+        print("You fell down into another pit but this time you didn't survive")
+        you.die()
+    if you.current_node.name == "Pit 2":
+        pit2.decision_room()
+        print("Some kor grab you and pull you to your death")
+        you.die()
+    if you.current_node.name == "Mountain Boss":
+        mountain_boss.run_room()
+    if you.current_node.name == "Mountain Shop":
+        mountain_shop.run_room()

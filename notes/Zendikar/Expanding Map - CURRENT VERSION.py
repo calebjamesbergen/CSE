@@ -208,6 +208,7 @@ gold_key = Key("Gold Key", 0)
 
 machete = Tools("Machete", 0)
 banana = Tools("Banana", 0)
+pickaxe = Tools("Pickaxe", 20, False)
 
 boat = Vehicle("Boat", 25)
 
@@ -815,10 +816,26 @@ pit2 = Room("Pit 2", None, None, None, None, None, None)
 mountain_boss = Room("Mountain Boss", None, None, "mountain_shop", "mountain4", None,
                      "Well, time for a boss fight I guess")
 mountain_shop = Room("Mountain Shop", None, None, None, "mountain_boss", None, None, False, None, "", False, False,
-                     "", False, 0, True, iron_armor, good_health_potion, None, None, "YES")
+                     "", False, 0, True, iron_armor, pickaxe, good_health_potion, None, "YES")
 
 # Cave
 spawn_point_cave = Room("Spawn Point Cave", None, None, None, None, None, "You are now in the cave")
+cave1 = Room("Cave 1", "cave2", "cave_special", "spawn_point_cave", None, None, "The torches on the wall start to dim")
+cave2 = Room("Cave 2", "cave3", "cave1", "cave_krayt", "cave4", None,
+             "To your north you hear someone mumbling about a precious")
+cave3 = Room("Cave 3", None, None, None, None, None, None)
+cave4 = Room("Cave 4", None, None, None, None, None, None)
+cave5 = Room("Cave 5", "cave6", None, None, "spawn_point_cave", None, "The torches on the wall are brightening")
+cave6 = Room("Cave 6", "cave_ritual", "cave5", None, "cave_krayt", None, "Some sort of ritual is going on north of you")
+cave7 = Room("Cave 7", "cave_in", "cave_ritual", None, "cave_weapon", None, None)
+cave_special = Room("Cave Special", None, None, None, None, None, None)
+cave_krayt = Room("Cave Krayt", None, None, "cave6", "cave2", None, None)
+cave_ritual = Room("Cave Ritual", "cave7", "cave6", None, None, None, "There is some sort of ritual here")
+cave_in = Room("Cave In", None, None, None, None, None, "There is a cave in here and you can't pass")
+cave_boss = Room("Cave Boss", "cave_shop", "cave_in", None, None, None, None, False, None, "", False, False, "", False,
+                 0, False, None, None, None, None, "YES", "spawn_point_boss")
+cave_shop = Room("Cave Shop", None, None, None, None, None, None, False, None, "", False, False, "", False,
+                 0, True, cave_sword, diamond_armor, good_health_potion)
 
 # Lake
 spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You are in Spawn Point Mountain")
@@ -827,7 +844,11 @@ spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You a
 spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, None, None, None,
                                 "You are in Spawn Point Mountain")
 
-you.current_node = spawn_point_mountain
+
+# Boss Area
+spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
+
+you.current_node = cave3
 you.attack_amt = 100
 
 first_time = True
@@ -930,3 +951,64 @@ while you.playing:
         mountain_boss.run_room()
     if you.current_node.name == "Mountain Shop":
         mountain_shop.run_room()
+
+    if you.current_node.name == "Spawn Point Cave":
+        spawn_point_cave.run_room()
+    if you.current_node.name == "Cave 1":
+        cave1.run_room()
+    if you.current_node.name == "Cave 2":
+        cave2.run_room()
+    if you.current_node.name == "Cave 3":
+        cave3.decision_room()
+        print("Gollum: Would you care to try my riddles?")
+        choice2 = input("YES or NO")
+        if choice2.upper() == "YES":
+            alive = True
+            print("Gollum: Here is the first riddle\nWhat has roots as nobody sees \nIs taller than trees, \nUp, up"
+                  " it goes, \nAnd yet never grows")
+            print("What is it?")
+            if alive:
+                choice3 = input(">")
+                if choice3.upper() == "MOUNTAIN":
+                    print("Gollum: You are correct \nTime for the next one")
+                else:
+                    print("Gollum: You are wrong. Time to die")
+                    you.die()
+                    alive = False
+            if alive:
+                print("Gollum: Here is the second one\nVoiceless it cries,\nWingless flutters,\nToothless bites,\n"
+                      "Mouthless mutters")
+                print("What is it?")
+                choice4 = input(">")
+                if choice4.upper() == "WIND":
+                    print("You are correct")
+                else:
+                    print("Gollum: YOU are wrong. Time to die")
+                    you.die()
+                    alive = False
+
+        if choice2.upper() == "NO":
+            print("Gollum: How dare you\nTime to die")
+            you.die()
+    if you.current_node.name == "Cave 4":
+        cave4.decision_room()
+
+        you.die()
+    if you.current_node.name == "Cave 5":
+        cave5.run_room()
+    if you.current_node.name == "Cave 6":
+        cave6.run_room()
+    if you.current_node.name == "Cave 7":
+        cave7.run_room()
+    if you.current_node.name == "Cave Special":
+        cave_special.run_room()
+    if you.current_node.name == "Cave Krayt":
+        cave_krayt.run_room()
+    if you.current_node.name == "Cave Ritual":
+        cave_ritual.run_room()
+    if you.current_node.name == "Cave In":
+        cave_in.run_room()
+    if you.current_node.name == "Cave Boss":
+        cave_boss.run_room()
+    if you.current_node.name == "Cave Shop":
+        cave_shop.run_room()

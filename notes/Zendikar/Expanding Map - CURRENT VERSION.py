@@ -238,7 +238,7 @@ class Monster(object):
         self.health = health
         self.damage = attack
         self.exp = exp
-        self.monster_gold = gold
+        self.gold = gold
         self.weapon = weapon
         self.on_fire = on_fire
 
@@ -345,6 +345,16 @@ class Person(object):
         print("%s attacks %s for %d damage" % (self.name, target.name, self.attack_amt-target.armor.defence))
         target.take_damage(self.attack_amt)
 
+    def get_stuff_from_monster(self, target):
+        print("You defeated the monster")
+        print("You got %s gold" % target.gold)
+        self.total_gold += target.gold
+        print("Now you have %s gold" % self.total_gold)
+        print("You got %s exp" % target.exp)
+        self.exp += target.exp
+        print("Now you have %s exp" % self.exp)
+        self.level_up()
+
     def fight(self, target):
         while target.health > 0 and self.health > 0 and self.wanting_to_fight:
             print("A %s appeared \nWould you like to attack it?" % target.name)
@@ -354,17 +364,12 @@ class Person(object):
             if choice.upper() == "YES":
                 target.attack(self)
                 self.attack(target)
-                if self.health > 0 and self.playing:
-                    if target.health <= 0:
-                        print("You defeated the %s" % target.name)
-                        print("You got %s gold" % target.monster_gold)
-                        self.total_gold += target.monster_gold
-                        print("Now you have %s gold" % target.monster_gold)
-                        print("You got %s exp" % target.exp)
-                        self.exp += target.exp
-                        self.level_up()
+            if target.health <= 0 and self.playing:
+                    self.get_stuff_from_monster(target)
             if choice.upper() == "NO":
                 self.wanting_to_fight = False
+                print("As you fled the %s killed you" % target.name)
+                self.die()
 
             if self.health == self.health:
                 pass
@@ -475,17 +480,18 @@ class Person(object):
             print("You didn't pick up the %s" % item.name)
 
     def level_up(self):
-        if self.exp >= self.exp_to_level_up:
-            self.exp -= 20
-            print("You leveled up")
-            print("You got 5 gold for leveling up")
-            self.total_gold += 5
-            print("Now you have %s gold" % self.total_gold)
-            print("Your health and attack increased by one")
-            self.attack_amt += 1
-            self.health += 1
-            self.level += 1
-            print("Now you are level %s" % self.level)
+        while self.exp >= 30:
+            if self.exp >= self.exp_to_level_up:
+                self.exp -= 20
+                print("You leveled up")
+                print("You got 5 gold for leveling up")
+                self.total_gold += 5
+                print("Now you have %s gold" % self.total_gold)
+                print("Your health and attack increased by one")
+                self.attack_amt += 1
+                self.health += 1
+                self.level += 1
+                print("Now you are level %s" % self.level)
 
     def check_self(self):
         print("You deal %s damage" % self.attack_amt)
@@ -819,11 +825,11 @@ mountain_shop = Room("Mountain Shop", None, None, None, "mountain_boss", None, N
                      "", False, 0, True, iron_armor, pickaxe, good_health_potion, None, "YES")
 
 # Cave
-spawn_point_cave = Room("Spawn Point Cave", None, None, None, None, None, "You are now in the cave")
+spawn_point_cave = Room("Spawn Point Cave", None, None, "cave5", "cave1", None, "You are now in the cave")
 cave1 = Room("Cave 1", "cave2", "cave_special", "spawn_point_cave", None, None, "The torches on the wall start to dim")
 cave2 = Room("Cave 2", "cave3", "cave1", "cave_krayt", "cave4", None,
              "To your north you hear someone mumbling about a precious")
-cave3 = Room("Cave 3", None, None, None, None, None, None)
+cave3 = Room("Cave 3", None, "cave2", None, None, None, None)
 cave4 = Room("Cave 4", None, None, None, None, None, None)
 cave5 = Room("Cave 5", "cave6", None, None, "spawn_point_cave", None, "The torches on the wall are brightening")
 cave6 = Room("Cave 6", "cave_ritual", "cave5", None, "cave_krayt", None, "Some sort of ritual is going on north of you")
@@ -848,8 +854,10 @@ spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, None, No
 # Boss Area
 spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
 
-you.current_node = cave3
-you.attack_amt = 100
+you.current_node = spawn_point_cave
+you.armor_defence = 100
+you.defence = 100
+you.attack_amt = 200
 
 first_time = True
 
@@ -922,6 +930,7 @@ while you.playing:
     if you.current_node.name == "Mountain 4":
         mountain4.decision_room()
         you.fight(crab)
+        you.run_command()
     if you.current_node.name == "Mountain 5":
         mountain5.decision_room()
         print("You start to get very dizzy and you fall off the edge of the mountain")
@@ -983,29 +992,91 @@ while you.playing:
                 if choice4.upper() == "WIND":
                     print("You are correct")
                 else:
-                    print("Gollum: YOU are wrong. Time to die")
+                    print("Gollum: You are wrong. Time to die")
                     you.die()
                     alive = False
-
+            if alive:
+                print("Gollum: It cannot be seen, cannot be felt,\nCannot be heard, cannot be smelt\nIt lies"
+                      "behind the stars and under hills,\nAnd empty holes it fills.\nIt comes first and follows"
+                      "after,\nEnds life, kills laughter")
+                print("What is it?")
+                choice5 = input(">")
+                if choice5.upper() == "DARK":
+                    print("Gollum: You are correct")
+                else:
+                    print("Gollum: You are wrong time to die")
+                    you.die()
+                    alive = False
+            if alive:
+                print("Gollum: Alive without breath,\n As cold as death,\n Never thirsty, ever drinking,\n"
+                      "All in mail never clinking")
+                print("What is it")
+                choice6 = input(">")
+                if choice6.upper() == "FISH":
+                    print("Gollum: You are correct")
+                else:
+                    print("Gollum: You are wrong time to die")
+                    you.die()
+                    alive = False
+            if alive:
+                print("Gollum: This thing all devours:\n Birds, beasts, trees, flowers;\n Gnaws iron, bites steel;\n"
+                      "Grinds hard stones to meal;\n Slays king, ruins town,\nAnd beats high mountain down")
+                print("What is it?")
+                choice7 = input(">")
+                if choice7.upper() == "TIME":
+                    print("Gollum: You are correct")
+                else:
+                    print("Gollum: You are wrong time to die")
+                    you.die()
+                    alive = False
+            if alive:
+                print("Suddenly a short humanoid with very hairy feet walks towards you")
+                print("Hi my name is Bilbo")
+                print("Here is my riddle for you")
+                print("What is in my pocket?")
+                choice8 = input(">")
+                if choice8.upper() == "NOT A RING":
+                    print("Bilbo: Wow. You are correct\nGood job")
+                else:
+                    print("Bilbo: You are wrong\nHave some fun gollum")
+                    you.die()
+                    alive = False
+            if alive:
+                you.run_command()
         if choice2.upper() == "NO":
             print("Gollum: How dare you\nTime to die")
             you.die()
     if you.current_node.name == "Cave 4":
         cave4.decision_room()
-
+        print("Some orcs appear and they make quick work of you")
         you.die()
     if you.current_node.name == "Cave 5":
         cave5.run_room()
     if you.current_node.name == "Cave 6":
         cave6.run_room()
     if you.current_node.name == "Cave 7":
-        cave7.run_room()
+        cave7.decision_room()
+        you.fight(lylek)
+        you.run_command()
     if you.current_node.name == "Cave Special":
-        cave_special.run_room()
+        cave_special.decision_room()
+        print("You find Thanos here and using the power of the infinity stones he erases you from history")
+        you.die()
     if you.current_node.name == "Cave Krayt":
-        cave_krayt.run_room()
+        cave_krayt.decision_room()
+        you.fight(krayt_dragon)
+        you.run_command()
     if you.current_node.name == "Cave Ritual":
-        cave_ritual.run_room()
+        cave_ritual.decision_room()
+        print("What would you like to do?")
+        choice_r = input("Try to SNEAK around the ritual or rush in and ATTACK")
+        if choice_r.upper() == "SNEAK":
+            print("You snuck around the ritual without anyone seeing you")
+            you.run_command()
+        else:
+            print("You rushed into the ritual but a sudden wave of kor run at you")
+            print("They tie you down and you become the sacrifice for the ritual")
+            you.die()
     if you.current_node.name == "Cave In":
         cave_in.run_room()
     if you.current_node.name == "Cave Boss":

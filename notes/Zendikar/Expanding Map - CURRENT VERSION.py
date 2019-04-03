@@ -139,21 +139,15 @@ class Filler(Item):
 
 
 class Boss(object):
-    def __init__(self, name, weapon, armor, health, crit_rate1, crit_rate2, crit_chance, crit_hit, did_you_beat_it,
-                 on_fire=False):
+    def __init__(self, name, armor, defence, health, did_you_beat_it, on_fire, gold, exp):
         self.name = name
-        self.weapon = weapon
-        self.damage = weapon.damage
         self.armor = armor
-        self.defence = armor.defence
+        self.defence = defence
         self.health = health
-        self.crit_rate1 = crit_rate1
-        self.crit_rate2 = crit_rate2
-        self.crit_hit = crit_hit
-        self.crit_chance = crit_chance
-        self.damage_dealing = 0
         self.did_you_beat_it = did_you_beat_it
         self.on_fire = on_fire
+        self.gold = gold
+        self.exp = exp
 
     def burning(self):
         if self.on_fire and self.health > 0:
@@ -166,20 +160,48 @@ class Boss(object):
                 print("%s has taken 5 damage \nNow %s has %s health" % (self.name, self.name, self.health))
             self.die()
 
-    def attack_damage(self):
-        self.damage_dealing = self.damage
-        self.crit_chance = random.randint(self.crit_rate1, self.crit_rate2)
-        if self.crit_chance == self.crit_hit:
-            self.damage_dealing *= 2
-        return self.damage_dealing
-
     def die(self):
         if self.health <= 0:
             print("%s has died" % self.name)
             self.did_you_beat_it = True
 
 
-boss = Boss("Boss", Sword("Sword", 50, 0, False), Armor("Armor", 50, 0, False), 200, 1, 4, 4, False, False, True)
+class Knucklotec(Boss):
+    def __init__(self, name, armor, defence, health, did_you_beat_it, on_fire, gold, exp):
+        super(Knucklotec, self).__init__(name, armor, defence, health, did_you_beat_it, on_fire, gold, exp)
+        self.attack_numbers = [1, 2, 3, 4]
+
+    def attack(self, target):
+        print("%s starts to attack" % self.name)
+        attack_num = random.randint(1, 5)
+        if attack_num == self.attack_numbers[0]:
+            print("%s starts to send a fist at you" % self.name)
+            print("He hits you but it does not hurt very much")
+            target.take_damage(10)
+        if attack_num == self.attack_numbers[1]:
+            print("%s starts to send a fist high in the air" % self.name)
+            print("Suddenly the fist comes crashing down")
+            target.take_damage(15)
+        if attack_num == self.attack_numbers[2]:
+            print("%s sends both fists a you" % self.name)
+            print("He then squishes you between both of his fists")
+            target.take_damage(25)
+        if attack_num == self.attack_numbers[3]:
+            print("%s starts to send a fist at you" % self.name)
+            print("But he misses")
+
+    def take_damage(self, damage):
+        if damage <= self.armor.defence:
+            print("No damage is done because of some FABULOUS armor")
+        else:
+            self.health -= damage - self.armor.defence
+            if self.health <= 0:
+                self.health = 0
+                print("%s has fallen" % self.name)
+        print("%s has %d health left" % (self.name, self.health))
+
+
+knucklotec = Knucklotec("Knucklotec", Armor("Armor", 20, 0, False), 20, 150, False, False, 50, 50)
 
 stick = Stick("Stick", 1, 0)
 
@@ -332,6 +354,7 @@ class Person(object):
         self.turns_to_burn_to_death -= 1
 
     def take_damage(self, damage):
+        print("%s damage is dealt" % damage)
         if damage <= self.armor.defence:
             print("No damage is done because of some FABULOUS armor")
         else:
@@ -363,9 +386,12 @@ class Person(object):
                 self.check_self()
             if choice.upper() == "YES":
                 target.attack(self)
-                self.attack(target)
+                if self.health > 0:
+                    self.attack(target)
             if target.health <= 0 and self.playing:
                     self.get_stuff_from_monster(target)
+            if self.health <= 0:
+                you.die()
             if choice.upper() == "NO":
                 self.wanting_to_fight = False
                 print("As you fled the %s killed you" % target.name)
@@ -542,6 +568,7 @@ class Person(object):
         print("Try again")
         self.playing = False
         self.health = 0
+        self.current_node = room
 
 
 choice1 = input("What would you like your name to be?")
@@ -754,6 +781,9 @@ class Room(object):
 
 
 # Rooms
+
+room = Room(None, None, None, None, None, None, None)
+
 # Raven Gorge
 spawn_point_raven_gorge = Room("Spawn Point Raven Gorge", "raven_gorge1", None,
                                None, None, None, None)
@@ -854,15 +884,14 @@ spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, None, No
 # Boss Area
 spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
 
-you.current_node = spawn_point_cave
-you.armor_defence = 100
-you.defence = 100
-you.attack_amt = 200
+you.current_node = spawn_point_raven_gorge
+
+you.fight(knucklotec)
 
 first_time = True
 
 while you.playing:
-    if first_time:
+    if first_time and you.playing:
         print("Welcome to Zendikar")
         print("This game will require skill and a bit of luck")
         print("Try checking your inventory by typing 'i'")
@@ -1078,6 +1107,15 @@ while you.playing:
             print("They tie you down and you become the sacrifice for the ritual")
             you.die()
     if you.current_node.name == "Cave In":
+        if "Pickaxe" in you.inventory:
+            print("You have the pickaxe")
+            print("Would you like to use it")
+            choice9 = input("YES or NO")
+            if choice9.upper() == "YES":
+                print("With ease you mined away the rocks in your path")
+                cave_in.north = cave_boss
+            if choice9.upper() == "NO":
+                print("You did not use the pickaxe")
         cave_in.run_room()
     if you.current_node.name == "Cave Boss":
         cave_boss.run_room()

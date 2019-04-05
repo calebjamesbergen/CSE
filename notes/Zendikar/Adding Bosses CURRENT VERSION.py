@@ -881,29 +881,57 @@ cave_shop = Room("Cave Shop", None, None, None, None, None, None, False, None, "
                  0, True, cave_sword, diamond_armor, good_health_potion, filler, "YES", "spawn_point_boss")
 
 # Desert
-spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, None, None, None,
+spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, "desert_sandstorm1", "desert1", None,
                                 "You are in Spawn Point Mountain")
-desert1 = Room()
-desert_maze1 = Room()
-desert_maze2 = Room()
-desert_maze3 = Room()
-desert_maze4 = Room()
-desert_maze5 = Room()
-desert_maze6 = Room()
-desert_maze7 = Room()
-desert_maze8 = Room()
-desert_maze9 = Room()
-desert_maze10 = Room()
-desert_maze11 = Room()
-desert_maze12 = Room()
-desert_maze13 = Room()
-desert_maze14 = Room()
-desert_maze15 = Room()
-desert_maze16 = Room()
-desert_maze17 = Room()
-desert_maze18 = Room()
-desert_boss = Room()
-desert_shop = Room()
+desert1 = Room("Desert 1", "desert_maze1", "spawn_point_great_desert", None, None, None,
+               "Print you see a sign that says\nWelcome to the maze")
+desert_maze1 = Room("Desert Maze", "desert_maze6", "desert1", None, "desert_maze2", None, "You are in the maze")
+desert_maze2 = Room("Desert Maze", "desert_maze5", None, "desert_maze1", "desert_maze3", None, "You are in the maze")
+desert_maze3 = Room("Desert Maze", "desert_maze4", None, "desert_maze2", None, None, "You are in the maze")
+desert_maze4 = Room("Desert Maze", "desert_maze9", "desert_maze3", None, "desert_maze2", None, "You are in the maze")
+desert_maze5 = Room("Desert Maze", "desert_maze8", "desert_maze5", "desert_maze6", "desert_maze4", None,
+                    "You are in the maze")
+desert_maze6 = Room("Desert Maze", "desert_maze7", "desert_maze1", None, "desert_maze5", None, "You are in the maze")
+desert_maze7 = Room("Desert Maze", "desert_maze10", "desert_maze6", None, "desert_maze8", None, "You are in the maze")
+desert_maze8 = Room("Desert Maze", "desert_maze11", "desert_maze5", "desert_maze7", "desert_maze9", None,
+                    "You are in the maze")
+desert_maze9 = Room("Desert Maze", "desert_maze12", "desert_maze4", "desert_maze8", None, None, "You are in the maze")
+
+desert_maze10 = Room("Desert Maze", "desert_boss", "desert_maze7", None, "desert_maze11", None,
+                     "You have left the maze")
+desert_maze11 = Room("Desert Maze", "desert_boss", "desert_maze8", "desert_maze10", "desert_maze12", None,
+                     "You have left the maze", False, None, "", False, False, "", True, 50)
+desert_maze12 = Room("Desert Maze", "desert_boss", "desert_maze9", "desert_maze11", None, None,
+                     "You have left the maze")
+
+desert_sandstorm1 = Room("Desert Sandstorm", "desert_sandstorm6", "spawn_point_desert", "desert_sandstorm2", None,
+                         None, "There is a raging sandstorm around you")
+desert_sandstorm2 = Room("Desert Sandstorm", "desert_sandstorm5", None, "desert_sandstorm3", "desert_sandstorm1",
+                         None, "There is a raging sandstorm around you")
+desert_sandstorm3 = Room("Desert Sandstorm", "desert_sandstorm4", None, None, "desert_sandstorm2",
+                         None, "There is a raging sandstorm around you")
+desert_sandstorm4 = Room("Desert Sandstorm", "desert_sandstorm7", "desert_sandstorm3", None, "desert_sandstorm5",
+                         None, "There is a raging sandstorm around you")
+desert_sandstorm5 = Room("Desert Sandstorm", "desert_sandstorm8", "desert_sandstorm2", "desert_sandstorm4",
+                         "desert_sandstorm6", None, "There is a raging sandstorm around you")
+desert_sandstorm6 = Room("Desert Sandstorm", "desert_sandstorm9", "desert_sandstorm1", "desert_sandstorm5", None,
+                         None, "There is a raging sandstorm around you")
+desert_sandstorm7 = Room("Desert Sandstorm", "desert_sandstorm12", "desert_sandstorm4", None, "desert_sandstorm8",
+                         None, "There is a raging sandstorm around you")
+desert_sandstorm8 = Room("Desert Sandstorm", "desert_sandstorm11", "desert_sandstorm5", "desert_sandstorm7",
+                         "desert_sandstorm9", None, "There is a raging sandstorm around you")
+desert_sandstorm9 = Room("Desert Sandstorm", "desert_sandstorm10", "desert_sandstorm6", "desert_sandstorm8", None,
+                         None, "There is a raging sandstorm around you")
+desert_sandstorm10 = Room("Desert Sandstorm", "desert_boss", "desert_sandstorm9", "desert_sandstorm11", None,
+                          None, "The sandstorm starts to clear up")
+desert_sandstorm11 = Room("Desert Sandstorm", "desert_boss", "desert_sandstorm8", "desert_sandstorm12",
+                          "desert_sandstorm10", None, "The sandstorm starts to clear up")
+desert_sandstorm12 = Room("Desert Sandstorm", "desert_boss", "desert_sandstorm7", None, "desert_sandstorm11",
+                          None, "The sandstorm starts to clear up", False, None, "", False, False, "", True, 50)
+desert_boss = Room("Desert Boss", "desert_shop", "spawn_point_desert", None, None, None,
+                   "Wow, what is this?\nOh wait it is the boss")
+desert_shop = Room("Desert Shop", None, "desert_boss", None, None, None, None, False, None, "", False, False, "",
+                   False, 0, True, iron_armor, good_health_potion, goron_tunic, filler, "YES")
 
 
 # Lake
@@ -1189,3 +1217,60 @@ while you.playing:
         you.run_command()
     if you.current_node.name == "Cave Shop":
         cave_shop.run_room()
+
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()
+    if you.current_node.name == "Spawn Point Desert":
+        spawn_point_great_desert.run_room()

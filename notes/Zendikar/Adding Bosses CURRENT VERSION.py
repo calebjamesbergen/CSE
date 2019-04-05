@@ -337,6 +337,7 @@ class Person(object):
         self.burning = False
         self.turns_to_burn_to_death = 3
         self.wanting_to_fight = True
+        self.first_time1 = True
 
     def burn_to_death(self):
         if goron_tunic.name in self.inventory:
@@ -380,7 +381,10 @@ class Person(object):
 
     def fight(self, target):
         while target.health > 0 and self.health > 0 and self.wanting_to_fight:
-            print("A %s appeared \nWould you like to attack it?" % target.name)
+            if self.first_time1:
+                print("A/an %s appeared" % target.name)
+                self.first_time1 = False
+            print("Would you like to attack it?")
             choice = input("YES or NO")
             if choice.lower() == "i":
                 self.check_self()
@@ -389,16 +393,14 @@ class Person(object):
                 if self.health > 0:
                     self.attack(target)
             if target.health <= 0 and self.playing:
-                    self.get_stuff_from_monster(target)
+                self.get_stuff_from_monster(target)
+                self.first_time1 = True
             if self.health <= 0:
                 you.die()
             if choice.upper() == "NO":
                 self.wanting_to_fight = False
                 print("As you fled the %s killed you" % target.name)
                 self.die()
-
-            if self.health == self.health:
-                pass
 
     def is_it_a_health_potion(self, health_potion1):
         if health_potion1.name == self.health_potions_list[0]:
@@ -521,13 +523,13 @@ class Person(object):
 
     def check_self(self):
         print("You deal %s damage" % self.attack_amt)
-        print("You have this armor: %s" % self.armor)
+        print("You have this armor: %s" % self.armor.name)
         print("You have %s defence" % self.defence)
         print("You have %s health" % self.health)
         print("You have %s gold" % self.total_gold)
         print("You are level %s" % self.level)
         print("You are %s exp away from leveling up" % (self.exp_to_level_up - self.exp))
-        print("Your best weapon is a/an %s" % self.weapon)
+        print("Your best weapon is a/an %s" % self.weapon.name)
         print("This is in your inventory: %s" % ", ".join(self.inventory))
         self.using_health_potion()
 
@@ -580,14 +582,16 @@ eldrazi_scout = Monster("Eldrazi Scout", 1, 1, 5, 5, Armor("Monster Armor", 0, 0
 eldrazi_scion = Monster("Eldrazi Scion", 3, 2, 5, 5, Armor("Monster Armor", 0, 0), Sword("Claw", 1, None))
 crab = Monster("Crab", 5, 3, 5, 5, Armor("Monster Armor", 2, None), Sword("Pincer", 1, None))
 krayt_dragon = Monster("Krayt Dragon", 10, 5, 10, 10, Armor("Monster Armor", 3, None), Sword("Claw", 1, None))
+lylek = Monster("Lylek", 15, 13, 20, 15, Armor("Skin", 7, 0), Weapon("Leg", 13, 0))
+
 sidewinder_naga = Monster("Sidewinder Naga", 5, 4, 10, 5, Armor("Monster Armor", 3, None), Sword("Dagger", 1, None))
 hydra = Monster("Hydra", 20, 1 * heads, 15, 20, Armor("Monster Armor", 4, None), Sword("Claw", 1, None))
+
 fire_elemental = Monster("Fire Elemental", 20, 5, 20, 20, Armor("Monster Armor", 5, None), Sword("Flames", 1, None))
 volcano_hellion = Monster("Volcano Hellion", 15, 10, 15, 10, Armor("Monster Armor", 5, None), Sword("Flames", 1, None))
-
-lylek = Monster("Lylek", 15, 20, 20, 15, Armor("Skin", 15, 0), Weapon("Leg", 20, 0))
-godzilla = Monster("Godzilla", 50, 20, 40, 30, Armor("Skin", 15, 0), Weapon("Fire breath", 20, 0))
 volcanic_dragon = Monster("Volcanic Dragon", 15, 15, 15, 15, Armor("Scales", 15, 0), Weapon("Fire breath", 15, 0))
+godzilla = Monster("Godzilla", 50, 20, 40, 30, Armor("Skin", 15, 0), Weapon("Fire breath", 20, 0))
+
 bellowing_tanglewurm = Monster("Bellowing Tanglewurm", 30, 15, 20, 20, Armor("Skin", 20, 0), Weapon("Mouth", 15, 0))
 grunn = Monster("Grunn", 60, 10, 40, 40, Armor("Grass Armor", 15, 0), Weapon("Fist", 10, 0))
 baloth = Monster("Baloth", 20, 20, 20, 20, Armor("Skin", 20, 0), Weapon("Mouth", 20, 0))
@@ -876,12 +880,34 @@ cave_boss = Room("Cave Boss", "cave_shop", "cave_in", None, None, None, None, Fa
 cave_shop = Room("Cave Shop", None, None, None, None, None, None, False, None, "", False, False, "", False,
                  0, True, cave_sword, diamond_armor, good_health_potion, filler, "YES", "spawn_point_boss")
 
-# Lake
-spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You are in Spawn Point Mountain")
-
 # Desert
 spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, None, None, None,
                                 "You are in Spawn Point Mountain")
+desert1 = Room()
+desert_maze1 = Room()
+desert_maze2 = Room()
+desert_maze3 = Room()
+desert_maze4 = Room()
+desert_maze5 = Room()
+desert_maze6 = Room()
+desert_maze7 = Room()
+desert_maze8 = Room()
+desert_maze9 = Room()
+desert_maze10 = Room()
+desert_maze11 = Room()
+desert_maze12 = Room()
+desert_maze13 = Room()
+desert_maze14 = Room()
+desert_maze15 = Room()
+desert_maze16 = Room()
+desert_maze17 = Room()
+desert_maze18 = Room()
+desert_boss = Room()
+desert_shop = Room()
+
+
+# Lake
+spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You are in Spawn Point Mountain")
 
 
 # Boss Area
@@ -1077,7 +1103,7 @@ while you.playing:
                     you.die()
                     alive = False
             if alive:
-                print("Gollum: Alive without breath,\n As cold as death,\n Never thirsty, ever drinking,\n"
+                print("Gollum: Alive without breath,\nAs cold as death,\nNever thirsty, ever drinking,\n"
                       "All in mail never clinking")
                 print("What is it")
                 choice6 = input(">")
@@ -1088,8 +1114,8 @@ while you.playing:
                     you.die()
                     alive = False
             if alive:
-                print("Gollum: This thing all devours:\n Birds, beasts, trees, flowers;\n Gnaws iron, bites steel;\n"
-                      "Grinds hard stones to meal;\n Slays king, ruins town,\nAnd beats high mountain down")
+                print("Gollum: This thing all devours:\nBirds, beasts, trees, flowers;\nGnaws iron, bites steel;\n"
+                      "Grinds hard stones to meal;\nSlays king, ruins town,\nAnd beats high mountain down")
                 print("What is it?")
                 choice7 = input(">")
                 if choice7.upper() == "TIME":

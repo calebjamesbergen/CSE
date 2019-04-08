@@ -169,24 +169,23 @@ class Boss(object):
 class Knucklotec(Boss):
     def __init__(self, name, armor, defence, health, did_you_beat_it, on_fire, gold, exp):
         super(Knucklotec, self).__init__(name, armor, defence, health, did_you_beat_it, on_fire, gold, exp)
-        self.attack_numbers = [1, 2, 3, 4]
 
     def attack(self, target):
         print("%s starts to attack" % self.name)
-        attack_num = random.randint(1, 5)
-        if attack_num == self.attack_numbers[0]:
+        attack_num = random.randint(1, 4)
+        if attack_num == 1:
             print("%s starts to send a fist at you" % self.name)
             print("He hits you but it does not hurt very much")
             target.take_damage(10)
-        if attack_num == self.attack_numbers[1]:
+        if attack_num == 2:
             print("%s starts to send a fist high in the air" % self.name)
             print("Suddenly the fist comes crashing down")
             target.take_damage(15)
-        if attack_num == self.attack_numbers[2]:
+        if attack_num == 3:
             print("%s sends both fists a you" % self.name)
             print("He then squishes you between both of his fists")
             target.take_damage(25)
-        if attack_num == self.attack_numbers[3]:
+        if attack_num == 4:
             print("%s starts to send a fist at you" % self.name)
             print("But he misses")
 
@@ -201,25 +200,60 @@ class Knucklotec(Boss):
         print("%s has %d health left" % (self.name, self.health))
 
 
+class Bowser(Boss):
+    def __init__(self, name, armor, defence, health, did_you_beat_it, on_fire, gold, exp):
+        super(Bowser, self).__init__(name, armor, defence, health, did_you_beat_it, on_fire, gold, exp)
+
+    def attack(self, target):
+        print("%s starts to attack" % self.name)
+        attack_num = random.randint(1, 5)
+        if attack_num == 1:
+            print("%s launches a fireball at you" % self.name)
+            target.take_damage(5)
+        if attack_num == 2:
+            print("%s launches multiple fireballs at you" % self.name)
+            print("Suddenly the fist comes crashing down")
+            target.take_damage(10)
+        if attack_num == 3:
+            print("%s spins in his shell at you" % self.name)
+            print("He then squishes you between both of his fists")
+            target.take_damage(2)
+        if attack_num == 4:
+            print("%s swipes his claws at you" % self.name)
+            print("But he misses")
+
+    def take_damage(self, damage):
+        if damage <= self.armor.defence:
+            print("No damage is done because of some FABULOUS armor")
+        else:
+            self.health -= damage - self.armor.defence
+            if self.health <= 0:
+                self.health = 0
+                print("%s has fallen" % self.name)
+        print("%s has %d health left" % (self.name, self.health))
+
+
+bowser = Bowser("Bowser", Armor("Armor", 3, 0, False), 3, 35, False, False, 25, 25)
+
 knucklotec = Knucklotec("Knucklotec", Armor("Armor", 20, 0, False), 20, 150, False, False, 50, 50)
 
 stick = Stick("Stick", 1, 0)
 
-wood_sword = Sword("Wood Sword", 3, 5)
-stone_sword = Sword("Stone Sword", 5, 10)
-ice_sword = Sword("Ice Sword", 15, 20)
-cave_sword = Sword("Cave Sword", 15, 20)
+wood_sword = Sword("Wood Sword", 10, 5)
+stone_sword = Sword("Stone Sword", 15, 10)
+ice_sword = Sword("Ice Sword", 25, 20)
+cave_sword = Sword("Cave Sword", 25, 20)
 
-diamond_sword = GreatSword("Diamond Sword", 15, 20, 1, 5)
-enchanted_sword = GreatSword("Enchanted Sword", 25, 50, 1, 3)
+diamond_sword = GreatSword("Diamond Sword", 35, 20, 1, 5)
+enchanted_sword = GreatSword("Enchanted Sword", 50, 50, 1, 3)
 
-leather_armor = Armor("Leather Armor", 1, 0)
-copper_armor = Armor("Copper Armor", 3, 5)
-iron_armor = Armor("Iron Armor", 10, 10)
+leather_armor = Armor("Leather Armor", 5, 0)
+copper_armor = Armor("Copper Armor", 10, 5)
+iron_armor = Armor("Iron Armor", 15, 10)
 monster_armor = Armor("Monster Armor", 1, None)
 
-diamond_armor = GreatArmor("Diamond Armor", 15, 20)
-enchanted_armor = GreatArmor("Enchanted Armor", 20, 40)
+diamond_armor = GreatArmor("Diamond Armor", 30, 20)
+enchanted_armor = GreatArmor("Enchanted Armor", 50, 40)
 
 goron_tunic = Clothes("Goron Tunic ", None)
 
@@ -294,7 +328,8 @@ class Person(object):
     def __init__(self, name, health, weapon, armor, assigned_room="Spawn Point Raven Gorge"):
         self.name = name
         self.alive_raven_gorge = True
-        self.directions = ["north", "south", "east", "west", "", "Skip"]
+        self.directions = ["north", "south", "east", "west"]
+        self.short_directions = ["n", "s", "e", "w"]
         self.current_node = assigned_room
         self.playing = True
         self.read_starting_text = False
@@ -324,9 +359,9 @@ class Person(object):
         self.health_potions_list = [health_potion.name, good_health_potion.name, great_health_potion.name]
         self.weapons_list = [wood_sword.name, stone_sword.name, ice_sword.name, diamond_sword.name,
                              enchanted_sword.name]
-        self.weapons_damage = [3, 5, 15, 15, 15, 25]
+        self.weapons_damage = [10, 15, 25, 25, 35, 50]
         self.armor_list = [copper_armor.name, iron_armor.name, diamond_armor.name, enchanted_armor.name]
-        self.armor_defence = [3, 10, 15, 20]
+        self.armor_defence = [10, 15, 30, 50]
         self.health_potion_heal = 3
         self.good_health_potion_heal = 5
         self.great_health_potion_heal = 10
@@ -520,13 +555,19 @@ class Person(object):
 
     def check_self(self):
         print("You deal %s damage" % self.attack_amt)
-        print("You have this armor: %s" % self.armor.name)
+        if self.armor == leather_armor:
+            print("You have this armor: Leather armor")
+        else:
+            print("You have this armor: %s" % self.armor)
         print("You have %s defence" % self.defence)
         print("You have %s health" % self.health)
         print("You have %s gold" % self.total_gold)
         print("You are level %s" % self.level)
         print("You are %s exp away from leveling up" % (self.exp_to_level_up - self.exp))
-        print("Your best weapon is a/an %s" % self.weapon.name)
+        if self.weapon == stick:
+            print("Your best weapon is a stick")
+        else:
+            print("Your best weapon is a/an %s" % self.weapon)
         print("This is in your inventory: %s" % ", ".join(self.inventory))
         self.using_health_potion()
 
@@ -534,14 +575,15 @@ class Person(object):
         while not self.did_command:
             if self.playing:
                 command = input(">")
+                if command in self.short_directions:
+                    pos = self.short_directions.index(command)
+                    command = self.directions[pos]
                 if command.lower() in ["q", "quit", "exit"]:
                     self.playing = False
                 elif self.burning:
                     self.burn_to_death()
                 elif command.lower() == "i":
                     self.check_self()
-                elif command == "":
-                    pass
                 elif command in self.directions:
                     try:
                         room_name = getattr(self.current_node, command)
@@ -551,15 +593,6 @@ class Person(object):
                         print("You can't go that way")
                 else:
                     print("Command not recognized")
-                if command == "s":
-                    room_name = "spawn_point_sheltered_valley"
-                    self.current_node = globals()[room_name]
-                    self.total_gold += 100
-                    self.weapon = "Wood Sword"
-                    self.attack_amt = 3
-                    self.armor = "Copper Armor"
-                    self.defence = 3
-                    self.health = 10
         self.did_command = False
 
     def die(self):
@@ -742,6 +775,7 @@ class Room(object):
     def run_shop(self):
         print("There is a shop here")
         print("Would you like to enter it")
+        self.stay_in_shop = "YES"
         self.enter_shop = input("YES or NO")
         while self.enter_shop.upper() == "YES" and self.stay_in_shop.upper() == "YES":
             if self.stay_in_shop.upper() == "YES":
@@ -809,7 +843,7 @@ spawn_point_sheltered_valley = Room("Spawn Point Sheltered Valley", None, None, 
                                     "You are now in a valley with grass going out in every direction")
 sheltered_valley1 = Room("Sheltered Valley 1", "sheltered_valley2", "sheltered_valley7",
                          "spawn_point_sheltered_valley", None, None, "There is a dead body north of you")
-sheltered_valley2 = Room("Sheltered Valley 2", "sheltered_valley3", None, None, None,
+sheltered_valley2 = Room("Sheltered Valley 2", "sheltered_valley3", "sheltered_valley1", None, None,
                          None, "Who ever died here dropped a lot of gold", False, None, "", False, False, "", True, 50)
 sheltered_valley3 = Room("Sheltered Valley 3", "mountain", None, "sheltered_valley4", "sheltered_valley1",
                          None, "There is a stream here and you are very thirsty")
@@ -931,7 +965,23 @@ desert_shop = Room("Desert Shop", None, "desert_boss", None, None, None, None, F
                    False, 0, True, iron_armor, good_health_potion, goron_tunic, filler, "YES")
 
 # Volcano
-spawn_point_volcano = Room(None, None, None, None, None, None, None)
+spawn_point_volcano = Room("Spawn Point Volcano", "volcano1", "volcano_death", None, "volcano_myth", None, None)
+volcano1 = Room("Volcano 1", "volcano2", "spawn_point_volcano", None, None, None, None)
+volcano2 = Room("Volcano 2", None, None, None, None, None, None)
+volcano3 = Room("Volcano 3", None, None, None, None, None, None)
+volcano3_right = Room("Volcano 3 Right", None, None, None, None, None, None)
+volcano4 = Room("Volcano 4", None, None, None, None, None, None)
+volcano4_left = Room("Volcano 4 Left", None, None, None, None, None, None)
+volcano4_right = Room("Volcano 4 Right", None, None, None, None, None, None)
+volcano_death = Room("Volcano Death", None, None, None, None, None, None)
+volcano_death2 = Room("Volcano Death 2", None, None, None, None, None, None)
+volcano_myth = Room("Volcano Myth", None, None, None, None, None, None)
+volcano_river = Room("Volcano River", None, None, None, None, None, None)
+volcano_explosion = Room("Volcano Explosion", None, None, None, None, None, None)
+volcano_boss1 = Room("Volcano Boss", None, None, None, None, None, None)
+volcano_boss2 = Room("Volcano Boss", None, None, None, None, None, None)
+volcano_shop = Room("Volcano Shop", None, None, None, None, None, None)
+
 
 # Lake
 spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You are in Spawn Point Mountain")
@@ -1312,7 +1362,9 @@ while you.playing:
         you.run_command()
 
     if you.current_node == desert_boss:
-        desert_boss.run_room()
+        desert_boss.decision_room()
+        you.fight(bowser)
+        you.run_command()
     if you.current_node == desert_shop:
         desert_shop.stay_in_shop = "YES"
         desert_shop.decision_room()
@@ -1324,3 +1376,6 @@ while you.playing:
             you.current_node = spawn_point_volcano
         if choice11.upper() == "NO":
             you.run_command()
+
+    if you.current_node == spawn_point_volcano:
+        spawn_point_volcano.run_room()

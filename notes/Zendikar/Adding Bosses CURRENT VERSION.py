@@ -321,10 +321,11 @@ class Person(object):
         self.did_you_get_to_the_lake = False
         self.shop3 = "YES"
         self.defence = 1
-        self.health_potions_list = ["Health Potion", "Good Health Potion", "Great Health Potion"]
-        self.weapons_list = ["Wood Sword", "Stone Sword", "Ice Sword", "Cave Sword", "Diamond Sword", "Enchanted Sword"]
+        self.health_potions_list = [health_potion.name, good_health_potion.name, great_health_potion.name]
+        self.weapons_list = [wood_sword.name, stone_sword.name, ice_sword.name, diamond_sword.name,
+                             enchanted_sword.name]
         self.weapons_damage = [3, 5, 15, 15, 15, 25]
-        self.armor_list = ["Copper Armor", "Iron Armor", "Diamond Armor", "Enchanted Armor"]
+        self.armor_list = [copper_armor.name, iron_armor.name, diamond_armor.name, enchanted_armor.name]
         self.armor_defence = [3, 10, 15, 20]
         self.health_potion_heal = 3
         self.good_health_potion_heal = 5
@@ -465,10 +466,6 @@ class Person(object):
         if weapon.name == self.weapons_list[4]:
             self.attack_amt = self.weapons_damage[4]
             self.weapon = self.weapons_list[4]
-            print("Now you deal %s damage" % self.attack_amt)
-        if weapon.name == self.weapons_list[5]:
-            self.attack_amt = self.weapons_damage[5]
-            self.weapon = self.weapons_list[5]
             print("Now you deal %s damage" % self.attack_amt)
 
     def is_it_armor(self, armor):
@@ -933,10 +930,14 @@ desert_boss = Room("Desert Boss", "desert_shop", "spawn_point_desert", None, Non
 desert_shop = Room("Desert Shop", None, "desert_boss", None, None, None, None, False, None, "", False, False, "",
                    False, 0, True, iron_armor, good_health_potion, goron_tunic, filler, "YES")
 
+# Volcano
+spawn_point_volcano = Room(None, None, None, None, None, None, None)
 
 # Lake
 spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You are in Spawn Point Mountain")
 
+# Jungle
+spawn_point_jungle = Room(None, None, None, None, None, None, None)
 
 # Boss Area
 spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
@@ -966,6 +967,7 @@ while you.playing:
     if you.current_node.name == "Raven Gorge 3 Right":
         raven_gorge3_right.run_room()
     if you.current_node.name == "Raven Gorge 4":
+        desert_shop.stay_in_shop = "YES"
         print("Since this is your first time in a shop I will give you a hint")
         print("Buying an item multiple times, other than a health potion, gives you nothing extra or helpful")
         raven_gorge4.decision_room()
@@ -1002,10 +1004,28 @@ while you.playing:
     if you.current_node.name == "Sheltered Valley 6":
         sheltered_valley6.run_room()
     if you.current_node.name == "Sheltered Valley 7":
-        sheltered_valley7.run_room()
+        sheltered_valley7.decision_room()
+        print("You hear a strange noise\nWould you like to investigate it?")
+        choice12 = input("YES or NO")
+        if choice12.upper() == "YES":
+            print("You walk out into the tall grass and suddenly multiple swords are sticking out of your gut")
+            you.die()
+        if choice12.upper() == "NO":
+            print("You stay put and nothing peculiar seems to happen")
+            you.run_command()
     if you.current_node.name == "Sheltered Valley 8":
-        sheltered_valley8.run_room()
+        sheltered_valley8.decision_room()
+        print("It is getting dark\nWould you like to light a fire?")
+        choice13 = input("YES or NO")
+        if choice13.upper() == "YES":
+            print("You light a fire and discover you are not the only one in this area")
+            print("You feel a slight prick in your neck, collapse, and never wake up")
+            you.die()
+        if choice13.upper() == "NO":
+            print("You don't light the fire and shortly after you fall asleep\nWhen you wake up nothing has changed")
+            you.run_command()
     if you.current_node.name == "Great Desert":
+        desert_shop.stay_in_shop = "YES"
         great_desert.decision_room()
         great_desert.run_shop()
         print("Would you like to go to the next area?")
@@ -1016,6 +1036,7 @@ while you.playing:
         if choice11.upper() == "NO":
             you.run_command()
     if you.current_node.name == "Lake":
+        desert_shop.stay_in_shop = "YES"
         lake.decision_room()
         lake.run_shop()
         print("Would you like to go to the next area?")
@@ -1026,6 +1047,7 @@ while you.playing:
         if choice11.upper() == "NO":
             you.run_command()
     if you.current_node.name == "Mountain":
+        desert_shop.stay_in_shop = "YES"
         mountain.decision_room()
         mountain.run_shop()
         print("Would you like to go to the next area?")
@@ -1071,9 +1093,11 @@ while you.playing:
         pit2.decision_room()
         print("Some kor grab you and pull you to your death")
         you.die()
+
     if you.current_node.name == "Mountain Boss":
         mountain_boss.run_room()
     if you.current_node.name == "Mountain Shop":
+        desert_shop.stay_in_shop = "YES"
         mountain_shop.decision_room()
         mountain_shop.run_shop()
         print("Would you like to go to the next area?")
@@ -1169,6 +1193,7 @@ while you.playing:
         if choice2.upper() == "NO":
             print("Gollum: How dare you\nTime to die")
             you.die()
+
     if you.current_node.name == "Cave 4":
         cave4.decision_room()
         print("Some orcs appear and they make quick work of you")
@@ -1211,66 +1236,91 @@ while you.playing:
             if choice9.upper() == "NO":
                 print("You did not use the pickaxe")
         cave_in.run_room()
+
     if you.current_node.name == "Cave Boss":
         cave_boss.decision_room()
         you.fight(knucklotec)
         you.run_command()
     if you.current_node.name == "Cave Shop":
-        cave_shop.run_room()
+        desert_shop.stay_in_shop = "YES"
+        cave_shop.decision_room()
+        cave_shop.run_shop()
+        print("Would you like to go to the next area?")
+        print("Once you leave this area you can not come back")
+        choice11 = input("YES or NO")
+        if choice11.upper() == "YES":
+            you.current_node = spawn_point_boss
+        if choice11.upper() == "NO":
+            you.run_command()
 
-    if you.current_node.name == "Spawn Point Desert":
+    if you.current_node == spawn_point_great_desert:
         spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
-    if you.current_node.name == "Spawn Point Desert":
-        spawn_point_great_desert.run_room()
+    if you.current_node == desert1:
+        desert1.run_room()
+    if you.current_node == desert_maze1:
+        desert_maze1.run_room()
+    if you.current_node == desert_maze2:
+        desert_maze2.run_room()
+    if you.current_node == desert_maze3:
+        desert_maze3.run_room()
+    if you.current_node == desert_maze4:
+        desert_maze4.run_room()
+    if you.current_node == desert_maze5:
+        desert_maze5.run_room()
+    if you.current_node == desert_maze6:
+        desert_maze6.run_room()
+    if you.current_node == desert_maze7:
+        desert_maze7.run_room()
+    if you.current_node == desert_maze8:
+        desert_maze8.run_room()
+    if you.current_node == desert_maze9:
+        desert_maze9.run_room()
+    if you.current_node == desert_maze10:
+        desert_maze10.run_room()
+    if you.current_node == desert_maze11:
+        desert_maze11.run_room()
+    if you.current_node == desert_maze12:
+        desert_maze12.decision_room()
+        you.fight(sidewinder_naga)
+        you.run_command()
+
+    if you.current_node == desert_sandstorm1:
+        desert_sandstorm1.run_room()
+    if you.current_node == desert_sandstorm2:
+        desert_sandstorm2.run_room()
+    if you.current_node == desert_sandstorm3:
+        desert_sandstorm3.run_room()
+    if you.current_node == desert_sandstorm4:
+        desert_sandstorm4.run_room()
+    if you.current_node == desert_sandstorm5:
+        desert_sandstorm5.run_room()
+    if you.current_node == desert_sandstorm6:
+        desert_sandstorm6.run_room()
+    if you.current_node == desert_sandstorm7:
+        desert_sandstorm7.run_room()
+    if you.current_node == desert_sandstorm8:
+        desert_sandstorm8.run_room()
+    if you.current_node == desert_sandstorm9:
+        desert_sandstorm9.run_room()
+    if you.current_node == desert_sandstorm10:
+        desert_sandstorm10.run_room()
+    if you.current_node == desert_sandstorm11:
+        desert_sandstorm11.run_room()
+    if you.current_node == desert_sandstorm12:
+        desert_sandstorm12.decision_room()
+        you.fight(hydra)
+        you.run_command()
+
+    if you.current_node == desert_boss:
+        desert_boss.run_room()
+    if you.current_node == desert_shop:
+        desert_shop.stay_in_shop = "YES"
+        desert_shop.decision_room()
+        desert_shop.run_shop()
+        print("Would you like to go to the next area?")
+        print("Once you leave this area you can not come back")
+        choice11 = input("YES or NO")
+        if choice11.upper() == "YES":
+            you.current_node = spawn_point_volcano
+        if choice11.upper() == "NO":
+            you.run_command()

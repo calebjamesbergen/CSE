@@ -184,7 +184,7 @@ class Knucklotec(Boss):
         if attack_num == 3:
             print("%s sends both fists a you" % self.name)
             print("He then squishes you between both of his fists")
-            target.take_damage(25)
+            target.take_damage(20)
         if attack_num == 4:
             print("%s starts to send a fist at you" % self.name)
             print("But he misses")
@@ -206,18 +206,16 @@ class Bowser(Boss):
 
     def attack(self, target):
         print("%s starts to attack" % self.name)
-        attack_num = random.randint(1, 5)
+        attack_num = random.randint(1, 4)
         if attack_num == 1:
             print("%s launches a fireball at you" % self.name)
-            target.take_damage(5)
+            target.take_damage(10)
         if attack_num == 2:
             print("%s launches multiple fireballs at you" % self.name)
-            print("Suddenly the fist comes crashing down")
-            target.take_damage(10)
+            target.take_damage(15)
         if attack_num == 3:
             print("%s spins in his shell at you" % self.name)
-            print("He then squishes you between both of his fists")
-            target.take_damage(2)
+            target.take_damage(5)
         if attack_num == 4:
             print("%s swipes his claws at you" % self.name)
             print("But he misses")
@@ -233,9 +231,59 @@ class Bowser(Boss):
         print("%s has %d health left" % (self.name, self.health))
 
 
-bowser = Bowser("Bowser", Armor("Armor", 3, 0, False), 3, 35, False, False, 25, 25)
+class TukTuk(Boss):
+    def __init__(self, name, armor, defence, health, did_you_beat_it, on_fire, gold, exp):
+        super(TukTuk, self).__init__(name, armor, defence, health, did_you_beat_it, on_fire, gold, exp)
 
-knucklotec = Knucklotec("Knucklotec", Armor("Armor", 20, 0, False), 20, 150, False, False, 50, 50)
+    def attack(self, target):
+        if target == target:
+            pass
+        print("%s swings his torch at you but nothing happens" % self.name)
+
+    def take_damage(self, damage):
+        if damage <= self.armor.defence:
+            print("No damage is done because of some FABULOUS armor")
+        else:
+            self.health -= damage - self.armor.defence
+            if self.health <= 0:
+                self.health = 0
+                print("%s has fallen" % self.name)
+        print("%s has %d health left" % (self.name, self.health))
+
+
+class TukTukReturned(Boss):
+    def __init__(self, name, armor, defence, health, did_you_beat_it, on_fire, gold, exp):
+        super(TukTukReturned, self).__init__(name, armor, defence, health, did_you_beat_it, on_fire, gold, exp)
+
+    def attack(self, target):
+        print("%s starts to attack" % self.name)
+        attack_num = random.randint(1, 3)
+        if attack_num == 1:
+            print("%s punches you with 1 fist" % self.name)
+            target.take_damage(10)
+        if attack_num == 2:
+            print("%s punches you with both fists" % self.name)
+            target.take_damage(15)
+        if attack_num == 3:
+            print("%s tries to grab you\nBut he misses" % self.name)
+
+    def take_damage(self, damage):
+        if damage <= self.armor.defence:
+            print("No damage is done because of some FABULOUS armor")
+        else:
+            self.health -= damage - self.armor.defence
+            if self.health <= 0:
+                self.health = 0
+                print("%s has fallen" % self.name)
+        print("%s has %d health left" % (self.name, self.health))
+
+
+tuktuk = TukTuk("TukTuk", Armor("Armor", 3, 0), 3, 15, False, False, 5, 5)
+tuktukreturned = TukTukReturned("TukTuk Returned", Armor("Armor", 5, 0), 5, 35, False, False, 25, 25)
+
+bowser = Bowser("Bowser", Armor("Armor", 5, 0, False), 5, 35, False, False, 25, 25)
+
+knucklotec = Knucklotec("Knucklotec", Armor("Armor", 20, 0, False), 20, 50, False, False, 50, 50)
 
 stick = Stick("Stick", 1, 0)
 
@@ -542,13 +590,12 @@ class Person(object):
     def level_up(self):
         while self.exp >= 30:
             if self.exp >= self.exp_to_level_up:
-                self.exp -= 20
+                self.exp -= 30
                 print("You leveled up")
                 print("You got 5 gold for leveling up")
                 self.total_gold += 5
                 print("Now you have %s gold" % self.total_gold)
-                print("Your health and attack increased by one")
-                self.attack_amt += 1
+                print("Your health increased by one")
                 self.health += 1
                 self.level += 1
                 print("Now you are level %s" % self.level)
@@ -610,9 +657,9 @@ you = Person(choice1, 5, stick, leather_armor)
 # Monsters
 eldrazi_scout = Monster("Eldrazi Scout", 1, 1, 5, 5, Armor("Monster Armor", 0, 0), Sword("Claw", 1, None))
 eldrazi_scion = Monster("Eldrazi Scion", 3, 2, 5, 5, Armor("Monster Armor", 0, 0), Sword("Claw", 1, None))
-crab = Monster("Crab", 5, 3, 5, 5, Armor("Monster Armor", 2, None), Sword("Pincer", 1, None))
-krayt_dragon = Monster("Krayt Dragon", 10, 5, 10, 10, Armor("Monster Armor", 3, None), Sword("Claw", 1, None))
-lylek = Monster("Lylek", 15, 13, 20, 15, Armor("Skin", 7, 0), Weapon("Leg", 13, 0))
+crab = Monster("Crab", 30, 5, 5, 5, Armor("Monster Armor", 5, None), Sword("Pincer", 1, None))
+krayt_dragon = Monster("Krayt Dragon", 20, 15, 10, 10, Armor("Monster Armor", 10, None), Sword("Claw", 1, None))
+lylek = Monster("Lylek", 20, 18, 20, 12, Armor("Skin", 12, 0), Weapon("Leg", 13, 0))
 
 sidewinder_naga = Monster("Sidewinder Naga", 5, 4, 10, 5, Armor("Monster Armor", 3, None), Sword("Dagger", 1, None))
 hydra = Monster("Hydra", 20, 1 * heads, 15, 20, Armor("Monster Armor", 4, None), Sword("Claw", 1, None))
@@ -888,7 +935,7 @@ spawn_point_pit = Room("Spawn Point Pit", None, None, "pit2", "pit1", None,
 pit1 = Room("Pit 1", None, None, None, None, None, None)
 pit2 = Room("Pit 2", None, None, None, None, None, None)
 mountain_boss = Room("Mountain Boss", None, None, "mountain_shop", "mountain4", None,
-                     "Well, time for a boss fight I guess")
+                     None)
 mountain_shop = Room("Mountain Shop", None, None, None, "mountain_boss", None, None, False, None, "", False, False,
                      "", False, 0, True, iron_armor, pickaxe, good_health_potion, filler, "YES")
 
@@ -995,6 +1042,8 @@ spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
 you.current_node = spawn_point_raven_gorge
 
 first_time = True
+first_time1 = True
+first_time2 = True
 
 while you.playing:
     if first_time and you.playing:
@@ -1044,6 +1093,7 @@ while you.playing:
             print("You drank from the stream and you are no longer thirsty")
             print("Sadly within a couple of minutes you fall over and do not get back up")
             you.die()
+            break
         if stream.upper() == "NO":
             print("You do not drink from the stream and that is probably a good thing")
         you.run_command()
@@ -1143,9 +1193,20 @@ while you.playing:
         pit2.decision_room()
         print("Some kor grab you and pull you to your death")
         you.die()
-
     if you.current_node.name == "Mountain Boss":
-        mountain_boss.run_room()
+        mountain_boss.decision_room()
+        if first_time2:
+            print("Well, time for a boss fight I guess")
+            first_time2 = False
+        you.fight(tuktuk)
+        if first_time1:
+            print("You slay TukTuk but something strange happens")
+            print("His bodies starts to shake and out of it comes a stone golem")
+            print("The golem says 'I am TukTuk Returned and you are going to die'")
+            you.fight(tuktukreturned)
+            first_time1 = False
+        if you.playing:
+            you.run_command()
     if you.current_node.name == "Mountain Shop":
         desert_shop.stay_in_shop = "YES"
         mountain_shop.decision_room()
@@ -1276,6 +1337,7 @@ while you.playing:
             print("They tie you down and you become the sacrifice for the ritual")
             you.die()
     if you.current_node.name == "Cave In":
+        cave_in.decision_room()
         if "Pickaxe" in you.inventory:
             print("You have the pickaxe")
             print("Would you like to use it")
@@ -1283,9 +1345,11 @@ while you.playing:
             if choice9.upper() == "YES":
                 print("With ease you mined away the rocks in your path")
                 cave_in.north = cave_boss
+                print("DEBUG: It should be open")
+                print(cave_in.north)
             if choice9.upper() == "NO":
                 print("You did not use the pickaxe")
-        cave_in.run_room()
+        you.run_command()
 
     if you.current_node.name == "Cave Boss":
         cave_boss.decision_room()

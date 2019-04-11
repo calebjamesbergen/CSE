@@ -176,15 +176,15 @@ class Knucklotec(Boss):
         if attack_num == 1:
             print("%s starts to send a fist at you" % self.name)
             print("He hits you but it does not hurt very much")
-            target.take_damage(10)
+            target.take_damage(12)
         if attack_num == 2:
             print("%s starts to send a fist high in the air" % self.name)
             print("Suddenly the fist comes crashing down")
-            target.take_damage(15)
+            target.take_damage(16)
         if attack_num == 3:
             print("%s sends both fists a you" % self.name)
             print("He then squishes you between both of his fists")
-            target.take_damage(20)
+            target.take_damage(18)
         if attack_num == 4:
             print("%s starts to send a fist at you" % self.name)
             print("But he misses")
@@ -283,7 +283,7 @@ tuktukreturned = TukTukReturned("TukTuk Returned", Armor("Armor", 5, 0), 5, 35, 
 
 bowser = Bowser("Bowser", Armor("Armor", 5, 0, False), 5, 35, False, False, 25, 25)
 
-knucklotec = Knucklotec("Knucklotec", Armor("Armor", 20, 0, False), 20, 50, False, False, 50, 50)
+knucklotec = Knucklotec("Knucklotec", Armor("Armor", 10, 0, False), 10, 50, False, False, 50, 50)
 
 stick = Stick("Stick", 1, 0)
 
@@ -887,7 +887,7 @@ raven_gorge4 = Room("Raven Gorge 4", None, "raven_gorge3", None, None, None, Non
 # Sheltered Valley
 spawn_point_sheltered_valley = Room("Spawn Point Sheltered Valley", None, None, "sheltered_valley4",
                                     "sheltered_valley1", None,
-                                    "You are now in a valley with grass going out in every direction")
+                                    "You are now in a valley with grass going out to your east and west")
 sheltered_valley1 = Room("Sheltered Valley 1", "sheltered_valley2", "sheltered_valley7",
                          "spawn_point_sheltered_valley", None, None, "There is a dead body north of you")
 sheltered_valley2 = Room("Sheltered Valley 2", "sheltered_valley3", "sheltered_valley1", None, None,
@@ -956,7 +956,7 @@ cave_in = Room("Cave In", None, None, None, None, None, "There is a cave in here
 cave_boss = Room("Cave Boss", "cave_shop", "cave_in", None, None, None, None, False, None, "", False, False, "", False,
                  0, False, None, None, None, None, "YES", "spawn_point_boss")
 cave_shop = Room("Cave Shop", None, None, None, None, None, None, False, None, "", False, False, "", False,
-                 0, True, cave_sword, diamond_armor, good_health_potion, filler, "YES", "spawn_point_boss")
+                 0, True, diamond_sword, diamond_armor, good_health_potion, filler, "YES", "spawn_point_boss")
 
 # Desert
 spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, "desert_sandstorm1", "desert1", None,
@@ -1012,22 +1012,23 @@ desert_shop = Room("Desert Shop", None, "desert_boss", None, None, None, None, F
                    False, 0, True, iron_armor, good_health_potion, goron_tunic, filler, "YES")
 
 # Volcano
-spawn_point_volcano = Room("Spawn Point Volcano", "volcano1", "volcano_death", None, "volcano_myth", None, None)
+spawn_point_volcano = Room("Spawn Point Volcano", "volcano1", "volcano_death", None, "volcano_myth", None,
+                           "I wouldn't suggest going any direction other than north")
 volcano1 = Room("Volcano 1", "volcano2", "spawn_point_volcano", None, None, None, None)
-volcano2 = Room("Volcano 2", None, None, None, None, None, None)
-volcano3 = Room("Volcano 3", None, None, None, None, None, None)
-volcano3_right = Room("Volcano 3 Right", None, None, None, None, None, None)
-volcano4 = Room("Volcano 4", None, None, None, None, None, None)
-volcano4_left = Room("Volcano 4 Left", None, None, None, None, None, None)
-volcano4_right = Room("Volcano 4 Right", None, None, None, None, None, None)
+volcano2 = Room("Volcano 2", "volcano_river", "volcano1", None, "volcano_death2", None,
+                "You see a large dragon to your west")
+volcano3 = Room("Volcano 3", "volcano4", "volcano_river", "volcano3_right", "volcano_explosion", None, None)
+volcano3_right = Room("Volcano 3 Right", None, None, None, "volcano3", None, None)
+volcano4 = Room("Volcano 4", None, None, "volcano_boss2", "volcano_boss1", None, None)
 volcano_death = Room("Volcano Death", None, None, None, None, None, None)
 volcano_death2 = Room("Volcano Death 2", None, None, None, None, None, None)
 volcano_myth = Room("Volcano Myth", None, None, None, None, None, None)
-volcano_river = Room("Volcano River", None, None, None, None, None, None)
-volcano_explosion = Room("Volcano Explosion", None, None, None, None, None, None)
-volcano_boss1 = Room("Volcano Boss", None, None, None, None, None, None)
-volcano_boss2 = Room("Volcano Boss", None, None, None, None, None, None)
-volcano_shop = Room("Volcano Shop", None, None, None, None, None, None)
+volcano_river = Room("Volcano River", "volcano3", "volcano2", None, None, None, None)
+volcano_explosion = Room("Volcano Explosion", None, None, "volcano3", None, None, None)
+volcano_boss1 = Room("Volcano Boss", "volcano_shop", None, "volcano4", None, None, None)
+volcano_boss2 = Room("Volcano Boss", "volcano_shop", None, None, "volcano4", None, None)
+volcano_shop = Room("Volcano Shop", None, None, "volcano_boss2", "volcano_boss1", None, None, False, None,
+                    "", False, False, "", False, 0, True, diamond_sword, diamond_armor, good_health_potion, filler)
 
 
 # Lake
@@ -1044,6 +1045,8 @@ you.current_node = spawn_point_raven_gorge
 first_time = True
 first_time1 = True
 first_time2 = True
+first_time3 = True
+first_time4 = True
 
 while you.playing:
     if first_time and you.playing:
@@ -1344,9 +1347,7 @@ while you.playing:
             choice9 = input("YES or NO")
             if choice9.upper() == "YES":
                 print("With ease you mined away the rocks in your path")
-                cave_in.north = cave_boss
-                print("DEBUG: It should be open")
-                print(cave_in.north.name)
+                cave_in.north = 'cave_boss'
             if choice9.upper() == "NO":
                 print("You did not use the pickaxe")
         you.run_command()
@@ -1443,3 +1444,80 @@ while you.playing:
 
     if you.current_node == spawn_point_volcano:
         spawn_point_volcano.run_room()
+        you.burn_to_death()
+    if you.current_node == volcano1:
+        volcano1.run_room()
+        if first_time3:
+            you.burning = True
+            first_time3 = False
+        you.burn_to_death()
+    if you.current_node == volcano2:
+        volcano2.run_room()
+        you.burn_to_death()
+    if you.current_node == volcano_death2:
+        volcano_death2.decision_room()
+        print("A very large dragon is here and his breath roasts you alive")
+        you.die()
+        break
+    if you.current_node == volcano3:
+        volcano3.run_room()
+        you.burn_to_death()
+    if you.current_node == volcano3_right:
+        volcano3_right.run_room()
+        you.burn_to_death()
+    if you.current_node == volcano4:
+        volcano4.run_room()
+        you.burn_to_death()
+    if you.current_node == volcano_death:
+        volcano_death.decision_room()
+        print("You think you see a mountain but it is not a mountain")
+        print("It starts slowly walking towards you and you see that it is ...")
+        print()
+        print()
+        print()
+        print("GODZILLA")
+        print("He breaths fire and incinerates you instantly")
+        you.die()
+    if you.current_node == volcano_myth:
+        volcano_myth.decision_room()
+        print("You think you see a mountain but it is not a mountain")
+        print("It turns around and based on it's crown and giant sword you know it is Surtur")
+        print("Before you can react he raises his sword and plunges it through the ground where you stand")
+        you.die()
+    if you.current_node == volcano_river:
+        rock_break = random.randint(1, 2)
+        volcano_river.decision_room()
+        if rock_break == 1:
+            print("You walk across a narrow path across a river of lava")
+        if rock_break == 2:
+            print("As you are walking across a narrow path a rock breaks and you trip and fall into the lava")
+            you.die()
+        you.burn_to_death()
+        you.run_command()
+    if you.current_node == volcano_explosion:
+        volcano_explosion.decision_room()
+        explode = random.randint(1, 2)
+        if explode == 1:
+            print("You see a volcano to your west but it looks dormant")
+        if explode == 2:
+            print("You see a volcano to your west and it is definitely not dormant")
+            print("It explodes and sends magma everywhere and you aren't able to dodge it in time")
+            you.die()
+        you.burn_to_death()
+    if you.current_node == volcano_boss1:
+        volcano_boss1.decision_room()
+        you.burn_to_death()
+    if you.current_node == volcano_boss2:
+        volcano_boss2.decision_room()
+        you.burn_to_death()
+    if you.current_node == volcano_shop:
+        volcano_shop.run_room()
+        you.burn_to_death()
+
+    if you.current_node == spawn_point_boss:
+        print("Congratulations for making it this far here is 50 gold for your efforts")
+        you.total_gold += 50
+        print("Now you have %s gold" % you.total_gold)
+        print("This is the last area of the game and lucky for you no instant death")
+        print("So get ready for the fight of your life")
+        spawn_point_boss.run_room()

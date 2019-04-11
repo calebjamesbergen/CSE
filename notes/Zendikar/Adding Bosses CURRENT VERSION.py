@@ -588,15 +588,15 @@ class Person(object):
             print("You didn't pick up the %s" % item.name)
 
     def level_up(self):
-        while self.exp >= 30:
-            if self.exp >= self.exp_to_level_up:
-                self.exp -= 30
+        while self.exp >= self.exp_to_level_up:
+                self.exp -= self.exp_to_level_up
                 print("You leveled up")
                 print("You got 5 gold for leveling up")
                 self.total_gold += 5
                 print("Now you have %s gold" % self.total_gold)
-                print("Your health increased by one")
-                self.health += 1
+                print("Your health increased by 2")
+                self.health += 2
+                print("Now you have %s health" % self.health)
                 self.level += 1
                 print("Now you are level %s" % self.level)
 
@@ -873,7 +873,7 @@ spawn_point_raven_gorge = Room("Spawn Point Raven Gorge", "raven_gorge1", None,
 raven_gorge1 = Room("Raven Gorge 1", "raven_gorge2", "spawn_point_raven_gorge", None, None, None,
                     "There is an eldrazi scout north of you", True, banana_peel)
 raven_gorge2 = Room("Raven Gorge 2", "raven_gorge3", "raven_gorge1", None, "raven_gorge2_left", None,
-                    "An eldrazi scout is here", False, None, "", False, True, "Eldrazi Scout")
+                    None, False, None, "", False, True, "Eldrazi Scout")
 raven_gorge2_left = Room("Raven Gorge 2 Left", None, None, "raven_gorge2", None, None, "", False, None,
                          "", False, False, "", True, 25)
 raven_gorge3 = Room("Raven Gorge 3", "raven_gorge4", "raven_gorge2", "raven_gorge3_right", None, None, None, False,
@@ -903,9 +903,9 @@ sheltered_valley5 = Room("Sheltered Valley 5", "lake", "sheltered_valley_4", Non
 sheltered_valley6 = Room("Sheltered Valley 6", None, None, None, None,
                          True, "You enter the cabin and an eldrazi is in there", False, None, "Eldrazi", True)
 sheltered_valley7 = Room("Sheltered Valley 7", "sheltered_valley1", "sheltered_valley8", None, None,
-                         None, "You hear a strange noise")
+                         None, None)
 sheltered_valley8 = Room("Sheltered Valley 8", "sheltered_valley7", "great_desert", None, None,
-                         None, "Night starts to fall and it gets very dark")
+                         None, None)
 great_desert = Room("Great Desert", "sheltered_valley8", None, None, None, None,
                     "You see a sign and it says \n You are in the great desert \n You are going to die", False, None,
                     "", False, False, "", False, 0, True, stone_sword, health_potion, filler, filler, "YES",
@@ -1050,7 +1050,7 @@ while you.playing:
         print("Welcome to Zendikar")
         print("This game will require skill and a bit of luck")
         print("Try checking your inventory by typing 'i'")
-        print("Or type 'north' 'south' 'east' or 'west' to begin")
+        print("Or type 'north' or 'n' to begin")
         print("Have fun")
         first_time = False
     if you.current_node.name == "Spawn Point Raven Gorge":
@@ -1346,7 +1346,7 @@ while you.playing:
                 print("With ease you mined away the rocks in your path")
                 cave_in.north = cave_boss
                 print("DEBUG: It should be open")
-                print(cave_in.north)
+                print(cave_in.north.name)
             if choice9.upper() == "NO":
                 print("You did not use the pickaxe")
         you.run_command()

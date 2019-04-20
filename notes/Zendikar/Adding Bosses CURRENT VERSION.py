@@ -974,7 +974,7 @@ pit2 = Room("Pit 2", None, None, None, None, None, None)
 mountain_boss = Room("Mountain Boss", None, None, "mountain_shop", "mountain4", None,
                      None)
 mountain_shop = Room("Mountain Shop", None, None, None, "mountain_boss", None, None, False, None, "", False, False,
-                     "", False, 0, True, iron_armor, pickaxe, good_health_potion, filler, "YES")
+                     "", False, 0, True, iron_sword, iron_armor, pickaxe, good_health_potion, "YES")
 
 # Cave
 spawn_point_cave = Room("Spawn Point Cave", None, None, "cave5", "cave1", None, "You are now in the cave")
@@ -1046,7 +1046,7 @@ desert_sandstorm12 = Room("Desert Sandstorm", "desert_boss", "desert_sandstorm7"
 desert_boss = Room("Desert Boss", "desert_shop", "spawn_point_desert", None, None, None,
                    "Wow, what is this?\nOh wait it is the boss")
 desert_shop = Room("Desert Shop", None, "desert_boss", None, None, None, None, False, None, "", False, False, "",
-                   False, 0, True, iron_armor, good_health_potion, goron_tunic, filler, "YES")
+                   False, 0, True, iron_sword, iron_armor, good_health_potion, goron_tunic, "YES")
 
 # Volcano
 spawn_point_volcano = Room("Spawn Point Volcano", "volcano1", "volcano_death", None, "volcano_myth", None,
@@ -1087,7 +1087,6 @@ spawn_point_jungle = Room(None, None, None, None, None, None, None)
 spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
 
 you.current_node = desert_shop
-you.is_it_a_weapon()
 you.total_gold = 100000000
 
 first_time = True

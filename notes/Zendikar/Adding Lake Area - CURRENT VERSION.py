@@ -332,6 +332,34 @@ class KingDodongo(Boss):
         print("%s has %d health left" % (self.name, self.health))
 
 
+class Morpheel(Boss):
+    def __init__(self, name, armor, defence, health, did_you_beat_it, on_fire, gold, exp):
+        super(Morpheel, self).__init__(name, armor, defence, health, did_you_beat_it, on_fire, gold, exp)
+
+    def attack(self, target):
+        print("%s starts to attack" % self.name)
+        attack_num = random.randint(1, 3)
+        if attack_num == 1:
+            print("%s sends pirahnas at you" % self.name)
+            target.take_damage(5)
+        if attack_num == 2:
+            print("%s swipes at you with its tentacles" % self.name)
+            target.take_damage(10)
+        if attack_num == 3:
+            print("%s swims at you" % self.name)
+            print("But it misses")
+
+    def take_damage(self, damage):
+        if damage <= self.armor.defence:
+            print("No damage is done because of some FABULOUS armor")
+        else:
+            self.health -= damage - self.armor.defence
+            if self.health <= 0:
+                self.health = 0
+                print("%s has fallen" % self.name)
+        print("%s has %d health left" % (self.name, self.health))
+
+
 tuktuk = TukTuk("TukTuk", Armor("Armor", 3, 0), 3, 15, False, False, 5, 5)
 tuktukreturned = TukTukReturned("TukTuk Returned", Armor("Armor", 5, 0), 5, 35, False, False, 25, 25)
 
@@ -341,6 +369,8 @@ bowser = Bowser("Bowser", Armor("Armor", 5, 0, False), 5, 35, False, False, 25, 
 
 bahamut = Bahamut("Bahamut", Armor("Armor", 10, 0), 10, 50, False, False, 50, 50)
 king_dodongo = KingDodongo("King Dodongo", Armor("Armor", 12, 0), 12, 55, False, False, 55, 55)
+
+morpheel = Morpheel("Morpheel", Armor("Armor", 5, 0, False), 10, 50, False, False, 50, 50)
 
 stick = Stick("Stick", 2, 0)
 
@@ -1078,30 +1108,31 @@ volcano_shop = Room("Volcano Shop", None, None, "volcano_boss2", "volcano_boss1"
 
 
 # Lake
-spawn_point_lake = Room("Spawn Point Lake", None, None, None, None, None, "You are in Spawn Point Lake")
-lake1 = Room("Lake 1", "lake6", "spawn_point_lake", None, None, None, None)
+spawn_point_lake = Room("Spawn Point Lake", "lake1", None, None, None, None, "You are in Spawn Point Lake")
+lake1 = Room("Lake 1", "lake6", "spawn_point_lake", None, None, None, "You are at the edge of the lake")
 lake2 = Room("Lake 2", "lake3", "lake1", "lake6", "lake7_left", None, "There are ripples in the water north of you")
-lake3 = Room("Lake 3", None, "lake2", None, None, None, None)
+lake3 = Room("Lake 3", None, "lake2", None, None, None, "Nezehal is here and it kills you")
 lake4 = Room("Lake 4", "lake5", None, "lake7_right", "lake6", None, "There are ripples in the water north of you")
-lake5 = Room("Lake 5", None, "lake4", None, None, None, None)
+lake5 = Room("Lake 5", None, "lake4", None, None, None, "Inkwell Leviathan is here and it kills you")
 lake6 = Room("Lake 6", "lake7", "lake1", "lake4", "lake2", None, "There are ripples in the water north of you")
-lake7 = Room("Lake 7", None, "lake6", None, None, None, None)
-lake7_left = Room("Lake 7 Left", "lake8_left", None, "lake2", None, None, None)
-lake7_right = Room("Lake 7 Right", "lake8_right", None, None, "lake4", None, None)
+lake7 = Room("Lake 7", None, "lake6", None, None, None, "Jokulmorder is here and it kills you")
+lake7_left = Room("Lake 7 Left", "lake8_left", None, "lake2", None, None, "The ripples in the lake are gone")
+lake7_right = Room("Lake 7 Right", "lake8_right", None, None, "lake4", None, "The ripples in the lake are gone")
 lake8_left = Room("Lake 8 Left", "lake16", "lake7_left", "lake9", None, None,
                   "There are ripples in the water north of you")
 lake8_right = Room("Lake 8 Right", "lake15", "lake7_right", None, "lake11", None,
                    "There are ripples in the water north of you")
 lake9 = Room("Lake 9", "lake10", None, "lake13", "lake8_left", None,
              "There are ripples in the water north of you but they are smaller than the other ripples you have seen")
-lake10 = Room("Lake 10", "lake_boss", "lake9", None, None, None, None)
+lake10 = Room("Lake 10", "lake_boss", "lake9", None, None, None,
+              "Something surfaces out of the water and it is a small fish")
 lake11 = Room("Lake 11", "lake12", None, "lake8_right", "lake13", None, "There are ripples in the water north of you")
-lake12 = Room("Lake 12", None, "lake11", None, None, None, None)
+lake12 = Room("Lake 12", None, "lake11", None, None, None, "Grisly Anglerfish is here and it kills you")
 lake13 = Room("Lake 13", "lake14", None, "lake11", "lake9", None, "There are ripples in the water north of you", True,
               intestines)
-lake14 = Room("Lake 14", None, "lake13", None, None, None, None)
-lake15 = Room("Lake 15", None, "lake8_right", None, None, None, None)
-lake16 = Room("Lake 16", None, "lake8_left", None, None, None, None)
+lake14 = Room("Lake 14", None, "lake13", None, None, None, "Davy Jones is here and he kills you")
+lake15 = Room("Lake 15", None, "lake8_right", None, None, None, "Shipbreaker Kraken is here and it kills you")
+lake16 = Room("Lake 16", None, "lake8_left", None, None, None, "Lorthos is here and it kills you")
 lake_boss = Room("Lake Boss", "lake_shop", "lake10", None, None, None, None)
 lake_shop = Room("Lake Shop", None, "lake_boss", None, None, None, None)
 
@@ -1111,8 +1142,7 @@ spawn_point_jungle = Room(None, None, None, None, None, None, None)
 # Boss Area
 spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
 
-you.current_node = desert_shop
-you.total_gold = 100000000
+you.current_node = spawn_point_raven_gorge
 
 first_time = True
 first_time1 = True
@@ -1598,21 +1628,46 @@ while you.playing:
             you.run_command()
 
     if you.current_node == spawn_point_lake:
-        spawn_point_lake.run_room()
+        spawn_point_lake.decision_room()
+        print("There are 20 gold coins on a ground")
+        you.total_gold += 20
+        print("Now you have %s gold" % you.total_gold)
+        you.run_command()
     if you.current_node == lake1:
-        lake1.run_room()
+        lake1.decision_room()
+        print("There is a boat shop here\nWould you like to buy a boat for 20 gold?")
+        choice_boat = input("YES or NO")
+        if choice_boat.upper() == "YES" and you.total_gold > 19:
+            you.total_gold -= 20
+            print("You bought the boat")
+            you.inventory.append("Boat")
+        if choice_boat.upper() == "YES" and not you.total_gold >= 20:
+            print("You can't buy that")
+        else:
+            pass
+        you.run_command()
     if you.current_node == lake2:
         lake2.run_room()
     if you.current_node == lake3:
-        lake3.run_room()
+        lake3.decision_room()
+        you.die()
     if you.current_node == lake4:
         lake4.run_room()
     if you.current_node == lake5:
-        lake5.run_room()
+        lake5.decision_room()
+        you.die()
     if you.current_node == lake6:
-        lake6.run_room()
+        lake6.decision_room()
+        if "Boat" in you.inventory:
+            pass
+            you.run_command()
+        else:
+            print("You try swimming in the lake but you drown")
+            you.die()
+            break
     if you.current_node == lake7:
-        lake7.run_room()
+        lake7.decision_room()
+        you.die()
     if you.current_node == lake7_left:
         lake7_left.run_room()
     if you.current_node == lake7_right:
@@ -1628,19 +1683,36 @@ while you.playing:
     if you.current_node == lake11:
         lake11.run_room()
     if you.current_node == lake12:
-        lake12.run_room()
+        lake12.decision_room()
+        you.die()
     if you.current_node == lake13:
         lake13.run_room()
     if you.current_node == lake14:
-        lake14.run_room()
+        lake14.decision_room()
+        you.die()
     if you.current_node == lake15:
-        lake15.run_room()
+        lake15.decision_room()
+        you.die()
     if you.current_node == lake16:
-        lake16.run_room()
+        lake16.decision_room()
+        you.die()
     if you.current_node == lake_boss:
-        lake_boss.run_room()
+        lake_boss.decision_room()
+        print("Suddenly a bubble appears around your head and you are sucked underwater")
+        print("You think you will die but somehow you can breathe here")
+        print("Although a giant fish thing is in front of you")
+        you.fight(morpheel)
     if you.current_node == lake_shop:
-        lake_shop.run_room()
+        lake_shop.decision_room()
+        lake_shop.run_shop()
+        you.run_command()
+        print("Would you like to go to the next area?")
+        print("Once you leave this area you can not come back")
+        choice14 = input("YES or NO")
+        if choice14.upper() == "YES":
+            you.current_node = spawn_point_jungle
+        if choice14.upper() == "NO":
+            you.run_command()
 
     if you.current_node == spawn_point_boss:
         print("Congratulations for making it this far here is 50 gold for your efforts")

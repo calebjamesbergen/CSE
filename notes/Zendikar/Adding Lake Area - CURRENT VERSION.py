@@ -341,10 +341,10 @@ class Morpheel(Boss):
         attack_num = random.randint(1, 3)
         if attack_num == 1:
             print("%s sends pirahnas at you" % self.name)
-            target.take_damage(5)
+            target.take_damage(7)
         if attack_num == 2:
             print("%s swipes at you with its tentacles" % self.name)
-            target.take_damage(10)
+            target.take_damage(13)
         if attack_num == 3:
             print("%s swims at you" % self.name)
             print("But it misses")
@@ -1134,15 +1134,16 @@ lake14 = Room("Lake 14", None, "lake13", None, None, None, "Davy Jones is here a
 lake15 = Room("Lake 15", None, "lake8_right", None, None, None, "Shipbreaker Kraken is here and it kills you")
 lake16 = Room("Lake 16", None, "lake8_left", None, None, None, "Lorthos is here and it kills you")
 lake_boss = Room("Lake Boss", "lake_shop", "lake10", None, None, None, None)
-lake_shop = Room("Lake Shop", None, "lake_boss", None, None, None, None)
+lake_shop = Room("Lake Shop", None, "lake_boss", None, None, None, None, False, None, "", False, False, "", False, 0,
+                 True, iron_sword, iron_armor, good_health_potion, filler)
 
 # Jungle
-spawn_point_jungle = Room(None, None, None, None, None, None, None)
+spawn_point_jungle = Room("Spawn Point Jungle", None, None, None, None, None, None)
 
 # Boss Area
 spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
 
-you.current_node = spawn_point_raven_gorge
+you.current_node = lake_shop
 
 first_time = True
 first_time1 = True
@@ -1206,7 +1207,14 @@ while you.playing:
     if you.current_node.name == "Sheltered Valley 4":
         sheltered_valley4.run_room()
     if you.current_node.name == "Sheltered Valley 5":
-        sheltered_valley5.run_room()
+        sheltered_valley5.decision_room()
+        print("You start to get very tired\nWould you like to sleep against one of the trees?")
+        choice_tree = input("YES or NO")
+        if choice_tree == "YES":
+            print("You fall asleep and the tree you sleep against slowly starts to envelop you")
+            you.die()
+        if choice_tree == "NO":
+            print("You don't sleep against the tree")
     if you.current_node.name == "Sheltered Valley 6":
         sheltered_valley6.run_room()
     if you.current_node.name == "Sheltered Valley 7":
@@ -1637,11 +1645,11 @@ while you.playing:
         lake1.decision_room()
         print("There is a boat shop here\nWould you like to buy a boat for 20 gold?")
         choice_boat = input("YES or NO")
-        if choice_boat.upper() == "YES" and you.total_gold > 19:
+        if choice_boat.upper() == "YES" and you.total_gold >= 20:
             you.total_gold -= 20
             print("You bought the boat")
             you.inventory.append("Boat")
-        if choice_boat.upper() == "YES" and not you.total_gold >= 20:
+        if choice_boat.upper() == "YES" and not you.total_gold <= 20:
             print("You can't buy that")
         else:
             pass
@@ -1702,10 +1710,10 @@ while you.playing:
         print("You think you will die but somehow you can breathe here")
         print("Although a giant fish thing is in front of you")
         you.fight(morpheel)
+        you.run_command()
     if you.current_node == lake_shop:
         lake_shop.decision_room()
         lake_shop.run_shop()
-        you.run_command()
         print("Would you like to go to the next area?")
         print("Once you leave this area you can not come back")
         choice14 = input("YES or NO")
@@ -1714,8 +1722,11 @@ while you.playing:
         if choice14.upper() == "NO":
             you.run_command()
 
+    if you.current_node == spawn_point_jungle:
+        spawn_point_jungle.run_room()
+
     if you.current_node == spawn_point_boss:
-        print("Congratulations for making it this far here is 50 gold for your efforts")
+        print("Congratulations for making it this far here is 50 gold for your effort")
         you.total_gold += 50
         print("Now you have %s gold" % you.total_gold)
         print("This is the last area of the game and lucky for you no instant death")

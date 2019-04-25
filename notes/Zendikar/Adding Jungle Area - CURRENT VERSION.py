@@ -1138,7 +1138,8 @@ lake_shop = Room("Lake Shop", None, "lake_boss", None, None, None, None, False, 
                  True, iron_sword, iron_armor, good_health_potion, filler)
 
 # Jungle
-spawn_point_jungle = Room("Spawn Point Jungle", None, None, None, None, None, None)
+spawn_point_jungle = Room("Spawn Point Jungle", "jungle1", None, None, None, None, "You are in a very luscious tropical"
+                                                                                   "jungle")
 jungle1 = Room("Jungle 1", "jungle4", "spawn_point_jungle", "jungle3", "jungle2", None,
                "There are lots of trees around you and you see a large gorilla to your west and a large something"
                "to your east but it is hard to make out clearly")
@@ -1751,6 +1752,60 @@ while you.playing:
     if you.current_node == spawn_point_jungle:
         spawn_point_jungle.run_room()
 
+    if you.current_node == jungle1:
+        jungle1.run_room()
+
+    if you.current_node == jungle2:
+        jungle2.run_room()
+
+    if you.current_node == jungle3:
+        jungle3.run_room()
+
+    if you.current_node == jungle4:
+        jungle4.run_room()
+
+    if you.current_node == jungle5:
+        jungle5.run_room()
+
+    if you.current_node == jungle6:
+        jungle6.run_room()
+
+    if you.current_node == jungle7:
+        jungle7.run_room()
+
+    if you.current_node == jungle8:
+        jungle8.run_room()
+
+    if you.current_node == jungle_machete:
+        jungle_machete.run_room()
+
+    if you.current_node == jungle_banana:
+        jungle_banana.run_room()
+
+    if you.current_node == jungle_tarmo:
+        jungle_tarmo.run_room()
+
+    if you.current_node == jungle_carnage:
+        jungle_carnage.run_room()
+
+    if you.current_node == jungle_key:
+        jungle_key.run_room()
+
+    if you.current_node == jungle_tree:
+        jungle_tree.run_room()
+
+    if you.current_node == jungle_cat:
+        jungle_cat.run_room()
+
+    if you.current_node == jungle_baloth:
+        jungle_baloth.run_room()
+
+    if you.current_node == jungle_boss:
+        jungle_boss.run_room()
+
+    if you.current_node == jungle_shop:
+        jungle_shop.run_room()
+
     if you.current_node == spawn_point_boss:
         print("Congratulations for making it this far here is 50 gold for your effort")
         you.total_gold += 50
@@ -1758,5 +1813,3 @@ while you.playing:
         print("This is the last area of the game and lucky for you no instant death")
         print("So get ready for the fight of your life")
         spawn_point_boss.run_room()
-
-# Test

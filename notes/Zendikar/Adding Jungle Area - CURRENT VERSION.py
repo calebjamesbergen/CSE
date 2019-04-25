@@ -1139,11 +1139,37 @@ lake_shop = Room("Lake Shop", None, "lake_boss", None, None, None, None, False, 
 
 # Jungle
 spawn_point_jungle = Room("Spawn Point Jungle", None, None, None, None, None, None)
+jungle1 = Room("Jungle 1", "jungle4", "spawn_point_jungle", "jungle3", "jungle2", None,
+               "There are lots of trees around you and you see a large gorilla to your west and a large something"
+               "to your east but it is hard to make out clearly")
+jungle2 = Room("Jungle 2", None, None, "jungle1", "jungle_banana", None, "There are a lot of bananas to your west")
+jungle3 = Room("Jungle 3", None, None, "jungle_machete", "jungle1", None, "Something shiny is to your east")
+jungle4 = Room("Jungle 4", "jungle5", "jungle1", None, None, None,
+               "There are a lot of angry monkeys north of you that won't budge")
+jungle5 = Room("Jungle 5", "jungle6", "jungle4", None, "jungle_key", None,
+               "The foliage in front of you is too thick to pass and your sword is not sharp enough to cut it")
+jungle6 = Room("Jungle 6", None, "jungle5", "jungle_tree", "jungle7", None, "There is foliage north of you that is too"
+                                                                            "thick to cut even for the machete")
+jungle7 = Room("Jungle 7", "jungle_cat", None, "jungle6", "jungle8", None, "There is a locked door north of you")
+jungle8 = Room("Jungle 8", "jungle_baloth", None, "jungle7", None, None, "There is a baloth north of you")
+jungle_banana = Room("Jungle Banana", "jungle_tarmo", None, "jungle2", None, None,
+                     "There is a lot of decaying material north of you", True, banana)
+jungle_machete = Room("Jungle Machete", "jungle_carnage", None, None, "jungle3", None, "There is a large dinosaur "
+                                                                                       "looking thing north of you",
+                      True, machete)
+jungle_tarmo = Room("Jungle Tarmo", None, None, None, None, None, None)
+jungle_carnage = Room("Jungle Carnage", None, None, None, None, None, None)
+jungle_key = Room("Jungle Key", None, None, "jungle5", None, None, None, True, bronze_key)
+jungle_tree = Room("Jungle Tree", None, None, None, None, None, None)
+jungle_cat = Room("Jungle Cat", None, None, None, None, None, None)
+jungle_baloth = Room("Jungle Baloth", "jungle_boss", "jungle8", None, None, None, None)
+jungle_boss = Room("Jungle Boss", "jungle_shop", "jungle_baloth", None, None, None, None)
+jungle_shop = Room("Jungle Shop", None, "jungle_boss", None, None, None, None)
 
 # Boss Area
 spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
 
-you.current_node = lake_shop
+you.current_node = spawn_point_jungle
 
 first_time = True
 first_time1 = True

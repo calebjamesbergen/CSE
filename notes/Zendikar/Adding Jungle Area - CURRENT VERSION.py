@@ -1732,3 +1732,5 @@ while you.playing:
         print("This is the last area of the game and lucky for you no instant death")
         print("So get ready for the fight of your life")
         spawn_point_boss.run_room()
+
+# Test

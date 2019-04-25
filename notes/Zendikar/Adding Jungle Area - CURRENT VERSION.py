@@ -658,16 +658,16 @@ class Person(object):
 
     def level_up(self):
         while self.exp >= self.exp_to_level_up:
-                self.exp -= self.exp_to_level_up
-                print("You leveled up")
-                print("You got 5 gold for leveling up")
-                self.total_gold += 5
-                print("Now you have %s gold" % self.total_gold)
-                print("Your health increased by 2")
-                self.health += 2
-                print("Now you have %s health" % self.health)
-                self.level += 1
-                print("Now you are level %s" % self.level)
+            self.exp -= self.exp_to_level_up
+            print("You leveled up")
+            print("You got 5 gold for leveling up")
+            self.total_gold += 5
+            print("Now you have %s gold" % self.total_gold)
+            print("Your health increased by 2")
+            self.health += 2
+            print("Now you have %s health" % self.health)
+            self.level += 1
+            print("Now you are level %s" % self.level)
 
     def check_self(self):
         print("You deal %s damage" % self.attack_amt)
@@ -1145,7 +1145,7 @@ jungle1 = Room("Jungle 1", "jungle4", "spawn_point_jungle", "jungle3", "jungle2"
                "to your east but it is hard to make out clearly")
 jungle2 = Room("Jungle 2", None, None, "jungle1", "jungle_banana", None, "There are a lot of bananas to your west")
 jungle3 = Room("Jungle 3", None, None, "jungle_machete", "jungle1", None, "Something shiny is to your east")
-jungle4 = Room("Jungle 4", "jungle5", "jungle1", None, None, None,
+jungle4 = Room("Jungle 4", None, "jungle1", None, None, None,
                "There are a lot of angry monkeys north of you that won't budge")
 jungle5 = Room("Jungle 5", "jungle6", "jungle4", None, "jungle_key", None,
                "The foliage in front of you is too thick to pass and your sword is not sharp enough to cut it")
@@ -1762,7 +1762,16 @@ while you.playing:
         jungle3.run_room()
 
     if you.current_node == jungle4:
-        jungle4.run_room()
+        jungle4.decision_room()
+        if "Banana" in you.inventory:
+            print("Hey\nMaybe the monkeys want a banana?\nDo you want to give it to them?")
+            choice_banana = input("YES or NO")
+            if choice_banana == "YES":
+                print("You give the banana to the monkeys and they let you pass")
+                jungle4.north = jungle5
+            if choice_banana == "NO":
+                print("You did not give the monkeys the banana and they stay where they are")
+        you.run_command()
 
     if you.current_node == jungle5:
         jungle5.run_room()
@@ -1783,28 +1792,50 @@ while you.playing:
         jungle_banana.run_room()
 
     if you.current_node == jungle_tarmo:
-        jungle_tarmo.run_room()
+        jungle_tarmo.decision_room()
+        print("The tarmogoyf thought you were dead and consumed you")
+        you.die()
+        break
 
     if you.current_node == jungle_carnage:
         jungle_carnage.run_room()
+        print("The carnage tyrant eats you")
+        you.die()
+        break
 
     if you.current_node == jungle_key:
         jungle_key.run_room()
 
     if you.current_node == jungle_tree:
-        jungle_tree.run_room()
+        jungle_tree.decision_room()
+        print("An ent doesn't see you and it sits on you")
+        you.die()
+        break
 
     if you.current_node == jungle_cat:
-        jungle_cat.run_room()
+        jungle_cat.decision_room()
+        print("A cat like humanoid sees you and is not happy")
+        you.die()
+        break
 
     if you.current_node == jungle_baloth:
-        jungle_baloth.run_room()
+        jungle_baloth.decision_room()
+        you.fight(baloth)
+        you.run_command()
 
     if you.current_node == jungle_boss:
-        jungle_boss.run_room()
+        jungle_boss.decision_room()
 
     if you.current_node == jungle_shop:
-        jungle_shop.run_room()
+        jungle_shop.decision_room()
+        jungle_shop.run_shop()
+        print("Would you like to go to the next area?")
+        print("Once you leave this area you can not come back")
+        choice14 = input("YES or NO")
+        if choice14.upper() == "YES":
+            you.current_node = spawn_point_boss
+        if choice14.upper() == "NO":
+            you.run_command()
 
     if you.current_node == spawn_point_boss:
         print("Congratulations for making it this far here is 50 gold for your effort")

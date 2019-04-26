@@ -400,13 +400,13 @@ class Ulamog(Boss):
         attack_num = random.randint(1, 4)
         if attack_num == 1:
             print("%s calls for eldrazi scions to attack you" % self.name)
-            target.take_damage(31)
+            target.take_damage(33)
         if attack_num == 2:
             print("%s attacks you with some of it's tentacles" % self.name)
-            target.take_damage(33)
+            target.take_damage(35)
         if attack_num == 3:
             print("%s smashes you into the ground with it's hands" % self.name)
-            target.take_damage(35)
+            target.take_damage(37)
         if attack_num == 4:
             print("%s roars very loudly but it does nothing" % self.name)
 
@@ -454,7 +454,7 @@ monster_armor = Armor("Monster Armor", 1, None)
 diamond_armor = GreatArmor("Diamond Armor", 20, 25)
 enchanted_armor = GreatArmor("Enchanted Armor", 30, 35)
 
-goron_tunic = Clothes("Goron Tunic ", None)
+goron_tunic = Clothes("Goron Tunic", 20)
 
 bronze_key = Key("Bronze Key", 0)
 
@@ -555,9 +555,9 @@ class Person(object):
         self.health_potions_list = [health_potion.name, good_health_potion.name, great_health_potion.name]
         self.weapons_list = [wood_sword.name, stone_sword.name, iron_sword.name, diamond_sword.name,
                              enchanted_sword.name]
-        self.weapons_damage = [10, 15, 25, 25, 35, 50]
+        self.weapons_damage = [10, 15, 25, 25, 35, 35]
         self.armor_list = [copper_armor.name, iron_armor.name, diamond_armor.name, enchanted_armor.name]
-        self.armor_defence = [10, 15, 30, 50]
+        self.armor_defence = [10, 15, 30, 35]
         self.health_potion_heal = 3
         self.good_health_potion_heal = 5
         self.great_health_potion_heal = 10
@@ -1089,7 +1089,7 @@ cave_shop = Room("Cave Shop", None, None, None, None, None, None, False, None, "
 
 # Desert
 spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, "desert_sandstorm1", "desert1", None,
-                                "You are in Spawn Point Mountain")
+                                "You are now in a very vast and dry desert")
 desert1 = Room("Desert 1", "desert_maze1", "spawn_point_great_desert", None, None, None,
                "Print you see a sign that says\nWelcome to the maze")
 desert_maze1 = Room("Desert Maze", "desert_maze6", "desert1", None, "desert_maze2", None, "You are in the maze")
@@ -1097,7 +1097,7 @@ desert_maze2 = Room("Desert Maze", "desert_maze5", None, "desert_maze1", "desert
 desert_maze3 = Room("Desert Maze", "desert_maze4", None, "desert_maze2", None, None, "You are in the maze")
 desert_maze4 = Room("Desert Maze", "desert_maze9", "desert_maze3", None, "desert_maze2", None, "You are in the maze")
 desert_maze5 = Room("Desert Maze", "desert_maze8", "desert_maze5", "desert_maze6", "desert_maze4", None,
-                    "You are in the maze")
+                    "You are in the maze", True, intestines)
 desert_maze6 = Room("Desert Maze", "desert_maze7", "desert_maze1", None, "desert_maze5", None, "You are in the maze")
 desert_maze7 = Room("Desert Maze", "desert_maze10", "desert_maze6", None, "desert_maze8", None, "You are in the maze")
 desert_maze8 = Room("Desert Maze", "desert_maze11", "desert_maze5", "desert_maze7", "desert_maze9", None,
@@ -1120,7 +1120,7 @@ desert_sandstorm3 = Room("Desert Sandstorm", "desert_sandstorm4", None, None, "d
 desert_sandstorm4 = Room("Desert Sandstorm", "desert_sandstorm7", "desert_sandstorm3", None, "desert_sandstorm5",
                          None, "There is a raging sandstorm around you")
 desert_sandstorm5 = Room("Desert Sandstorm", "desert_sandstorm8", "desert_sandstorm2", "desert_sandstorm4",
-                         "desert_sandstorm6", None, "There is a raging sandstorm around you")
+                         "desert_sandstorm6", None, "There is a raging sandstorm around you", True, fang)
 desert_sandstorm6 = Room("Desert Sandstorm", "desert_sandstorm9", "desert_sandstorm1", "desert_sandstorm5", None,
                          None, "There is a raging sandstorm around you")
 desert_sandstorm7 = Room("Desert Sandstorm", "desert_sandstorm12", "desert_sandstorm4", None, "desert_sandstorm8",
@@ -1163,8 +1163,8 @@ volcano_river = Room("Volcano River", "volcano3", "volcano2", None, None, None, 
 volcano_explosion = Room("Volcano Explosion", None, None, "volcano3", None, None, None)
 volcano_boss1 = Room("Volcano Boss", "volcano_shop", None, "volcano4", None, None, None)
 volcano_boss2 = Room("Volcano Boss", "volcano_shop", None, None, "volcano4", None, None)
-volcano_shop = Room("Volcano Shop", None, None, "volcano_boss2", "volcano_boss1", None, "Far to your north yoo see the"
-                                                                                        "end. The final boss fight",
+volcano_shop = Room("Volcano Shop", None, None, "volcano_boss2", "volcano_boss1", None, "Far to your north you see the"
+                                                                                        " end. The final boss fight",
                     False, None, "", False, False, "", False, 0, True, enchanted_sword, enchanted_armor,
                     great_health_potion, filler)
 
@@ -1936,9 +1936,8 @@ while you.playing:
             you.run_command()
 
     if you.current_node == spawn_point_boss:
-        print("Congratulations for making it this far here is 50 gold for your effort")
-        you.total_gold += 50
-        print("Now you have %s gold" % you.total_gold)
+        print("Congratulations for making it this far here are 2 great health potions for your effort")
+        you.great_health_potions += 2
         print("This is the last area of the game and lucky for you no instant death")
         print("So get ready for the fight of your life")
         spawn_point_boss.run_room()
@@ -1954,3 +1953,4 @@ while you.playing:
     if you.current_node == last_room:
         last_room.decision_room()
         print("Thank you for playing my game")
+        break

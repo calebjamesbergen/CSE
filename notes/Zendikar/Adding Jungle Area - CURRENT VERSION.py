@@ -360,6 +360,67 @@ class Morpheel(Boss):
         print("%s has %d health left" % (self.name, self.health))
 
 
+class Odolwa(Boss):
+    def __init__(self, name, armor, defence, health, did_you_beat_it, on_fire, gold, exp):
+        super(Odolwa, self).__init__(name, armor, defence, health, did_you_beat_it, on_fire, gold, exp)
+
+    def attack(self, target):
+        print("%s starts to attack" % self.name)
+        attack_num = random.randint(1, 4)
+        if attack_num == 1:
+            print("%s summons moths that attack you" % self.name)
+            target.take_damage(13)
+        if attack_num == 2:
+            print("%s summons giant beetles that attack you" % self.name)
+            target.take_damage(19)
+        if attack_num == 3:
+            print("%s summons boulders that rain from the sky" % self.name)
+            target.take_damage(21)
+        if attack_num == 4:
+            print("%s swings his sword at you" % self.name)
+            print("But it misses")
+
+    def take_damage(self, damage):
+        if damage <= self.armor.defence:
+            print("No damage is done because of some FABULOUS armor")
+        else:
+            self.health -= damage - self.armor.defence
+            if self.health <= 0:
+                self.health = 0
+                print("%s has fallen" % self.name)
+        print("%s has %d health left" % (self.name, self.health))
+
+
+class Ulamog(Boss):
+    def __init__(self, name, armor, defence, health, did_you_beat_it, on_fire, gold, exp):
+        super(Ulamog, self).__init__(name, armor, defence, health, did_you_beat_it, on_fire, gold, exp)
+
+    def attack(self, target):
+        print("%s starts to attack" % self.name)
+        attack_num = random.randint(1, 4)
+        if attack_num == 1:
+            print("%s calls for eldrazi scions to attack you" % self.name)
+            target.take_damage(31)
+        if attack_num == 2:
+            print("%s attacks you with some of it's tentacles" % self.name)
+            target.take_damage(33)
+        if attack_num == 3:
+            print("%s smashes you into the ground with it's hands" % self.name)
+            target.take_damage(35)
+        if attack_num == 4:
+            print("%s roars very loudly but it does nothing" % self.name)
+
+    def take_damage(self, damage):
+        if damage <= self.armor.defence:
+            print("No damage is done because of some FABULOUS armor")
+        else:
+            self.health -= damage - self.armor.defence
+            if self.health <= 0:
+                self.health = 0
+                print("%s has fallen" % self.name)
+        print("%s has %d health left" % (self.name, self.health))
+
+
 tuktuk = TukTuk("TukTuk", Armor("Armor", 3, 0), 3, 15, False, False, 5, 5)
 tuktukreturned = TukTukReturned("TukTuk Returned", Armor("Armor", 5, 0), 5, 35, False, False, 25, 25)
 
@@ -372,29 +433,30 @@ king_dodongo = KingDodongo("King Dodongo", Armor("Armor", 12, 0), 12, 55, False,
 
 morpheel = Morpheel("Morpheel", Armor("Armor", 5, 0, False), 10, 50, False, False, 50, 50)
 
+odolwa = Odolwa("Odolwa", Armor("Armor", 10, 0, False), 10, 50, False, False, 50, 50)
+
+ulamog = Ulamog("Ulamog", Armor("Armor", 30, 0, False), 30, 100, False, False, 100, 100)
+
 stick = Stick("Stick", 2, 0)
 
 wood_sword = Sword("Wood Sword", 10, 5)
 stone_sword = Sword("Stone Sword", 15, 10)
 iron_sword = Sword("Iron Sword", 25, 20)
 
-diamond_sword = GreatSword("Diamond Sword", 35, 20, 1, 5)
-enchanted_sword = GreatSword("Enchanted Sword", 50, 50, 1, 3)
+diamond_sword = GreatSword("Diamond Sword", 35, 30, 1, 5)
+enchanted_sword = GreatSword("Enchanted Sword", 30, 35, 1, 3)
 
 leather_armor = Armor("Leather Armor", 5, 0)
 copper_armor = Armor("Copper Armor", 10, 5)
 iron_armor = Armor("Iron Armor", 15, 10)
 monster_armor = Armor("Monster Armor", 1, None)
 
-diamond_armor = GreatArmor("Diamond Armor", 30, 20)
-enchanted_armor = GreatArmor("Enchanted Armor", 50, 40)
+diamond_armor = GreatArmor("Diamond Armor", 20, 25)
+enchanted_armor = GreatArmor("Enchanted Armor", 30, 35)
 
 goron_tunic = Clothes("Goron Tunic ", None)
 
 bronze_key = Key("Bronze Key", 0)
-copper_key = Key("Copper Key", 0)
-silver_key = Key("Silver Key", 0)
-gold_key = Key("Gold Key", 0)
 
 machete = Tools("Machete", 0)
 banana = Tools("Banana", 0)
@@ -738,7 +800,7 @@ godzilla = Monster("Godzilla", 50, 20, 40, 30, Armor("Skin", 15, 0), Weapon("Fir
 
 bellowing_tanglewurm = Monster("Bellowing Tanglewurm", 30, 15, 20, 20, Armor("Skin", 20, 0), Weapon("Mouth", 15, 0))
 grunn = Monster("Grunn", 60, 10, 40, 40, Armor("Grass Armor", 15, 0), Weapon("Fist", 10, 0))
-baloth = Monster("Baloth", 20, 20, 20, 20, Armor("Skin", 20, 0), Weapon("Mouth", 20, 0))
+baloth = Monster("Baloth", 20, 17, 20, 20, Armor("Skin", 13, 0), Weapon("Mouth", 17, 0))
 
 
 class Room(object):
@@ -1023,7 +1085,7 @@ cave_in = Room("Cave In", None, None, None, None, None, "There is a cave in here
 cave_boss = Room("Cave Boss", "cave_shop", "cave_in", None, None, None, None, False, None, "", False, False, "", False,
                  0, False, None, None, None, None, "YES", "spawn_point_boss")
 cave_shop = Room("Cave Shop", None, None, None, None, None, None, False, None, "", False, False, "", False,
-                 0, True, diamond_sword, diamond_armor, good_health_potion, filler, "YES", "spawn_point_boss")
+                 0, True, enchanted_sword, enchanted_armor, great_health_potion, filler, "YES", "spawn_point_boss")
 
 # Desert
 spawn_point_great_desert = Room("Spawn Point Great Desert", None, None, "desert_sandstorm1", "desert1", None,
@@ -1103,8 +1165,8 @@ volcano_boss1 = Room("Volcano Boss", "volcano_shop", None, "volcano4", None, Non
 volcano_boss2 = Room("Volcano Boss", "volcano_shop", None, None, "volcano4", None, None)
 volcano_shop = Room("Volcano Shop", None, None, "volcano_boss2", "volcano_boss1", None, "Far to your north yoo see the"
                                                                                         "end. The final boss fight",
-                    False, None, "", False, False, "", False, 0, True, diamond_sword, diamond_armor,
-                    good_health_potion, filler)
+                    False, None, "", False, False, "", False, 0, True, enchanted_sword, enchanted_armor,
+                    great_health_potion, filler)
 
 
 # Lake
@@ -1138,20 +1200,19 @@ lake_shop = Room("Lake Shop", None, "lake_boss", None, None, None, None, False, 
                  True, iron_sword, iron_armor, good_health_potion, filler)
 
 # Jungle
-spawn_point_jungle = Room("Spawn Point Jungle", "jungle1", None, None, None, None, "You are in a very luscious tropical"
-                                                                                   "jungle")
+spawn_point_jungle = Room("Spawn Point Jungle", "jungle1", None, "jungle3", "jungle2", None, "You are in a very luscious tropical"
+                                                                                             " jungle")
 jungle1 = Room("Jungle 1", "jungle4", "spawn_point_jungle", "jungle3", "jungle2", None,
-               "There are lots of trees around you and you see a large gorilla to your west and a large something"
-               "to your east but it is hard to make out clearly")
+               "There are lots of trees around you making it hard to see")
 jungle2 = Room("Jungle 2", None, None, "jungle1", "jungle_banana", None, "There are a lot of bananas to your west")
 jungle3 = Room("Jungle 3", None, None, "jungle_machete", "jungle1", None, "Something shiny is to your east")
 jungle4 = Room("Jungle 4", None, "jungle1", None, None, None,
                "There are a lot of angry monkeys north of you that won't budge")
-jungle5 = Room("Jungle 5", "jungle6", "jungle4", None, "jungle_key", None,
+jungle5 = Room("Jungle 5", None, "jungle4", None, "jungle_key", None,
                "The foliage in front of you is too thick to pass and your sword is not sharp enough to cut it")
 jungle6 = Room("Jungle 6", None, "jungle5", "jungle_tree", "jungle7", None, "There is foliage north of you that is too"
                                                                             "thick to cut even for the machete")
-jungle7 = Room("Jungle 7", "jungle_cat", None, "jungle6", "jungle8", None, "There is a locked door north of you")
+jungle7 = Room("Jungle 7", None, None, "jungle6", "jungle8", None, "There is a locked door north of you")
 jungle8 = Room("Jungle 8", "jungle_baloth", None, "jungle7", None, None, "There is a baloth north of you")
 jungle_banana = Room("Jungle Banana", "jungle_tarmo", None, "jungle2", None, None,
                      "There is a lot of decaying material north of you", True, banana)
@@ -1165,18 +1226,26 @@ jungle_tree = Room("Jungle Tree", None, None, None, None, None, None)
 jungle_cat = Room("Jungle Cat", None, None, None, None, None, None)
 jungle_baloth = Room("Jungle Baloth", "jungle_boss", "jungle8", None, None, None, None)
 jungle_boss = Room("Jungle Boss", "jungle_shop", "jungle_baloth", None, None, None, None)
-jungle_shop = Room("Jungle Shop", None, "jungle_boss", None, None, None, None)
+jungle_shop = Room("Jungle Shop", None, "jungle_boss", None, None, None, None, False, None, "", False, False, "",
+                   False, 0, True, enchanted_sword, enchanted_armor, great_health_potion, filler)
 
 # Boss Area
-spawn_point_boss = Room("Spawn Point Boss", None, None, None, None, None, None)
+spawn_point_boss = Room("Spawn Point Boss", "boss_area_fight", "boss_area_fight", "boss_area_fight", "boss_area_fight", None, None)
+boss_area_fight = Room("Boss Fight", None, "spawn_point_boss", None, None, None, None)
 
-you.current_node = spawn_point_jungle
+last_room = Room("You Did It!", None, None, None, None, None, None)
+
+you.current_node = spawn_point_raven_gorge
 
 first_time = True
 first_time1 = True
 first_time2 = True
 first_time3 = True
 first_time4 = True
+banana_first_time = True
+machete_first_time = True
+key_first_time = True
+
 
 while you.playing:
     if first_time and you.playing:
@@ -1237,11 +1306,12 @@ while you.playing:
         sheltered_valley5.decision_room()
         print("You start to get very tired\nWould you like to sleep against one of the trees?")
         choice_tree = input("YES or NO")
-        if choice_tree == "YES":
+        if choice_tree.upper() == "YES":
             print("You fall asleep and the tree you sleep against slowly starts to envelop you")
             you.die()
-        if choice_tree == "NO":
+        if choice_tree.upper() == "NO":
             print("You don't sleep against the tree")
+        you.run_command()
     if you.current_node.name == "Sheltered Valley 6":
         sheltered_valley6.run_room()
     if you.current_node.name == "Sheltered Valley 7":
@@ -1676,10 +1746,8 @@ while you.playing:
             you.total_gold -= 20
             print("You bought the boat")
             you.inventory.append("Boat")
-        if choice_boat.upper() == "YES" and not you.total_gold <= 20:
-            print("You can't buy that")
         else:
-            pass
+            print("You can't buy that")
         you.run_command()
     if you.current_node == lake2:
         lake2.run_room()
@@ -1763,24 +1831,49 @@ while you.playing:
 
     if you.current_node == jungle4:
         jungle4.decision_room()
-        if "Banana" in you.inventory:
-            print("Hey\nMaybe the monkeys want a banana?\nDo you want to give it to them?")
+        if "Banana" in you.inventory and banana_first_time:
+            print("Hey, maybe the monkeys want a banana\nDo you want to give it to them?")
             choice_banana = input("YES or NO")
-            if choice_banana == "YES":
+            if choice_banana.upper() == "YES":
                 print("You give the banana to the monkeys and they let you pass")
-                jungle4.north = jungle5
-            if choice_banana == "NO":
+                jungle4.north = "jungle5"
+                banana_first_time = False
+                jungle4.room_text = None
+            if choice_banana.upper() == "NO":
                 print("You did not give the monkeys the banana and they stay where they are")
         you.run_command()
 
     if you.current_node == jungle5:
-        jungle5.run_room()
+        jungle5.decision_room()
+        if "Machete" in you.inventory and machete_first_time:
+            print("Maybe the machete can cut through the foliage\nWould you like to use it?")
+            choice_machete = input("YES or NO")
+            if choice_machete.upper() == "YES":
+                print("You cut through the foliage with ease")
+                jungle5.north = "jungle6"
+                machete_first_time = False
+                jungle5.room_text = None
+            if choice_machete.upper() == "NO":
+                print("You did not use the machete")
+
+        you.run_command()
 
     if you.current_node == jungle6:
         jungle6.run_room()
 
     if you.current_node == jungle7:
-        jungle7.run_room()
+        jungle7.decision_room()
+        if "Bronze Key" in you.inventory and key_first_time:
+            print("You have a key\nWould you like to use it?")
+            choice_key = input("YES or NO")
+            if choice_key.upper() == "YES":
+                print("You used the key and unlocked the door")
+                jungle7.north = "jungle_cat"
+                key_first_time = False
+                jungle7.room_text = None
+            if choice_key.upper() == "NO":
+                print("You did not use the key")
+        you.run_command()
 
     if you.current_node == jungle8:
         jungle8.run_room()
@@ -1798,7 +1891,7 @@ while you.playing:
         break
 
     if you.current_node == jungle_carnage:
-        jungle_carnage.run_room()
+        jungle_carnage.decision_room()
         print("The carnage tyrant eats you")
         you.die()
         break
@@ -1825,6 +1918,11 @@ while you.playing:
 
     if you.current_node == jungle_boss:
         jungle_boss.decision_room()
+        you.fight(odolwa)
+        if you.health > 0:
+            you.run_command()
+        else:
+            break
 
     if you.current_node == jungle_shop:
         jungle_shop.decision_room()
@@ -1844,3 +1942,15 @@ while you.playing:
         print("This is the last area of the game and lucky for you no instant death")
         print("So get ready for the fight of your life")
         spawn_point_boss.run_room()
+
+    if you.current_node == boss_area_fight:
+        boss_area_fight.decision_room()
+        print("This is it\nThe final fight\nAre you ready?")
+        print("Fight!")
+        you.fight(ulamog)
+        if you.health > 0:
+            you.current_node = last_room
+
+    if you.current_node == last_room:
+        last_room.decision_room()
+        print("Thank you for playing my game")

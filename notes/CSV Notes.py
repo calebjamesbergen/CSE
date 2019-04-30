@@ -20,6 +20,13 @@ def is_it_even(num: str):
         return True
     return False
 
+
+def reverse_it(string):
+    return string[::-1]
+
+
+print(reverse_it("dlroW olleH"))
+
 # with open("Book1.csv", "r") as old_csv:
 # #     reader = csv.reader(old_csv)
 # #

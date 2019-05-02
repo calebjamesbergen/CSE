@@ -1,36 +1,52 @@
 import csv
 
 
-def validate(num: int):
-    do_it(num)
+def validate(num: str):
+    new_num = drop_last_digit(num)
+    reversed_nums = reverse_numbers(new_num)
+    multiplied_nums = multiply_odds(reversed_nums)
+    even_nums_list = even_nums(reversed_nums)
+    test = 0
+    sum1 = combine_nums(even_nums_list, multiplied_nums, test)
+    true_or_false = mod_by10(sum1)
+    if true_or_false:
+        return True
+    return False
 
 
-def do_it(num):
-    last_num = num[15]
-    new_num = num[0:15]
-    reversed_num = new_num[::-1]
-    num1 = reversed_num
+def drop_last_digit(num):
+    return num[0:15]
 
-    odd_numbers = [int(num1[0]), int(num1[2]), int(num1[4]), int(num1[6]), int(num1[8]), int(num1[10]), int(num1[12]), int(num1[14])]
 
-    for i in range(len(odd_numbers)):
-        odd_numbers[i] *= 2
+def reverse_numbers(num):
+    return num[::-1]
 
-        if odd_numbers[i] > 9:
-            odd_numbers[i] -= 9
 
-        num1[0] = str(odd_numbers[0])
-        num1[2] = odd_numbers[1]
-        num1[4] = odd_numbers[2]
-        num1[6] = odd_numbers[3]
-        num1[8] = odd_numbers[4]
-        num1[10] = odd_numbers[5]
-        num1[12] = odd_numbers[6]
-        num1[14] = odd_numbers[7]
+def multiply_odds(num):
+    list_num = []
+    for i in range(len(num)):
+        int_version = int(num[i])
+        if i % 2 == 0:
+            int_version *= 2
+            if int_version > 9:
+                int_version -= 9
+            list_num.append(int_version)
+    return list_num
 
-    final_num = num1[0] + num1[1] + num1[2] + num1[3] + num1[4] + num1[5] + num1[6] + num1[7] + num1[8] + num1[9] + num1[10] + num1[11] + num1[12] + num1[13] + num1[14]
 
-    if final_num % 10 == 0:
+def even_nums(num):
+    return [int(num[1]), int(num[3]), int(num[5]), int(num[7]), int(num[9]), int(num[11]), int(num[13])]
+
+
+def combine_nums(num, num2, num3):
+    if num3 == num3:
+        pass
+    num3 = sum(num) + sum(num2)
+    return num3
+
+
+def mod_by10(sum3):
+    if sum3 % 10 == 0:
         return True
     return False
 

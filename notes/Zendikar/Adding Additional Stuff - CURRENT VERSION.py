@@ -1026,15 +1026,13 @@ sheltered_valley3 = Room("Sheltered Valley 3", "mountain", None, "sheltered_vall
 sheltered_valley4 = Room("Sheltered Valley 4", "sheltered_valley5", None, "sheltered_valley6",
                          "spawn_point_sheltered_valley", None,
                          "You start heading east and you see a mass of trees in front of you \nAlso to your east you"
-                         " see a cabin")
+                         " see a suspicious looking cabin")
 sheltered_valley5 = Room("Sheltered Valley 5", "lake", "sheltered_valley_4", None, None, None,
                          "You are now completely surrounded by trees")
 sheltered_valley6 = Room("Sheltered Valley 6", None, None, None, None,
                          True, "You enter the cabin and an eldrazi is in there", False, None, "Eldrazi", True)
-sheltered_valley7 = Room("Sheltered Valley 7", "sheltered_valley1", "sheltered_valley8", None, None,
-                         None, None)
-sheltered_valley8 = Room("Sheltered Valley 8", "sheltered_valley7", "great_desert", None, None,
-                         None, None)
+sheltered_valley7 = Room("Sheltered Valley 7", "sheltered_valley1", "sheltered_valley8", None, None, None, None)
+sheltered_valley8 = Room("Sheltered Valley 8", "sheltered_valley7", "great_desert", None, None, None, None)
 great_desert = Room("Great Desert", "sheltered_valley8", None, None, None, None,
                     "You see a sign and it says \n You are in the great desert \n You are going to die", False, None,
                     "", False, False, "", False, 0, True, stone_sword, health_potion, filler, filler, "YES",
@@ -1044,8 +1042,7 @@ lake = Room("Lake", None, "sheltered_valley5", None, None, None, "The trees open
             "", False, False, "", False, 0, True, stone_sword, health_potion, filler, filler, "YES",
             "spawn_point_lake")
 mountain = Room("Mountain", None, "sheltered_valley3", None, None, None, "Ahead of you is a large mountain", False,
-                None,
-                "", False, False, "", False, 0, True, stone_sword, health_potion, filler, filler, "YES",
+                None, "", False, False, "", False, 0, True, stone_sword, health_potion, filler, filler, "YES",
                 "spawn_point_mountain")
 
 # Mountain
@@ -1153,7 +1150,7 @@ volcano3 = Room("Volcano 3", "volcano4", "volcano_river", "volcano3_right", "vol
                                                                                                        "east")
 volcano3_right = Room("Volcano 3 Right", None, None, None, "volcano3", None, None)
 volcano4 = Room("Volcano 4", None, "volcano3", "volcano_boss2", "volcano_boss1", None, "Going west or east will take"
-                                                                                       " you to the boss fight\nChoose "
+                                                                                       " you a the boss fight\nChoose "
                                                                                        "which way you want to go",
                 True, banana_peel)
 volcano_death = Room("Volcano Death", None, None, None, None, None, None)

@@ -1,4 +1,6 @@
 import random
+import RockPaperScissors
+import Magic8Ball
 
 
 class Item(object):
@@ -992,7 +994,7 @@ class Room(object):
             you.run_command()
 
 
-# Rooms
+# Rooms        e
 
 room = Room(None, None, None, None, None, None, None)
 
@@ -1242,9 +1244,25 @@ first_time4 = True
 banana_first_time = True
 machete_first_time = True
 key_first_time = True
+game = False
+
+print("Would you like to play the main game or a mini game?")
+choice_game = input("GAME or MINI GAME")
+
+if choice_game.upper() == "GAME":
+    game = True
+
+if choice_game.upper() == "MINI GAME":
+    print("What mini game would you like to play")
+    choice_minigame = input("ROCK PAPER SCISSORS or MAGIC 8 BALL")
+    if choice_minigame.upper() == "ROCK PAPER SCISSORS":
+        RockPaperScissors.rock_paper_scissors()
+
+    if choice_minigame.upper() == "MAGIC 8 BALL":
+        Magic8Ball.choice()
 
 
-while you.playing:
+while you.playing and game:
     if first_time and you.playing:
         print("Welcome to Zendikar")
         print("This game will require skill and a bit of luck")

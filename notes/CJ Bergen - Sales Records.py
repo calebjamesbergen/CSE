@@ -3,6 +3,7 @@ import csv
 # Sub-Saharan Africa, Middle East and North Africa, Australia and Oceania, Europe, Asia, Central America and the Caribbean, North America
 # Region, highest rate of return
 
+
 fruit_profit = 0
 clothes_profit = 0
 meat_profit = 0

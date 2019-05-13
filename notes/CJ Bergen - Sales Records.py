@@ -219,6 +219,7 @@ with open("Sales Records.csv", "r") as old_csv:
     typesss = do_it2(sub_saharan_africa_profit, middle_east_and_north_africa_profit, australia_and_oceania_profit, europe_profit, asia_profit, central_america_and_the_caribbean, north_america, "Sub-Saharan Africa", "Middle East and North Africa", "Australia and Oceania", "Europe",  "Asia", "Central America and the Caribbean", "North America")
     print()
     print("The highest total profit from a region was $%f and it was  made by %s" % (max(profit_list2), typesss))
+    print()
 
     aaaa = do_it3(fruit_averages, clothes_averages, meat_averages, beverages_averages, office_supplies_averages, cosmetics_averages, snacks_averages, personal_care_averages, household_averages, vegetables_averages, baby_food_averages, cereal_averages, "Fruits", "Clothes", "Meat", "Beverages", "Office Supplies", "Cosmetics", "Snacks", "Personal Care", "Household", "Vegetables", "Baby Food", "Cereal")
     print("The safest thing to invest in is %s with a %f ratio of 1 unit to the profit for that" % (aaaa, max(average_list)))

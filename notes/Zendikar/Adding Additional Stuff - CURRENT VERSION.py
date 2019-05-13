@@ -445,7 +445,7 @@ wood_sword = Sword("Wood Sword", 10, 5)
 stone_sword = Sword("Stone Sword", 15, 10)
 iron_sword = Sword("Iron Sword", 25, 20)
 
-diamond_sword = GreatSword("Diamond Sword", 35, 30, 1, 5)
+diamond_sword = GreatSword("Diamond Sword", 40, 30, 1, 5)
 enchanted_sword = GreatSword("Enchanted Sword", 30, 35, 1, 3)
 
 leather_armor = Armor("Leather Armor", 5, 0)
@@ -557,7 +557,7 @@ class Person(object):
         self.health_potions_list = [health_potion.name, good_health_potion.name, great_health_potion.name]
         self.weapons_list = [wood_sword.name, stone_sword.name, iron_sword.name, diamond_sword.name,
                              enchanted_sword.name]
-        self.weapons_damage = [10, 15, 25, 25, 35, 35]
+        self.weapons_damage = [wood_sword.damage, stone_sword.damage, iron_sword.damage, diamond_sword.damage, 35, enchanted_sword.name]
         self.armor_list = [copper_armor.name, iron_armor.name, diamond_armor.name, enchanted_armor.name]
         self.armor_defence = [10, 15, 30, 35]
         self.health_potion_heal = 3
@@ -1008,7 +1008,7 @@ raven_gorge2 = Room("Raven Gorge 2", "raven_gorge3", "raven_gorge1", None, "rave
 raven_gorge2_left = Room("Raven Gorge 2 Left", None, None, "raven_gorge2", None, None, None, False, None,
                          "", False, False, "", True, 25)
 raven_gorge3 = Room("Raven Gorge 3", "raven_gorge4", "raven_gorge2", "raven_gorge3_right", None, None, None, False,
-                    None, "", False, True, "Eldrazi Scion")
+                    None, "", False, True, "There is an something large east of you")
 raven_gorge3_right = Room("Raven Gorge 3 Right", None, None, None, "raven_gorge3", True,
                           "An eldrazi devastator appeared and ripped you apart", False, None, "Eldrazi Devastator",
                           True)
@@ -1711,7 +1711,9 @@ while you.playing and game:
             print("You walk across a narrow path across a river of lava")
         if rock_break == 2:
             print("As you are walking across a narrow path a rock breaks and you trip and fall into the lava")
-            you.die()
+            you.health -= 10
+            print("You took 10 damage")
+            print("Now you have %s health" % you.health)
             break
         you.run_command()
     if you.current_node == volcano_explosion:
@@ -1722,7 +1724,9 @@ while you.playing and game:
         if explode == 2:
             print("You see a volcano to your west and it is definitely not dormant")
             print("It explodes and sends magma everywhere and you aren't able to dodge it in time")
-            you.die()
+            print("You took 10 damage")
+            you.health -= 10
+            print("Now you have %s health" % you.health)
             break
     if you.current_node == volcano_boss1:
         volcano_boss1.decision_room()
@@ -1968,4 +1972,3 @@ while you.playing and game:
     if you.current_node == last_room:
         last_room.decision_room()
         print("Thank you for playing my game")
-        break

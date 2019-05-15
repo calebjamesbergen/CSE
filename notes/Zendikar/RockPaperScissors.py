@@ -24,8 +24,6 @@ def rock_paper_scissors():
         if dice_roll == 3:
             thing2 = "scissors"
 
-        print(thing2)
-
         if thing1 == "rock":
             print()
             if thing2 == "rock":
@@ -41,6 +39,8 @@ def rock_paper_scissors():
                 print("You won")
                 times_you_have_won += 1
                 print("You have won %s times" % times_you_have_won)
+                lives += 1
+                print("You got 1 additional live\nNow you have %s lives" % lives)
 
         if thing1 == "paper":
             print()
@@ -49,6 +49,9 @@ def rock_paper_scissors():
                 print("You won")
                 times_you_have_won += 1
                 print("You have won %s times" % times_you_have_won)
+                print("You have won %s times" % times_you_have_won)
+                lives += 1
+                print("You got 1 additional live\nNow you have %s lives" % lives)
             if thing2 == "paper":
                 print("Your opponent did rock")
                 print("Nothing happened")
@@ -69,6 +72,9 @@ def rock_paper_scissors():
                 print("Your opponent did paper")
                 print("You won")
                 times_you_have_won += 1
+                print("You have won %s times" % times_you_have_won)
+                lives += 1
+                print("You got 1 additional live\nNow you have %s lives" % lives)
                 print("You have won %s times" % times_you_have_won)
             if thing2 == "scissors":
                 print("Your opponent did rock")

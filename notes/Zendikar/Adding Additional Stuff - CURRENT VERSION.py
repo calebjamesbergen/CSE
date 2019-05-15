@@ -734,7 +734,7 @@ class Person(object):
             print("Now you are level %s" % self.level)
 
     def check_self(self):
-        print("You deal %s damage" % self.attack_amt)
+        print("You can deal a max of %s damage" % self.attack_amt)
         if self.armor == leather_armor:
             print("You have this armor: Leather armor")
         else:
@@ -1018,12 +1018,12 @@ raven_gorge4 = Room("Raven Gorge 4", None, "raven_gorge3", None, None, None, Non
 # Sheltered Valley
 spawn_point_sheltered_valley = Room("Spawn Point Sheltered Valley", None, None, "sheltered_valley4",
                                     "sheltered_valley1", None,
-                                    "You are now in a valley with grass going out to your east and west")
+                                    "You are now in a valley with paths going out to your east and west")
 sheltered_valley1 = Room("Sheltered Valley 1", "sheltered_valley2", "sheltered_valley7",
                          "spawn_point_sheltered_valley", None, None, "There is a dead body north of you")
 sheltered_valley2 = Room("Sheltered Valley 2", "sheltered_valley3", "sheltered_valley1", None, None,
                          None, "Who ever died here dropped a lot of gold", False, None, "", False, False, "", True, 50)
-sheltered_valley3 = Room("Sheltered Valley 3", "mountain", None, "sheltered_valley4", "sheltered_valley1",
+sheltered_valley3 = Room("Sheltered Valley 3", "mountain", "sheltered_valley2", "sheltered_valley4", "sheltered_valley1",
                          None, "There is a stream here and you are very thirsty")
 sheltered_valley4 = Room("Sheltered Valley 4", "sheltered_valley5", None, "sheltered_valley6",
                          "spawn_point_sheltered_valley", None,
@@ -1049,7 +1049,7 @@ mountain = Room("Mountain", None, "sheltered_valley3", None, None, None, "Ahead 
 
 # Mountain
 spawn_point_mountain = Room("Spawn Point Mountain", None, None, "mountain6", "mountain1", None,
-                            "You are in Spawn Point Mountain\nThere are paths leading to your left and to your right")
+                            "You are in Spawn Point Mountain\nThere are paths leading to your west and to your east")
 mountain1 = Room("Mountain 1", "mountain2", "spawn_point_mountain", None, None, None,
                  "You start climbing the right side of the mountain")
 mountain2 = Room("Mountain 2", "mountain5", "mountain3", None, None, None,

@@ -1,6 +1,7 @@
 import random
 import RockPaperScissors
 import Magic8Ball
+from termcolor import colored
 
 
 class Item(object):
@@ -150,17 +151,6 @@ class Boss(object):
         self.on_fire = on_fire
         self.gold = gold
         self.exp = exp
-
-    def burning(self):
-        if self.on_fire and self.health > 0:
-            print("%s has been burned" % self.name)
-            self.health -= 5
-            if self.health > 0:
-                print("%s has taken 5 damage \nNow %s has %s health" % (self.name, self.name, self.health))
-            else:
-                self.health = 0
-                print("%s has taken 5 damage \nNow %s has %s health" % (self.name, self.name, self.health))
-            self.die()
 
     def die(self):
         if self.health <= 0:
@@ -508,7 +498,7 @@ class Monster(object):
 
     def take_damage(self, damage):
         if damage < self.armor.defence:
-            print("No damage is done because of some FABULOUS armor!")
+            print(colored("No damage is done because of some FABULOUS armor!", "blue"))
         else:
             self.health -= damage - self.armor.defence
         self.burning()
@@ -572,14 +562,14 @@ class Person(object):
         self.first_time1 = True
 
     def take_damage(self, damage):
-        print("%s damage is dealt" % damage)
+        print(colored("%s damage is dealt" % damage, "red"))
         if damage <= self.defence:
             print("No damage is done because of some FABULOUS armor")
         else:
             self.health -= damage - self.defence
             if self.health <= 0:
                 self.health = 0
-                print("%s has fallen" % self.name)
+                print(colored("%s has fallen" % self.name, "red"))
         print("%s has %d health left" % (self.name, self.health))
 
     def attack(self, target):
@@ -973,16 +963,16 @@ class Room(object):
             print(self.room_text)
 
     def run_room(self, target=None):
-        print(self.name)
+        print(colored(self.name, "blue"))
         if self.room_text:
-            print(self.room_text)
+            print(colored(self.room_text, "green"))
         if self.item_in_it:
             if not self.item.is_it_collected:
                 you.pick_up_item(self.item)
         if self.gold_in_it:
-            print("You found %s gold" % self.how_much_gold)
+            print(colored("You found %s gold" % self.how_much_gold, "yellow"))
             you.total_gold += self.how_much_gold
-            print("Now you have %s gold" % you.total_gold)
+            print(colored("Now you have %s gold" % you.total_gold, "yellow"))
         if self.instant_death:
             you.die()
         if self.monster_in_it:
@@ -994,7 +984,7 @@ class Room(object):
             you.run_command()
 
 
-# Rooms        e
+# Rooms
 
 room = Room(None, None, None, None, None, None, None)
 
@@ -1265,11 +1255,30 @@ if choice_game.upper() == "MINI GAME":
 while you.playing and game:
     if first_time and you.playing:
         print("Welcome to Zendikar")
-        print("This game will require skill and a bit of luck")
-        print("The point of the game is to progress north and slay Ulamog the final boss\nGood luck")
+        print("This world has been over run by the leeching eldrazi\nAll over this planet they are destroying everything")
+        print("You are this planets last hope\nYou need to save them\nTheir master, Ulamog, looms over the land north of you\n"
+              "You need to slay Ulamog to free this planet from its imminent doom\nAlong the way you will face many challenges but a person like you should be easily able to rise up and find victory")
+        input("There are many things waiting to slow you down on your path to victory so be careful\nGood luck")
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
+        print()
         print("Try checking your inventory by typing 'i'")
         print("Or type 'north' or 'n' to begin")
-        print("Have fun")
         first_time = False
     if you.current_node.name == "Spawn Point Raven Gorge":
         spawn_point_raven_gorge.run_room()

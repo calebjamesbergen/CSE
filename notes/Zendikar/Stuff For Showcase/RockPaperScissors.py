@@ -1,4 +1,5 @@
 import random
+from termcolor import colored
 
 
 def rock_paper_scissors():
@@ -77,5 +78,5 @@ def rock_paper_scissors():
                 print("You got 1 additional live\nNow you have %s lives" % lives)
                 print("You have won %s times" % times_you_have_won)
             if thing2 == "scissors":
-                print("Your opponent did rock")
+                print("Your opponent did scissors")
                 print("Nothing happened")

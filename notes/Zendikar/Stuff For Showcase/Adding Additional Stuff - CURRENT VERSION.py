@@ -547,7 +547,8 @@ class Person(object):
         self.health_potions_list = [health_potion.name, good_health_potion.name, great_health_potion.name]
         self.weapons_list = [wood_sword.name, stone_sword.name, iron_sword.name, diamond_sword.name,
                              enchanted_sword.name]
-        self.weapons_damage = [wood_sword.damage, stone_sword.damage, iron_sword.damage, diamond_sword.damage, 35, enchanted_sword.name]
+        self.weapons_damage = [wood_sword.damage, stone_sword.damage, iron_sword.damage, diamond_sword.damage, 35,
+                               enchanted_sword.name]
         self.armor_list = [copper_armor.name, iron_armor.name, diamond_armor.name, enchanted_armor.name]
         self.armor_defence = [10, 15, 30, 35]
         self.health_potion_heal = 3
@@ -1013,7 +1014,8 @@ sheltered_valley1 = Room("Sheltered Valley 1", "sheltered_valley2", "sheltered_v
                          "spawn_point_sheltered_valley", None, None, "There is a dead body north of you")
 sheltered_valley2 = Room("Sheltered Valley 2", "sheltered_valley3", "sheltered_valley1", None, None,
                          None, "Who ever died here dropped a lot of gold", False, None, "", False, False, "", True, 50)
-sheltered_valley3 = Room("Sheltered Valley 3", "mountain", "sheltered_valley2", "sheltered_valley4", "sheltered_valley1",
+sheltered_valley3 = Room("Sheltered Valley 3", "mountain", "sheltered_valley2", "sheltered_valley4",
+                         "sheltered_valley1",
                          None, "There is a stream here and you are very thirsty")
 sheltered_valley4 = Room("Sheltered Valley 4", "sheltered_valley5", None, "sheltered_valley6",
                          "spawn_point_sheltered_valley", None,
@@ -1189,8 +1191,8 @@ lake_shop = Room("Lake Shop", None, "lake_boss", None, None, None, None, False, 
                  True, iron_sword, iron_armor, good_health_potion, filler)
 
 # Jungle
-spawn_point_jungle = Room("Spawn Point Jungle", "jungle1", None, "jungle3", "jungle2", None, "You are in a very luscious tropical"
-                                                                                             " jungle")
+spawn_point_jungle = Room("Spawn Point Jungle", "jungle1", None, "jungle3", "jungle2", None,
+                          "You are in a very luscious tropical jungle")
 jungle1 = Room("Jungle 1", "jungle4", "spawn_point_jungle", "jungle3", "jungle2", None,
                "There are lots of trees around you making it hard to see")
 jungle2 = Room("Jungle 2", None, None, "jungle1", "jungle_banana", None, "There are a lot of bananas to your west")
@@ -1219,7 +1221,8 @@ jungle_shop = Room("Jungle Shop", None, "jungle_boss", None, None, None, None, F
                    False, 0, True, enchanted_sword, enchanted_armor, great_health_potion, filler)
 
 # Boss Area
-spawn_point_boss = Room("Spawn Point Boss", "boss_area_fight", "boss_area_fight", "boss_area_fight", "boss_area_fight", None, None)
+spawn_point_boss = Room("Spawn Point Boss", "boss_area_fight", "boss_area_fight", "boss_area_fight", "boss_area_fight",
+                        None, None)
 boss_area_fight = Room("Boss Fight", None, "spawn_point_boss", None, None, None, None)
 
 last_room = Room("You Did It!", None, None, None, None, None, None)
@@ -1235,10 +1238,9 @@ banana_first_time = True
 machete_first_time = True
 key_first_time = True
 game = False
-
+"""
 print("Would you like to play the main game or a mini game?")
 choice_game = input("GAME or MINI GAME")
-
 if choice_game.upper() == "GAME":
     game = True
 
@@ -1250,15 +1252,19 @@ if choice_game.upper() == "MINI GAME":
 
     if choice_minigame.upper() == "MAGIC 8 BALL":
         Magic8Ball.choice()
+"""
 
-
-while you.playing and game:
+while you.playing:
     if first_time and you.playing:
         print("Welcome to Zendikar")
-        print("This world has been over run by the leeching eldrazi\nAll over this planet they are destroying everything")
-        print("You are this planets last hope\nYou need to save them\nTheir master, Ulamog, looms over the land north of you\n"
-              "You need to slay Ulamog to free this planet from its imminent doom\nAlong the way you will face many challenges but a person like you should be easily able to rise up and find victory")
-        input("There are many things waiting to slow you down on your path to victory so be careful\nGood luck")
+        print("This world has been over run by the leeching eldrazi\nAll over this planet they "
+              "are destroying everything")
+        print("You are this planets last hope\nYou need to save them\nTheir master, Ulamog, looms over "
+              "the land north of you\n"
+              "You need to slay Ulamog to free this planet from its imminent doom\nAlong the way you "
+              "will face many challenges but a person like you should be easily able to rise up and find victory")
+        input("There are many things waiting to slow you down on your path to victory so be careful\nGood luck"
+              " (Hit enter to start)")
         print()
         print()
         print()
@@ -1278,7 +1284,7 @@ while you.playing and game:
         print()
         print()
         print("Try checking your inventory by typing 'i'")
-        print("Or type 'north' or 'n' to begin")
+        print("Or type 'north' or 'n' to move")
         first_time = False
     if you.current_node.name == "Spawn Point Raven Gorge":
         spawn_point_raven_gorge.run_room()
